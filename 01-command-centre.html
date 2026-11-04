@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Northvale Group plc — Controller's Room (example data)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@6/dist/echarts.min.js"></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+<style>
+:root{
+  --ground:#0a0e13; --ground-2:#0e141a; --line:#1d2731; --line-2:#2a3743;
+  --bone:#ebe5d8; --text:#d6d0c3; --muted:#8e99a4; --faint:#7d8894;
+  --amber:#f0a24b; --amber-dim:#8a5d2c; --fav:#6cc4a1; --adv:#ff6f5b; --slate:#4b5967;
+  --serif:'Bodoni Moda', 'Didot', serif; --sans:'Hanken Grotesk', system-ui, sans-serif; --mono:'JetBrains Mono', ui-monospace, monospace;
+  --ease-out: cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box} html{background:var(--ground);color-scheme:dark;scrollbar-color:var(--line-2) var(--ground)}
+body{margin:0;background:var(--ground);color:var(--text);font:400 15px/1.5 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:var(--amber);color:#160d02}
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-track{background:var(--ground)}::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:10px;border:2px solid var(--ground)}
+:focus-visible{outline:1.5px solid var(--amber);outline-offset:3px;border-radius:3px}
+.num,.mono{font-family:var(--mono);font-variant-numeric:tabular-nums lining-nums;font-feature-settings:"tnum","zero" 0}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+/* header */
+header.top{position:fixed;inset:0 0 auto 0;height:64px;z-index:20;display:flex;align-items:center;gap:28px;padding:0 32px;background:rgba(10,14,19,.94);border-bottom:1px solid var(--line)}
+.mark{display:flex;align-items:baseline;gap:12px;margin-right:auto;white-space:nowrap}
+.mark b{font:500 21px/1 var(--serif);color:var(--bone);letter-spacing:-.005em}
+.mark span{font-size:13px;color:var(--muted)}
+.ctl{display:flex;align-items:center;gap:10px}
+.ctl label{font-size:12px;color:var(--muted)}
+.seg{display:inline-flex;border:1px solid var(--line-2);border-radius:5px;padding:2px;gap:2px;background:var(--ground-2)}
+.seg button{height:28px;padding:0 10px;border-radius:3px;font:500 12px/28px var(--sans);color:var(--muted);transition:color .15s,background-color .15s}
+.seg button:hover{color:var(--bone)}
+.seg button[aria-checked="true"]{background:var(--bone);color:#10151b}
+.tag{font:500 11px/1 var(--mono);color:var(--amber);border:1px solid var(--amber-dim);padding:6px 8px;border-radius:4px;white-space:nowrap}
+
+/* hero */
+.hero{position:relative;height:max(760px,100vh);padding-top:64px;display:grid;grid-template-columns:minmax(0,1.32fr) minmax(440px,1fr);border-bottom:1px solid var(--line)}
+.globe{position:relative;overflow:hidden;cursor:grab}
+.globe:active{cursor:grabbing}
+.globe canvas{display:block;width:100%;height:100%}
+.glabel{position:absolute;left:0;top:0;pointer-events:none;font:500 11px/1.25 var(--mono);color:var(--bone);white-space:nowrap;text-shadow:0 1px 2px #0a0e13,0 0 6px #0a0e13;will-change:transform,opacity;transition:opacity .25s}
+.glabel i{font-style:normal;color:var(--muted);display:block;font-family:var(--sans);font-size:11px}
+.glabel.sel{color:var(--amber)}
+.glabel.r{text-align:right}
+.globe-foot{position:absolute;left:32px;bottom:28px;right:32px;display:flex;justify-content:space-between;align-items:flex-end;pointer-events:none}
+.legend{font-size:12px;color:var(--muted);display:flex;gap:18px;align-items:center}
+.legend .sw{display:inline-block;width:22px;height:2px;background:var(--amber);vertical-align:middle;margin-right:8px}
+.legend .sw.dim{background:var(--slate)}
+.hint{font-size:12px;color:var(--faint)}
+.read{padding:56px 48px 40px 8px;display:flex;flex-direction:column;min-width:0}
+.dateline{font:400 13px/1.4 var(--sans);color:var(--muted);margin:0 0 18px}
+h1.lede{font:400 clamp(34px,3.1vw,46px)/1.08 var(--serif);color:var(--bone);margin:0 0 14px;letter-spacing:-.012em;text-wrap:balance}
+h1.lede em{font-style:italic;color:var(--amber)}
+.sub{font-size:15px;color:var(--muted);max-width:46ch;margin:0 0 36px;text-wrap:pretty}
+.kpis{border-top:1px solid var(--line);margin-top:auto}
+.kpi{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:4px 16px;padding:16px 0 15px;border-bottom:1px solid var(--line)}
+.kpi .k{font-size:13px;color:var(--muted)}
+.kpi .v{font:500 30px/1 var(--serif);color:var(--bone);font-variant-numeric:lining-nums tabular-nums;grid-row:span 2;align-self:center;text-align:right}
+.kpi .d{font:400 12px/1.3 var(--mono);color:var(--faint)}
+.fav{color:var(--fav)!important}.adv{color:var(--adv)!important}
+.note{font-size:12px;color:var(--faint);margin-top:14px}
+
+/* chapters */
+.chapters{display:grid;grid-template-columns:220px minmax(0,1fr);gap:0 56px;max-width:1440px;margin:0 auto;padding:0 48px 0 32px}
+.rail{position:sticky;top:64px;align-self:start;height:calc(100vh - 64px);padding:72px 0 0;display:flex;flex-direction:column;gap:2px}
+.rail a{display:grid;grid-template-columns:18px 1fr;align-items:center;padding:7px 0;font-size:13px;color:var(--faint);text-decoration:none;transition:color .2s}
+.rail a::before{content:"";width:9px;height:1px;background:currentColor;transition:width .3s var(--ease-out)}
+.rail a.on{color:var(--bone)} .rail a.on::before{width:14px;background:var(--amber)}
+.rail a:hover{color:var(--text)}
+.rail .meta{margin-top:auto;padding-bottom:32px;font-size:12px;color:var(--faint);line-height:1.6}
+section.ch{padding:88px 0 72px;border-bottom:1px solid var(--line);min-height:70vh}
+section.ch:last-of-type{border-bottom:0}
+h2{font:400 38px/1.1 var(--serif);color:var(--bone);margin:0 0 10px;letter-spacing:-.01em}
+.finding{font-size:16px;color:var(--muted);max-width:68ch;margin:0 0 36px;text-wrap:pretty}
+.finding b{color:var(--text);font-weight:500}
+.grid2{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(320px,1fr);gap:40px;align-items:start}
+.chart{height:400px;width:100%}
+.chart.tall{height:440px}
+.axisnote{font-size:12px;color:var(--faint);margin-top:6px}
+
+table.t{width:100%;border-collapse:collapse;font-size:13px}
+table.t th{font:500 12px/1.2 var(--sans);color:var(--muted);text-align:right;padding:0 0 10px;border-bottom:1px solid var(--line-2)}
+table.t th:first-child,table.t td:first-child{text-align:left}
+table.t td{padding:11px 0;border-bottom:1px solid var(--line);text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--text);font-size:12.5px}
+table.t td:first-child{font-family:var(--sans);font-size:13.5px}
+table.t td .s{display:block;font-family:var(--sans);font-size:12px;color:var(--faint)}
+table.t tbody tr{cursor:pointer;transition:background-color .15s}
+table.t tbody tr:hover{background:rgba(235,229,216,.035)}
+table.t tbody tr.sel td:first-child{color:var(--amber)}
+table.t tfoot td{border-bottom:0;border-top:1px solid var(--line-2);color:var(--bone);font-weight:500}
+
+.versions{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.versions li{display:grid;grid-template-columns:1fr auto auto;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:13.5px;align-items:baseline}
+.versions li span:nth-child(2){font-family:var(--mono);color:var(--bone)}
+.versions li span:nth-child(3){font-family:var(--mono);font-size:12px;min-width:64px;text-align:right}
+
+.ubar{position:relative;height:6px;background:var(--line);border-radius:3px;width:160px;margin-left:auto}
+.ubar i{position:absolute;inset:0 auto 0 0;background:var(--bone);border-radius:3px;transform-origin:left}
+.ubar i.lo{background:var(--adv)}
+.ubar b{position:absolute;top:-4px;width:1.5px;height:14px;background:var(--amber)}
+.pill{display:inline-block;font:500 11px/1 var(--mono);padding:4px 6px;border-radius:3px;border:1px solid var(--line-2);color:var(--muted)}
+.pill.warn{color:var(--adv);border-color:rgba(255,111,91,.4)}
+.pill.ok{color:var(--fav);border-color:rgba(108,196,161,.35)}
+
+footer{max-width:1440px;margin:0 auto;padding:40px 48px 64px 308px;font-size:12px;color:var(--faint);border-top:1px solid var(--line)}
+#tip{position:fixed;z-index:50;pointer-events:none;min-width:200px;max-width:300px;background:#121a22;border:1px solid var(--line-2);border-radius:6px;padding:10px 12px;font-size:12.5px;color:var(--text);box-shadow:0 10px 28px rgba(0,0,0,.45);opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s}
+#tip.on{opacity:1;transform:none}
+#tip h4{margin:0 0 6px;font:500 13px/1.3 var(--sans);color:var(--bone)}
+#tip .r{display:flex;justify-content:space-between;gap:16px;font-family:var(--mono);font-size:12px;line-height:1.7}
+#tip .r span:first-child{font-family:var(--sans);color:var(--muted)}
+.fallback{position:absolute;inset:0;display:none;place-items:center;color:var(--muted);font-size:14px;text-align:center;padding:40px}
+@media (prefers-reduced-motion: reduce){ *{transition-duration:0s!important} }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="mark"><b>Northvale Group plc</b><span>Controller’s room · FY27</span></div>
+  <div class="ctl"><label id="l-ent">Entity</label><div class="seg" role="radiogroup" aria-labelledby="l-ent" data-k="entity"></div></div>
+  <div class="ctl"><label id="l-per">Period</label><div class="seg" role="radiogroup" aria-labelledby="l-per" data-k="period"></div></div>
+  <div class="ctl"><label id="l-scn">Scenario</label><div class="seg" role="radiogroup" aria-labelledby="l-scn" data-k="scenario"></div></div>
+  <span class="tag" title="All figures are synthetic and for demonstration only">Example data</span>
+</header>
+
+<section class="hero" id="top">
+  <div class="globe" id="globe" aria-label="3D globe of Northvale entities with intercompany flows; drag to rotate, click an office to filter">
+    <div class="fallback" id="glfail">3D view unavailable in this browser. All figures remain available below.</div>
+    <div class="globe-foot">
+      <div class="legend"><span><span class="sw"></span>Intercompany flow, seller → buyer</span><span><span class="sw dim"></span>Outside current filter</span></div>
+      <div class="hint">Drag to rotate · click an office to filter</div>
+    </div>
+  </div>
+  <div class="read">
+    <p class="dateline" id="dateline"></p>
+    <h1 class="lede" id="lede"></h1>
+    <p class="sub" id="sub"></p>
+    <div class="kpis" id="kpis"></div>
+    <p class="note" id="scnote"></p>
+  </div>
+</section>
+
+<div class="chapters">
+  <nav class="rail" aria-label="Chapters">
+    <a href="#variance">Variance bridge</a><a href="#growth">Revenue growth</a><a href="#forecast">Rolling forecast</a><a href="#people">Utilisation</a><a href="#ic">Intercompany</a>
+    <div class="meta">Books closed: Oct 26 (WD4)<br>Reporting currency: GBP<br>Budget FX: €0.855 · $0.785 · S$0.585</div>
+  </nav>
+  <main>
+    <section class="ch" id="variance">
+      <h2>From budget to actual</h2>
+      <p class="finding" id="f-var"></p>
+      <div class="grid2">
+        <div><div class="chart" id="c-bridge"></div><p class="axisnote" id="bridge-note"></p></div>
+        <div><table class="t" id="t-ent"></table></div>
+      </div>
+    </section>
+    <section class="ch" id="growth">
+      <h2>Revenue, month by month</h2>
+      <p class="finding" id="f-growth"></p>
+      <div class="chart tall" id="c-growth"></div>
+    </section>
+    <section class="ch" id="forecast">
+      <h2>How the forecast moved</h2>
+      <p class="finding" id="f-fc"></p>
+      <div class="grid2">
+        <div class="chart" id="c-fc"></div>
+        <ul class="versions" id="versions"></ul>
+      </div>
+    </section>
+    <section class="ch" id="people">
+      <h2>Who is billing</h2>
+      <p class="finding" id="f-people"></p>
+      <table class="t" id="t-people"></table>
+    </section>
+    <section class="ch" id="ic">
+      <h2>Intercompany, before elimination</h2>
+      <p class="finding" id="f-ic"></p>
+      <table class="t" id="t-ic"></table>
+    </section>
+  </main>
+</div>
+<footer>Example data. Northvale Group plc, its entities, clients and people are fictional; figures are generated for demonstration and are internally consistent but not real.</footer>
+<div id="tip" role="tooltip"></div>
+
+<script>/* Northvale Group plc — EXAMPLE DATA ONLY. Deterministic synthetic model, FY27 (Apr 2026 – Mar 2027). */
+const NV = (() => {
+  function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+  const r = rng(20261104); const n = a => (r()*2-1)*a;
+  const MONTHS = ['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'];
+  const LABELS = MONTHS.map((m,i)=>m+' '+(i<9?'26':'27'));
+  const ACT = 7; // Apr–Oct 2026 closed; Nov–Mar forecast
+  const SEAS = [0.95,1.0,1.02,1.03,0.86,1.02,1.05,1.03,0.82,0.98,1.0,1.04];
+  const FXB = {GBP:1, EUR:0.855, USD:0.785, SGD:0.585};
+  const FXA = {GBP:[1,1,1,1,1,1,1], EUR:[0.851,0.849,0.853,0.858,0.861,0.859,0.862], USD:[0.790,0.788,0.781,0.772,0.765,0.762,0.758], SGD:[0.586,0.584,0.581,0.578,0.575,0.574,0.572]};
+  const ENT = [
+    {id:'NVA',name:'Northvale Advisory Ltd',short:'Advisory UK',city:'London',lat:51.507,lon:-0.128,ccy:'GBP',fte:62,rate:195,util:0.72,vol:-0.035,px:0.028,ohd:0.035,growth:0.08,dR:0.50,oR:0.33,dso:[49,51,53,52,56,55,54],dsoT:50},
+    {id:'NVD',name:'Northvale Digital Ltd',short:'Digital UK',city:'Manchester',lat:53.480,lon:-2.242,ccy:'GBP',fte:48,rate:150,util:0.75,vol:0.045,px:-0.012,ohd:-0.01,growth:0.14,dR:0.53,oR:0.29,dso:[44,45,43,46,47,45,44],dsoT:45},
+    {id:'NVI',name:'Northvale Ireland Ltd',short:'Ireland',city:'Dublin',lat:53.350,lon:-6.260,ccy:'EUR',fte:30,rate:170,util:0.70,vol:0.012,px:0.010,ohd:0.0,growth:0.06,dR:0.52,oR:0.31,dso:[52,50,51,53,55,52,51],dsoT:50},
+    {id:'NVU',name:'Northvale Inc.',short:'North America',city:'New York',lat:40.713,lon:-74.006,ccy:'USD',fte:34,rate:260,util:0.68,vol:-0.075,px:0.015,ohd:0.02,growth:0.11,dR:0.51,oR:0.32,dso:[63,66,68,70,72,71,74],dsoT:60},
+    {id:'NVS',name:'Northvale Asia Pte. Ltd',short:'Asia Pacific',city:'Singapore',lat:1.352,lon:103.820,ccy:'SGD',fte:22,rate:240,util:0.70,vol:0.06,px:0.02,ohd:0.01,growth:0.19,dR:0.50,oR:0.30,dso:[58,57,55,56,54,53,52],dsoT:52},
+  ];
+  const SCEN = {base:{h:1,d:1,label:'Base'}, up:{h:1.045,d:1.01,label:'Upside'}, down:{h:0.92,d:0.985,label:'Downside'}};
+  // ---- entity monthly model ----
+  const M = {};
+  ENT.forEach(e => {
+    const fb = FXB[e.ccy];
+    const bH = SEAS.map(s => e.fte*140*e.util*s);
+    const bRev = bH.map(h => h*e.rate*fb);
+    const avg = bRev.reduce((a,b)=>a+b,0)/12;
+    const bDel = SEAS.map(() => avg*e.dR);
+    const bOH = SEAS.map((s,i) => avg*e.oR*(1 + (i===11?0.04:0) + (i===0?0.02:0)));
+    const act = []; 
+    for (let m=0;m<ACT;m++){
+      const ramp = 0.5 + m/ACT;
+      const aH = bH[m]*(1 + e.vol*ramp + n(0.025) - (m===4 && e.ccy!=='SGD' ? 0.03 : 0));
+      const aRateL = e.rate*(1 + e.px + n(0.007));
+      const fxa = FXA[e.ccy][m];
+      const aDel = bDel[m]*(1 + 0.3*Math.max(0,e.vol) + n(0.012));
+      const aOH = bOH[m]*(1 + e.ohd + n(0.035));
+      act.push({h:aH, rateL:aRateL, fx:fxa, del:aDel, oh:aOH});
+    }
+    const last3 = act.slice(4);
+    const hr = last3.reduce((a,x,i)=>a + x.h/bH[4+i],0)/3, rr = last3.reduce((a,x)=>a+x.rateL,0)/3/e.rate;
+    const fxL = FXA[e.ccy][ACT-1];
+    const pyF = SEAS.map(() => 1/(1+e.growth+n(0.025)));
+    M[e.id] = {e, bH, bRev, bDel, bOH, act, hr: 1+(hr-1)*0.7, rr: 1+(rr-1)*0.85, fxL, pyF, fb};
+  });
+  function series(id, scen='base'){
+    const S = SCEN[scen]||SCEN.base;
+    if (id==='GRP'){ const parts = ENT.map(e=>series(e.id,scen)); return parts[0].map((_,m)=>{ const o={m,label:LABELS[m],isAct:m<ACT}; ['rev','revB','revPY','del','delB','oh','ohB','ebitda','ebitdaB','ebitdaPY','hours','hoursB','vol','price','fx','ar','cap'].forEach(k=>o[k]=parts.reduce((a,p)=>a+p[m][k],0)); o.margin=o.ebitda/o.rev; o.marginB=o.ebitdaB/o.revB; o.util=o.hours/o.cap; o.utilB=o.hoursB/o.cap; return o; }); }
+    const X = M[id], e = X.e; const out = [];
+    for (let m=0;m<12;m++){
+      let h, rateL, fx, del, oh;
+      if (m<ACT){ ({h, rateL, fx, del, oh} = X.act[m]); }
+      else { h = X.bH[m]*X.hr*S.h; rateL = e.rate*X.rr; fx = X.fxL; del = X.bDel[m]*(1+0.3*Math.max(0,e.vol))*S.d; oh = X.bOH[m]*(1+e.ohd*0.6); }
+      const rev = h*rateL*fx, revB = X.bRev[m];
+      const vol = (h - X.bH[m])*e.rate*X.fb, price = h*(rateL-e.rate)*X.fb, fxv = h*rateL*(fx - X.fb);
+      const ebitda = rev - del - oh, ebitdaB = revB - X.bDel[m] - X.bOH[m];
+      const revPY = revB*X.pyF[m]*(1+n(0.0)) , ebitdaPY = revPY*(1-e.dR*1.04-e.oR*1.05);
+      const cap = e.fte*140*SEAS[m];
+      out.push({m,label:LABELS[m],isAct:m<ACT,rev,revB,revPY,del,delB:X.bDel[m],oh,ohB:X.bOH[m],ebitda,ebitdaB,ebitdaPY,hours:h,hoursB:X.bH[m],cap,util:h/cap,utilB:X.bH[m]/cap,vol,price,fx:fxv,margin:ebitda/rev,marginB:ebitdaB/revB});
+    }
+    // receivables from DSO path (3-month count-back)
+    out.forEach((o,m)=>{ const d = m<ACT ? e.dso[m] : e.dso[ACT-1] + (e.dsoT - e.dso[ACT-1])*((m-ACT+1)/5); o.dso=d;
+      const r3 = [m,m-1,m-2].reduce((a,k)=>a+(k>=0?out[k].rev:out[0].revPY),0); o.ar = d/91*r3; });
+    return out;
+  }
+  // ---- aggregation over a month range ----
+  function sum(id, scen, from, to){
+    const s = series(id, scen).slice(from, to+1); const o = {};
+    ['rev','revB','revPY','del','delB','oh','ohB','ebitda','ebitdaB','ebitdaPY','hours','hoursB','cap','vol','price','fx'].forEach(k=>o[k]=s.reduce((a,x)=>a+x[k],0));
+    o.margin=o.ebitda/o.rev; o.marginB=o.ebitdaB/o.revB; o.marginPY=o.ebitdaPY/o.revPY; o.util=o.hours/o.cap; o.utilB=o.hoursB/o.cap;
+    const last = series(id, scen)[to]; o.ar = last.ar; 
+    const sr = series(id,scen); const r3 = [to,to-1,to-2].reduce((a,k)=>a+(k>=0?sr[k].rev:sr[0].revPY),0); o.dso = id==='GRP' ? last.ar/r3*91 : last.dso;
+    o.bridge = [
+      {k:'budget', label:'Budget EBITDA', v:o.ebitdaB, total:true},
+      {k:'vol', label:'Volume (hours)', v:o.vol},
+      {k:'price', label:'Rate / price', v:o.price},
+      {k:'fx', label:'FX translation', v:o.fx},
+      {k:'del', label:'Delivery cost', v:-(o.del-o.delB)},
+      {k:'oh', label:'Overheads', v:-(o.oh-o.ohB)},
+      {k:'actual', label: to<ACT ? 'Actual EBITDA':'Outturn EBITDA', v:o.ebitda, total:true},
+    ];
+    return o;
+  }
+  // ---- group cash ----
+  function cash(scen='base'){
+    const g = series('GRP', scen); let c = 9.18e6; let prevAR = ENT.reduce((a,e)=>a + e.dso[0]/91*3*M[e.id].bRev[11]*M[e.id].pyF[11],0);
+    return g.map((o,m)=>{ const tax = [3,6,9].includes(m)?415000:0, div = m===5?1.6e6:0, capex = 58000 + (m===2?140000:0), fin = 72000;
+      const dAR = o.ar - prevAR; prevAR = o.ar; const flow = o.ebitda - tax - div - capex - fin - dAR; c += flow;
+      return {m,label:o.label,isAct:o.isAct,cash:c,flow,dAR,tax,div,capex,fin,ebitda:o.ebitda}; });
+  }
+  // ---- rolling forecast versions (outturn as forecast at month k) ----
+  function versions(id='GRP'){
+    const out = [{name:'Budget', asAt:-1, vals: series(id).map(o=>o.revB)}];
+    for (let k=2;k<ACT;k++){ // forecast made after closing month k
+      const s = series(id); const ratio = s.slice(0,k+1).reduce((a,x)=>a+x.rev,0)/s.slice(0,k+1).reduce((a,x)=>a+x.revB,0);
+      out.push({name:'RF '+MONTHS[k], asAt:k, vals: s.map((o,m)=> m<=k ? o.rev : o.revB*(1+(ratio-1)*0.8))});
+    }
+    return out;
+  }
+  // ---- intercompany (seller -> buyer), monthly GBP ----
+  const ICDEF = [
+    ['NVA','NVD',38000,'Group management fee'],['NVA','NVI',22000,'Group management fee'],['NVA','NVU',30000,'Group management fee'],['NVA','NVS',16000,'Group management fee'],
+    ['NVD','NVA',145000,'Subcontracted digital delivery'],['NVD','NVU',62000,'Subcontracted digital delivery'],['NVI','NVA',88000,'Nearshore delivery centre'],
+    ['NVS','NVU',54000,'Offshore support desk'],['NVU','NVA',24000,'Secondment recharge'],['NVI','NVD',31000,'Data engineering pods'],
+  ];
+  const IC = ICDEF.map(([from,to,base,nature]) => { const months = SEAS.map((s,m)=> m<ACT ? base*s*(1+n(0.06)) : base*s); return {from,to,nature,months}; });
+  // reconciliation differences at Oct close (seller vs buyer ledger)
+  const ICREC = {'NVS>NVU':12400, 'NVI>NVA':-3150};
+  function ic(from=0,to=ACT-1){ return IC.map(f=>({from:f.from,to:f.to,nature:f.nature,v:f.months.slice(from,to+1).reduce((a,b)=>a+b,0),diff: to===ACT-1 ? (ICREC[f.from+'>'+f.to]||0) : 0})); }
+  // ---- consultants & weekly time ----
+  const PROJ = [
+    {id:'P01',client:'Halden Utilities',name:'ERP finance transformation',ent:'NVA',type:'T&M'},
+    {id:'P02',client:'Marlow Rail',name:'Cost assurance review',ent:'NVA',type:'Fixed fee'},
+    {id:'P03',client:'Corrin Health',name:'Data platform build',ent:'NVD',type:'T&M'},
+    {id:'P04',client:'Ashby Retail',name:'FP&A redesign',ent:'NVD',type:'Fixed fee'},
+    {id:'P05',client:'Keswick Water',name:'Regulatory reporting',ent:'NVI',type:'T&M'},
+    {id:'P06',client:'Brightmere Insurance',name:'IFRS 17 support',ent:'NVU',type:'T&M'},
+    {id:'P07',client:'Orla Energy',name:'Carve-out readiness',ent:'NVS',type:'Fixed fee'},
+  ];
+  const GR = {Director:0.55, Manager:0.70, 'Senior Consultant':0.80, Consultant:0.82, Analyst:0.78};
+  const CDEF = [
+    ['Priya Raman','NVA','Director',['P01','P02']],['Tom Ashworth','NVA','Manager',['P01']],['Eleanor Voss','NVA','Senior Consultant',['P01','P02']],['Daniel Okafor','NVA','Consultant',['P02']],['Hannah Liddell','NVA','Analyst',['P01']],
+    ['Marcus Brennan','NVD','Manager',['P03','P04']],['Aisha Siddiqui','NVD','Senior Consultant',['P03']],['Callum Reid','NVD','Consultant',['P04','P03']],['Zofia Nowak','NVD','Consultant',['P03']],
+    ['Ciarán Doyle','NVI','Manager',['P05','P01']],['Niamh Kelleher','NVI','Senior Consultant',['P05']],
+    ['Jordan Pierce','NVU','Director',['P06']],['Maya Castellanos','NVU','Senior Consultant',['P06']],
+    ['Wei Ling Tan','NVS','Manager',['P07']],['Arjun Mehta','NVS','Consultant',['P07','P06']],['Grace Lim','NVS','Analyst',['P07']],
+  ];
+  const WEEKS = []; { const d0 = new Date(Date.UTC(2026,3,6)); for (let w=0; w<30; w++){ const d = new Date(d0.getTime()+w*7*864e5); const mi = (d.getUTCMonth()+12-3)%12; WEEKS.push({w, label: d.getUTCDate()+' '+MONTHS[mi], m: mi}); } }
+  const CONS = CDEF.map(([name,ent,grade,projects],ci) => {
+    const target = GR[grade]*(1 + (ent==='NVU'?-0.08:0) + (ent==='NVD'?0.04:0));
+    const leave = new Set(); const nl = 2 + Math.floor(r()*3); while (leave.size < nl){ const w = r()<0.55 ? 16+Math.floor(r()*5) : Math.floor(r()*30); leave.add(w); }
+    const weeks = WEEKS.map(W => {
+      const avail = leave.has(W.w) ? (r()<0.5?0:15) : 37.5 - (W.w===7||W.w===21?7.5:0);
+      let bill = Math.max(0, Math.min(avail, avail*target*(1+n(0.14)) + (ci%5===2 && W.w>18 ? -6 : 0)));
+      const split = projects.length===1 ? [1] : [0.68+n(0.1), 0]; if (split.length===2) split[1]=1-split[0];
+      const byP = {}; projects.forEach((p,i)=>byP[p]=bill*split[i]);
+      return {w:W.w, m:W.m, cap:37.5, avail, bill, nonbill: Math.max(0,avail-bill), leave: 37.5-avail, byP, util: avail? bill/avail : 0};
+    });
+    const tot = weeks.reduce((a,x)=>({bill:a.bill+x.bill, avail:a.avail+x.avail}),{bill:0,avail:0});
+    return {name, ent, grade, projects, target, weeks, bill:tot.bill, avail:tot.avail, util: tot.bill/tot.avail};
+  });
+  return {MONTHS, LABELS, ACT, ENT, SCEN, series, sum, cash, versions, ic, IC, PROJ, CONS, WEEKS, FXB, FXA,
+    ent: id => ENT.find(e=>e.id===id)};
+})();
+const fmt = {
+  gbp(v, d){ const a=Math.abs(v), s=v<0?'−':''; if(a>=1e6) return s+'£'+(a/1e6).toFixed(d??(a>=1e7?1:2))+'m'; if(a>=1e3) return s+'£'+(a/1e3).toFixed(d??0)+'k'; return s+'£'+a.toFixed(0); },
+  sgbp(v, d){ return (v>0?'+':'')+fmt.gbp(v,d); },
+  pct(v, d=1){ return (v*100).toFixed(d)+'%'; },
+  spct(v, d=1){ const x=(v*100); return (x>0?'+':x<0?'−':'')+Math.abs(x).toFixed(d)+'%'; },
+  pp(v, d=1){ const x=v*100; return (x>0?'+':x<0?'−':'')+Math.abs(x).toFixed(d)+' pp'; },
+  int(v){ return Math.round(v).toLocaleString('en-GB'); },
+  hrs(v){ return Math.round(v).toLocaleString('en-GB')+' h'; },
+};
+
+window.NV=NV; window.fmt=fmt;
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+gsap.registerPlugin(ScrollTrigger);
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = s => document.querySelector(s);
+const C = getComputedStyle(document.documentElement);
+const col = k => C.getPropertyValue(k).trim();
+const CITY = {GRP:'Group',NVA:'LON',NVD:'MAN',NVI:'DUB',NVU:'NYC',NVS:'SIN'};
+const state = {entity:'GRP', period:'YTD', scenario:'base'};
+const PER = {M:{from:6,to:6,label:'Oct 26',long:'October'}, YTD:{from:0,to:6,label:'YTD',long:'Year to date'}, FY:{from:0,to:11,label:'FY27',long:'Full-year outturn'}};
+
+/* ---------- controls ---------- */
+const OPTS = {entity:[['GRP','Group'],...NV.ENT.map(e=>[e.id,CITY[e.id],e.name])], period:[['M','Oct 26'],['YTD','YTD'],['FY','FY outturn']], scenario:[['base','Base'],['up','Upside'],['down','Downside']]};
+document.querySelectorAll('.seg').forEach(seg=>{
+  const k = seg.dataset.k;
+  OPTS[k].forEach(([v,l,t])=>{ const b=document.createElement('button'); b.type='button'; b.role='radio'; b.textContent=l; if(t) b.title=t; b.dataset.v=v; b.setAttribute('aria-checked', state[k]===v); b.onclick=()=>set(k,v); seg.append(b); });
+  seg.addEventListener('keydown', e=>{ if(!['ArrowLeft','ArrowRight'].includes(e.key)) return; const bs=[...seg.children]; const i=bs.findIndex(b=>b.dataset.v===state[k]); const j=(i+(e.key==='ArrowRight'?1:-1)+bs.length)%bs.length; set(k,bs[j].dataset.v); bs[j].focus(); });
+});
+function set(k,v){ if(state[k]===v) return; state[k]=v; document.querySelectorAll(`.seg[data-k="${k}"] button`).forEach(b=>b.setAttribute('aria-checked', b.dataset.v===v)); render(); }
+
+/* ---------- tooltip ---------- */
+const tip = $('#tip');
+function showTip(html, x, y){ tip.innerHTML = html; tip.classList.add('on'); const w = tip.offsetWidth, h = tip.offsetHeight; tip.style.left = Math.min(innerWidth-w-12, x+16)+'px'; tip.style.top = Math.min(innerHeight-h-12, y+16)+'px'; }
+function hideTip(){ tip.classList.remove('on'); }
+const row = (k,v,cls='') => `<div class="r"><span>${k}</span><span class="${cls}">${v}</span></div>`;
+
+/* ---------- number tween ---------- */
+function tweenText(el, to, f){ const from = +el.dataset.v || 0; el.dataset.v = to; if (RM || !el.dataset.init){ el.dataset.init=1; el.textContent=f(to); if(RM) return; }
+  const o={v:from}; gsap.to(o,{v:to,duration:.6,ease:'expo.out',overwrite:true,onUpdate:()=>el.textContent=f(o.v)}); }
+
+/* ---------- hero narrative + KPIs ---------- */
+function heroRender(){
+  const P = PER[state.period], s = NV.sum(state.entity, state.scenario, P.from, P.to);
+  const name = state.entity==='GRP' ? 'Group' : NV.ent(state.entity).short;
+  const v = s.ebitda - s.ebitdaB; const drivers = s.bridge.slice(1,6).slice().sort((a,b)=>a.v-b.v);
+  const neg = drivers[0], pos = drivers[drivers.length-1];
+  $('#dateline').textContent = `${name} · ${P.long}${state.period==='FY'?' · '+NV.SCEN[state.scenario].label+' scenario':''} · management accounts`;
+  $('#lede').innerHTML = `${state.period==='FY'?'EBITDA outturn':'EBITDA'} of ${fmt.gbp(s.ebitda)}, <em>${fmt.gbp(Math.abs(v))} ${v<0?'behind':'ahead of'}</em> budget.`;
+  $('#sub').textContent = `${pos.v>0?pos.label+' added '+fmt.gbp(pos.v):'No driver was favourable'}; ${neg.v<0?neg.label.toLowerCase()+' cost '+fmt.gbp(-neg.v):'nothing was adverse'}. Margin ${fmt.pct(s.margin)} against ${fmt.pct(s.marginB)} planned.`;
+  const cash = NV.cash(state.scenario), cE = cash[P.to], cS = P.from===0 ? 9.18e6 : cash[P.from-1].cash;
+  const dsoT = state.entity==='GRP' ? 52 : NV.ent(state.entity).dsoT;
+  const K = [
+    ['Revenue', s.rev, x=>fmt.gbp(x), `${fmt.spct(s.rev/s.revB-1)} vs budget · ${fmt.spct(s.rev/s.revPY-1)} YoY`, s.rev>=s.revB],
+    ['EBITDA margin', s.margin, x=>fmt.pct(x), `${fmt.pp(s.margin-s.marginB)} vs budget`, s.margin>=s.marginB],
+    ['Billable utilisation', s.util, x=>fmt.pct(x), `${fmt.pp(s.util-s.utilB)} vs plan`, s.util>=s.utilB],
+    ['Group cash, '+NV.LABELS[P.to], cE.cash, x=>fmt.gbp(x), `${fmt.sgbp(cE.cash-cS)} over period${state.entity!=='GRP'?' · group treasury':''}`, cE.cash>=cS],
+    ['Debtor days (DSO)', s.dso, x=>x.toFixed(1), `target ${dsoT} days`, s.dso<=dsoT],
+  ];
+  const box = $('#kpis');
+  if (!box.children.length) box.innerHTML = K.map(()=>`<div class="kpi"><span class="k"></span><span class="v num"></span><span class="d"></span></div>`).join('');
+  K.forEach(([k,val,f,d,good],i)=>{ const el = box.children[i]; el.querySelector('.k').textContent=k; tweenText(el.querySelector('.v'), val, f); const dd=el.querySelector('.d'); dd.textContent=d; dd.className='d '+(good?'fav':'adv'); });
+  $('#scnote').textContent = state.period==='FY' ? 'Nov 26 – Mar 27 are forecast months under the selected scenario.' : 'Scenario changes forecast months (Nov–Mar) only; switch to FY outturn to see its effect.';
+}
+
+/* ---------- ECharts ---------- */
+const EC = {}; const base = {color:[col('--bone'),col('--amber'),col('--slate'),col('--muted')], animationDuration:900, animationDurationUpdate:600, animationEasing:'cubicOut', animationEasingUpdate:'cubicOut', textStyle:{fontFamily:'JetBrains Mono', color:col('--muted')}};
+if (RM) Object.assign(base,{animation:false});
+const axisCommon = {axisLine:{lineStyle:{color:col('--line-2')}}, axisTick:{show:false}, axisLabel:{color:col('--muted'), fontSize:11}, splitLine:{lineStyle:{color:col('--line')}}};
+const ttip = {trigger:'axis', backgroundColor:'#121a22', borderColor:col('--line-2'), padding:[10,12], textStyle:{color:col('--text'), fontFamily:'JetBrains Mono', fontSize:12}, axisPointer:{type:'shadow', shadowStyle:{color:'rgba(235,229,216,.04)'}}};
+function chart(id){ if(!EC[id]){ EC[id]=echarts.init(document.getElementById(id), null, {renderer:'canvas'}); new ResizeObserver(()=>EC[id].resize()).observe(document.getElementById(id)); } return EC[id]; }
+const ready = new Set();
+
+function bridgeRender(){
+  const P = PER[state.period], s = NV.sum(state.entity, state.scenario, P.from, P.to);
+  const v = s.ebitda - s.ebitdaB;
+  $('#f-var').innerHTML = `${P.long} EBITDA is <b>${fmt.gbp(s.ebitda)}</b> against a budget of ${fmt.gbp(s.ebitdaB)}, a ${v<0?'shortfall':'beat'} of <b>${fmt.gbp(Math.abs(v))}</b> (${fmt.spct(v/s.ebitdaB)}). Revenue variances split into hours sold, rate achieved and FX translation at budget rates; cost lines are shown as their effect on profit.`;
+  // entity table
+  const rows = NV.ENT.map(e=>({e, s:NV.sum(e.id, state.scenario, P.from, P.to)}));
+  const T = (a,b)=>a.reduce((x,y)=>x+y[b],0);
+  const g = NV.sum('GRP', state.scenario, P.from, P.to);
+  $('#t-ent').innerHTML = `<thead><tr><th>Entity</th><th>Budget</th><th>Actual</th><th>Var</th><th>Margin</th></tr></thead><tbody>${rows.map(({e,s})=>{const d=s.ebitda-s.ebitdaB;return `<tr data-e="${e.id}" class="${state.entity===e.id?'sel':''}"><td>${e.short}<span class="s">${e.city} · ${e.ccy}</span></td><td>${fmt.gbp(s.ebitdaB)}</td><td>${fmt.gbp(s.ebitda)}</td><td class="${d<0?'adv':'fav'}">${fmt.sgbp(d)}</td><td>${fmt.pct(s.margin)}</td></tr>`}).join('')}</tbody><tfoot><tr><td>Group EBITDA</td><td>${fmt.gbp(g.ebitdaB)}</td><td>${fmt.gbp(g.ebitda)}</td><td class="${g.ebitda<g.ebitdaB?'adv':'fav'}">${fmt.sgbp(g.ebitda-g.ebitdaB)}</td><td>${fmt.pct(g.margin)}</td></tr></tfoot>`;
+  $('#t-ent').querySelectorAll('tbody tr').forEach(tr=>tr.onclick=()=>set('entity', state.entity===tr.dataset.e?'GRP':tr.dataset.e));
+  if(!ready.has('variance')) return;
+  let cum = 0; const baseD=[], valD=[], labels=[];
+  s.bridge.forEach(b=>{ if(b.total){ baseD.push(0); valD.push({value:b.v, itemStyle:{color: b.k==='budget'?col('--slate'):col('--bone')}}); cum=b.v; }
+    else { const lo = b.v<0 ? cum+b.v : cum; baseD.push(lo); valD.push({value:Math.abs(b.v), raw:b.v, itemStyle:{color: b.v<0?col('--adv'):col('--fav')}}); cum+=b.v; } labels.push(b.label); });
+  const levels = s.bridge.reduce((a,b,i)=>{ const prev=a.length?a[a.length-1]:0; a.push(b.total?b.v:prev+b.v); return a; },[]);
+  const lo = Math.min(...levels, ...baseD.filter((x,i)=>!s.bridge[i].total)), hi = Math.max(...levels);
+  const step = Math.pow(10, Math.floor(Math.log10(Math.max(hi,1)))-1);
+  const min = Math.max(0, Math.floor((lo - (hi-lo)*0.9)/step)*step);
+  $('#bridge-note').textContent = `Axis starts at ${fmt.gbp(min)} so movements are legible. Totals are full height from that baseline.`;
+  chart('c-bridge').setOption({...base, grid:{left:8,right:8,top:36,bottom:8,containLabel:true},
+    tooltip:{...ttip, formatter: ps=>{ const i=ps[0].dataIndex, b=s.bridge[i]; return `<div style="font-family:Hanken Grotesk;color:${col('--bone')};margin-bottom:4px">${b.label}</div>${b.total?fmt.gbp(b.v):fmt.sgbp(b.v)}${b.total?'':`<div style="color:${col('--muted')}">${fmt.spct(b.v/s.ebitdaB)} of budget EBITDA</div>`}`; }},
+    xAxis:{type:'category', data:labels, ...axisCommon, axisLabel:{...axisCommon.axisLabel, fontFamily:'Hanken Grotesk', fontSize:12, interval:0, width:90, overflow:'break'}},
+    yAxis:{type:'value', min, ...axisCommon, axisLine:{show:false}, axisLabel:{...axisCommon.axisLabel, formatter:v=>fmt.gbp(v,1)}},
+    series:[{type:'bar', stack:'w', data:baseD, itemStyle:{color:'transparent'}, silent:true, barWidth:'54%'},
+      {type:'bar', stack:'w', data:valD, barWidth:'54%', label:{show:true, position:'top', color:col('--text'), fontSize:12, fontFamily:'JetBrains Mono', formatter:p=>{const b=s.bridge[p.dataIndex]; return b.total?fmt.gbp(b.v):fmt.sgbp(b.v);}}}]}, {notMerge:false});
+}
+
+function growthRender(){
+  const ser = NV.series(state.entity, state.scenario);
+  const P = PER[state.period];
+  const y = NV.sum(state.entity, state.scenario, 0, 6);
+  const mom = ser.map((o,i)=> i? o.rev/ser[i-1].rev-1 : null);
+  const best = ser.slice(0,7).reduce((a,o)=> (o.rev/o.revPY > a.rev/a.revPY ? o : a));
+  $('#f-growth').innerHTML = `Year-to-date revenue is up <b>${fmt.spct(y.rev/y.revPY-1)}</b> on last year (${fmt.gbp(y.revPY)} → ${fmt.gbp(y.rev)}). Strongest month against prior year: <b>${best.label}</b> at ${fmt.spct(best.rev/best.revPY-1)}. August’s dip is seasonal — holidays cut available hours by about 14%.`;
+  if(!ready.has('growth')) return;
+  chart('c-growth').setOption({...base, grid:{left:8,right:8,top:40,bottom:8,containLabel:true},
+    legend:{top:0,left:0,itemWidth:14,itemHeight:8,textStyle:{color:col('--muted'),fontFamily:'Hanken Grotesk',fontSize:12},data:['Actual','Forecast','Budget','Prior year']},
+    tooltip:{...ttip, formatter: ps=>{ const i=ps[0].dataIndex, o=ser[i]; return `<div style="font-family:Hanken Grotesk;color:${col('--bone')};margin-bottom:4px">${o.label} · ${o.isAct?'actual':'forecast'}</div>`+[['Revenue',fmt.gbp(o.rev)],['Budget',fmt.gbp(o.revB)],['vs budget',fmt.spct(o.rev/o.revB-1)],['Prior year',fmt.gbp(o.revPY)],['YoY',fmt.spct(o.rev/o.revPY-1)],['MoM',mom[i]==null?'—':fmt.spct(mom[i])]].map(([a,b])=>`<div style="display:flex;justify-content:space-between;gap:18px"><span style="color:${col('--muted')}">${a}</span><span>${b}</span></div>`).join(''); }},
+    xAxis:{type:'category', data:ser.map(o=>o.label), ...axisCommon},
+    yAxis:{type:'value', ...axisCommon, axisLine:{show:false}, axisLabel:{...axisCommon.axisLabel, formatter:v=>fmt.gbp(v,1)}},
+    series:[
+      {name:'Actual', type:'bar', barWidth:'46%', stack:'r', itemStyle:{color:col('--bone')}, data:ser.map((o,i)=>o.isAct?{value:o.rev, itemStyle:{color: i>=P.from&&i<=P.to?col('--bone'):'#6f6a60'}}:null)},
+      {name:'Forecast', type:'bar', barWidth:'46%', stack:'r', data:ser.map(o=>o.isAct?null:o.rev), itemStyle:{color:'rgba(240,162,75,.14)', borderColor:col('--amber'), borderWidth:1}},
+      {name:'Budget', type:'line', data:ser.map(o=>o.revB), symbol:'none', itemStyle:{color:col('--slate')}, lineStyle:{color:col('--slate'), width:1.5}, step:'middle'},
+      {name:'Prior year', type:'line', data:ser.map(o=>o.revPY), symbol:'circle', symbolSize:5, lineStyle:{color:col('--muted'), width:1, type:[2,4]}, itemStyle:{color:col('--muted')}},
+    ]});
+}
+
+function forecastRender(){
+  const V = NV.versions(state.entity); const ser = { base:NV.series(state.entity,'base'), up:NV.series(state.entity,'up'), down:NV.series(state.entity,'down') };
+  const fy = V.map(v=>v.vals.reduce((a,b)=>a+b,0));
+  const cur = NV.sum(state.entity, state.scenario, 0, 11).rev;
+  $('#f-fc').innerHTML = `Full-year revenue was budgeted at <b>${fmt.gbp(fy[0])}</b>. Five monthly re-forecasts later the ${NV.SCEN[state.scenario].label.toLowerCase()} case lands at <b>${fmt.gbp(cur)}</b>; the chart tracks cumulative revenue against budget, with the shaded fan showing the downside-to-upside range for the five open months.`;
+  $('#versions').innerHTML = V.map((v,i)=>`<li><span>${v.name==='Budget'?'Budget (Mar 26)':'Re-forecast after '+NV.LABELS[v.asAt]}</span><span>${fmt.gbp(fy[i])}</span><span class="${i? (fy[i]>=fy[0]?'fav':'adv') :''}">${i?fmt.spct(fy[i]/fy[0]-1):'—'}</span></li>`).join('') + `<li><span>Current view · ${NV.SCEN[state.scenario].label}</span><span>${fmt.gbp(cur)}</span><span class="${cur>=fy[0]?'fav':'adv'}">${fmt.spct(cur/fy[0]-1)}</span></li>`;
+  if(!ready.has('forecast')) return;
+  const lab = ser.base.map(o=>o.label); const A = NV.ACT; const B = V[0].vals;
+  const cum = arr => { let c=0; return arr.map((x,i)=> x==null?null:(c+=x - B[i])); };
+  const cumFrom = (vals, k) => { const c = cum(vals); return c.map((x,i)=> i>=k ? x : null); };
+  const up = cum(ser.up.map(o=>o.rev)), dn = cum(ser.down.map(o=>o.rev));
+  const lower = dn.map((x,i)=> i>=A-1 ? x : null), band = up.map((x,i)=> i>=A-1 ? x - dn[i] : null);
+  const vs = V.slice(1).map((v,j)=>({name:v.name, type:'line', symbol:'none', data:cumFrom(v.vals, v.asAt), lineStyle:{width:1, color:col('--amber'), opacity:.25+j*.14}, itemStyle:{color:col('--amber')}, emphasis:{focus:'series', lineStyle:{width:2,opacity:1}}}));
+  chart('c-fc').setOption({...base, grid:{left:8,right:8,top:40,bottom:8,containLabel:true},
+    legend:{top:0,left:0,itemWidth:14,itemHeight:2,textStyle:{color:col('--muted'),fontFamily:'Hanken Grotesk',fontSize:12},data:['Actual','Re-forecasts','Scenario range']},
+    tooltip:{...ttip, axisPointer:{type:'line', lineStyle:{color:col('--line-2')}}, formatter: ps=>{ const i=ps[0].dataIndex; return `<div style="font-family:Hanken Grotesk;color:${col('--bone')};margin-bottom:4px">${lab[i]} · cumulative vs budget</div>` + ps.filter(p=>p.value!=null && !['lo','Re-forecasts'].includes(p.seriesName)).map(p=>`<div style="display:flex;justify-content:space-between;gap:18px"><span style="color:${col('--muted')}">${p.seriesName==='Scenario range'?'Upside':p.seriesName}</span><span>${fmt.sgbp(p.seriesName==='Scenario range'? up[i] : p.value)}</span></div>`).join('') + (i>=A-1?`<div style="display:flex;justify-content:space-between;gap:18px"><span style="color:${col('--muted')}">Downside</span><span>${fmt.sgbp(dn[i])}</span></div>`:''); }},
+    xAxis:{type:'category', data:lab, boundaryGap:false, ...axisCommon},
+    yAxis:{type:'value', ...axisCommon, axisLine:{show:false}, axisLabel:{...axisCommon.axisLabel, formatter:v=>fmt.sgbp(v,1)}, splitLine:{lineStyle:{color:col('--line')}}},
+    series:[
+      {name:'lo', type:'line', stack:'band', stackStrategy:'all', data:lower, symbol:'none', lineStyle:{opacity:0}, silent:true},
+      {name:'Scenario range', type:'line', stack:'band', stackStrategy:'all', data:band, symbol:'none', lineStyle:{opacity:0}, areaStyle:{color:'rgba(240,162,75,.13)'}, itemStyle:{color:'rgba(240,162,75,.5)'}},
+      {name:'Re-forecasts', type:'line', data:[], itemStyle:{color:col('--amber')}, lineStyle:{color:col('--amber'),opacity:.5}},
+      ...vs,
+      {name:'Actual', type:'line', data:cum(ser.base.map((o,i)=>i<A?o.rev:null)), symbol:'circle', symbolSize:6, lineStyle:{color:col('--bone'), width:2}, itemStyle:{color:col('--bone')}, markLine:{silent:true, symbol:'none', label:{show:true, position:'insideStartTop', formatter:'Budget', color:col('--muted'), fontFamily:'Hanken Grotesk'}, lineStyle:{color:col('--slate'), type:[6,4]}, data:[{yAxis:0}]}},
+      {name:NV.SCEN[state.scenario].label+' forecast', type:'line', data:cumFrom(ser[state.scenario].map(o=>o.rev), A-1), symbol:'none', lineStyle:{color:col('--amber'), width:2.2}, itemStyle:{color:col('--amber')}},
+    ]}, {replaceMerge:['series']});
+}
+
+function peopleRender(){
+  const P = PER[state.period]; const wk = w => state.period==='M' ? w.m===6 : true;
+  const list = NV.CONS.filter(c=>state.entity==='GRP'||c.ent===state.entity).map(c=>{ const ws=c.weeks.filter(wk); const bill=ws.reduce((a,w)=>a+w.bill,0), avail=ws.reduce((a,w)=>a+w.avail,0); return {...c, bill, avail, u: avail?bill/avail:0}; }).sort((a,b)=>b.u-a.u);
+  const tb = list.reduce((a,c)=>a+c.bill,0), ta = list.reduce((a,c)=>a+c.avail,0);
+  const below = list.filter(c=>c.u < c.target-0.05);
+  $('#f-people').innerHTML = `Across ${list.length} consultants in the sample, <b>${fmt.hrs(tb)}</b> billed of ${fmt.hrs(ta)} available — <b>${fmt.pct(tb/ta)}</b> billable${state.period==='M'?' in October':' from 6 Apr to 30 Oct'}. ${below.length?`<b>${below.length}</b> ${below.length===1?'is':'are'} more than 5 points under grade target.`:'Everyone is within 5 points of grade target.'} Time data covers closed weeks only.`;
+  const PN = Object.fromEntries(NV.PROJ.map(p=>[p.id,p.client]));
+  $('#t-people').innerHTML = `<thead><tr><th>Consultant</th><th style="text-align:left;padding-left:24px">Engagements</th><th>Billable</th><th>Available</th><th>Billable %</th><th style="width:200px">vs grade target</th></tr></thead><tbody>${list.map(c=>`<tr data-e="${c.ent}"><td>${c.name}<span class="s">${c.grade} · ${CITY[c.ent]}</span></td><td style="text-align:left;padding-left:24px;font-family:var(--sans);font-size:13px;color:var(--muted)">${c.projects.map(p=>PN[p]).join(', ')}</td><td>${fmt.int(c.bill)}</td><td>${fmt.int(c.avail)}</td><td class="${c.u<c.target-0.05?'adv':''}">${fmt.pct(c.u)}</td><td><div class="ubar"><i class="${c.u<c.target-0.05?'lo':''}" style="width:${Math.min(100,c.u*100)}%"></i><b style="left:${c.target*100}%"></b></div></td></tr>`).join('')}</tbody>`;
+  if(!RM && ready.has('people')) gsap.from('#t-people .ubar i',{scaleX:0,duration:.8,ease:'expo.out',stagger:.025});
+}
+
+function icRender(){
+  const P = PER[state.period]; const to = Math.min(P.to, NV.ACT-1);
+  const flows = NV.ic(P.from, to).filter(f=>state.entity==='GRP'||f.from===state.entity||f.to===state.entity).sort((a,b)=>b.v-a.v);
+  const tot = flows.reduce((a,f)=>a+f.v,0), un = flows.filter(f=>f.diff);
+  $('#f-ic').innerHTML = `<b>${fmt.gbp(tot)}</b> of intercompany trading ${P.from===P.to?'in October':'year to date'}, all eliminated on consolidation. ${un.length?`<b>${un.length}</b> pair${un.length>1?'s':''} did not agree at the Oct close — ${un.map(f=>`${CITY[f.from]}→${CITY[f.to]} ${fmt.sgbp(f.diff)}`).join(', ')} — and sit${un.length>1?'':'s'} on the reconciliation list.`:'Every pair agreed at the October close.'}${state.period==='FY'?' Forecast months are excluded: intercompany is reported on closed periods only.':''}`;
+  $('#t-ic').innerHTML = `<thead><tr><th>Seller → buyer</th><th style="text-align:left;padding-left:24px">Nature</th><th>Value</th><th>Share</th><th>Oct reconciliation</th></tr></thead><tbody>${flows.map(f=>`<tr><td>${NV.ent(f.from).short} → ${NV.ent(f.to).short}<span class="s">${CITY[f.from]} → ${CITY[f.to]}</span></td><td style="text-align:left;padding-left:24px;font-family:var(--sans);font-size:13px;color:var(--muted)">${f.nature}</td><td>${fmt.gbp(f.v)}</td><td>${fmt.pct(f.v/tot)}</td><td>${f.diff?`<span class="pill warn">Difference ${fmt.sgbp(f.diff,1)}</span>`:'<span class="pill ok">Agreed</span>'}</td></tr>`).join('')}</tbody>`;
+}
+
+/* ---------- globe ---------- */
+const G = {};
+const LOFF = {NVA:[12,18,0], NVD:[12,-19,0], NVI:[-12,-4,-100], NVU:[12,0,0], NVS:[12,0,0]};
+function initGlobe(){
+  const host = $('#globe');
+  let renderer; try { renderer = new THREE.WebGLRenderer({antialias:true, alpha:true, powerPreference:'high-performance'}); } catch(e){ $('#glfail').style.display='grid'; return; }
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2)); host.prepend(renderer.domElement);
+  const scene = new THREE.Scene(); const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+  const controls = new OrbitControls(camera, renderer.domElement); controls.enablePan=false; controls.enableZoom=true; controls.minDistance=3.4; controls.maxDistance=6; controls.enableDamping=true; controls.dampingFactor=.06; controls.rotateSpeed=.45;
+  controls.autoRotate = !RM; controls.autoRotateSpeed = .32;
+  const ll = (lat,lon,r=1)=>{ const p=(90-lat)*Math.PI/180, t=(lon+180)*Math.PI/180; return new THREE.Vector3(-r*Math.sin(p)*Math.cos(t), r*Math.cos(p), r*Math.sin(p)*Math.sin(t)); };
+  const camAt = (lat,lon,d)=> ll(lat,lon,d);
+  camera.position.copy(camAt(50,14,4.75)); controls.update();
+  // body
+  const globe = new THREE.Group(); scene.add(globe);
+  globe.add(new THREE.Mesh(new THREE.SphereGeometry(.995,96,64), new THREE.MeshBasicMaterial({color:0x0c131a})));
+  const rim = new THREE.ShaderMaterial({transparent:true, side:THREE.BackSide, depthWrite:false, uniforms:{c:{value:new THREE.Color(0x3a5468)}},
+    vertexShader:`varying vec3 vN; varying vec3 vP; void main(){ vN=normalize(normalMatrix*normal); vec4 mv=modelViewMatrix*vec4(position,1.); vP=mv.xyz; gl_Position=projectionMatrix*mv; }`,
+    fragmentShader:`uniform vec3 c; varying vec3 vN; varying vec3 vP; void main(){ float f=pow(1.0-abs(dot(normalize(-vP),vN)),3.0); gl_FragColor=vec4(c, f*0.55); }`});
+  globe.add(new THREE.Mesh(new THREE.SphereGeometry(1.06,64,48), rim));
+  // graticule
+  const gm = new THREE.LineBasicMaterial({color:0x1b2630, transparent:true, opacity:.9});
+  for(let lat=-60; lat<=60; lat+=30){ const pts=[]; for(let lon=-180; lon<=180; lon+=4) pts.push(ll(lat,lon,1.001)); globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), gm)); }
+  for(let lon=-180; lon<180; lon+=30){ const pts=[]; for(let lat=-90; lat<=90; lat+=4) pts.push(ll(lat,lon,1.001)); globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), gm)); }
+  // land dots from water mask
+  const img = new Image(); img.crossOrigin='anonymous';
+  img.onload = ()=>{ const cv=document.createElement('canvas'); cv.width=1024; cv.height=512; const cx=cv.getContext('2d',{willReadFrequently:true}); cx.drawImage(img,0,0,1024,512); const d=cx.getImageData(0,0,1024,512).data;
+    const N=42000, pos=[], phi=Math.PI*(3-Math.sqrt(5));
+    for(let i=0;i<N;i++){ const y=1-(i/(N-1))*2, r=Math.sqrt(1-y*y), th=phi*i; const v=new THREE.Vector3(Math.cos(th)*r, y, Math.sin(th)*r);
+      const lat=90-Math.acos(v.y)*180/Math.PI; let lon=Math.atan2(v.z,-v.x)*180/Math.PI-180; if(lon<-180) lon+=360;
+      const u=Math.floor((lon+180)/360*1023), w=Math.floor((90-lat)/180*511); if(d[(w*1024+u)*4] < 110) pos.push(v.x*1.003,v.y*1.003,v.z*1.003); }
+    const g=new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos,3));
+    const dot=document.createElement('canvas'); dot.width=dot.height=32; const dc=dot.getContext('2d'); dc.fillStyle='#fff'; dc.beginPath(); dc.arc(16,16,13,0,7); dc.fill();
+    G.land = new THREE.Points(g, new THREE.PointsMaterial({size:.0125, map:new THREE.CanvasTexture(dot), transparent:true, opacity:0, color:0xb9b2a3, depthWrite:false, alphaTest:.2}));
+    globe.add(G.land); gsap.to(G.land.material,{opacity:.85, duration: RM?0:1.6, ease:'power2.out'}); };
+  img.onerror = ()=>{}; img.src='https://cdn.jsdelivr.net/npm/three-globe@2/example/img/earth-water.png';
+  // nodes
+  G.nodes = {}; G.labels = {};
+  NV.ENT.forEach(e=>{ const p=ll(e.lat,e.lon,1.004);
+    const core = new THREE.Mesh(new THREE.SphereGeometry(.016,16,12), new THREE.MeshBasicMaterial({color:0xebe5d8})); core.position.copy(p);
+    const ring = new THREE.Mesh(new THREE.RingGeometry(.03,.034,48), new THREE.MeshBasicMaterial({color:0xf0a24b, transparent:true, opacity:.8, side:THREE.DoubleSide, depthWrite:false})); ring.position.copy(p); ring.lookAt(p.clone().multiplyScalar(2));
+    const hit = new THREE.Mesh(new THREE.SphereGeometry(.07,8,8), new THREE.MeshBasicMaterial({visible:false})); hit.position.copy(p); hit.userData={e};
+    globe.add(core, ring, hit); G.nodes[e.id]={core,ring,hit,p};
+    const lb=document.createElement('div'); lb.className='glabel'+(e.id==='NVI'?' r':''); lb.innerHTML=`${CITY[e.id]} · ${e.id}<i>${e.short}</i>`; host.append(lb); G.labels[e.id]=lb; });
+  // arcs
+  G.arcGroup = new THREE.Group(); globe.add(G.arcGroup); G.arcs=[];
+  const arcMat = () => new THREE.ShaderMaterial({transparent:true, depthWrite:false, uniforms:{uT:{value:0}, uP:{value:0}, uO:{value:1}, uC:{value:new THREE.Color(0xf0a24b)}, uK:{value:6}},
+    vertexShader:`varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
+    fragmentShader:`uniform float uT,uP,uO,uK; uniform vec3 uC; varying vec2 vUv; void main(){ if(vUv.x>uP) discard; float d=fract(vUv.x*uK-uT); float a=smoothstep(0.,.08,d)*(1.-smoothstep(.22,.5,d)); float head=smoothstep(uP-.04,uP,vUv.x)*step(uP,.999); vec3 c=mix(uC*.55,vec3(1.,.93,.82),a*.6); gl_FragColor=vec4(c,(0.32+0.68*max(a,head))*uO); }`});
+  G.buildArcs = (flows) => {
+    G.arcs.forEach(a=>{ G.arcGroup.remove(a.mesh); a.mesh.geometry.dispose(); }); G.arcs=[];
+    const max = Math.max(...flows.map(f=>f.v));
+    flows.forEach((f,i)=>{ const a=G.nodes[f.from].p, b=G.nodes[f.to].p; const ang=a.angleTo(b);
+      const off = (f.from<f.to?1:-1)*0.04; const mid=a.clone().add(b).normalize().multiplyScalar(1+0.06+ang*0.2);
+      const side=new THREE.Vector3().crossVectors(a,b).normalize().multiplyScalar(off*ang*3);
+      const c1=a.clone().lerp(mid,.55).normalize().multiplyScalar(mid.length()).add(side), c2=b.clone().lerp(mid,.55).normalize().multiplyScalar(mid.length()).add(side);
+      const curve=new THREE.CubicBezierCurve3(a,c1,c2,b);
+      const geo=new THREE.TubeGeometry(curve, 96, .0024+.0085*Math.sqrt(f.v/max), 8, false);
+      const m=arcMat(); m.uniforms.uK.value = Math.max(2, Math.round(curve.getLength()*5)); const mesh=new THREE.Mesh(geo,m); mesh.userData={f}; mesh.renderOrder=2;
+      G.arcGroup.add(mesh); G.arcs.push({mesh, f, speed:.25+.35*(f.v/max)}); });
+  };
+  // interaction
+  const ray=new THREE.Raycaster(); const mouse=new THREE.Vector2(); let hover=null;
+  renderer.domElement.addEventListener('pointermove', ev=>{ const r=renderer.domElement.getBoundingClientRect(); mouse.set((ev.clientX-r.left)/r.width*2-1, -(ev.clientY-r.top)/r.height*2+1); ray.setFromCamera(mouse,camera);
+    const hn = ray.intersectObjects(Object.values(G.nodes).map(n=>n.hit))[0];
+    if (hn){ const e=hn.object.userData.e; const P=PER[state.period]; const s=NV.sum(e.id,state.scenario,P.from,P.to); hover=e.id; renderer.domElement.style.cursor='pointer';
+      showTip(`<h4>${e.name}</h4>${row('Revenue',fmt.gbp(s.rev))}${row('vs budget',fmt.spct(s.rev/s.revB-1), s.rev>=s.revB?'fav':'adv')}${row('EBITDA',fmt.gbp(s.ebitda))}${row('Margin',fmt.pct(s.margin))}${row('Utilisation',fmt.pct(s.util))}${row('DSO',s.dso.toFixed(0)+' days')}`, ev.clientX, ev.clientY); return; }
+    ray.params.Mesh = {}; const ha = ray.intersectObjects(G.arcs.map(a=>a.mesh))[0];
+    renderer.domElement.style.cursor=''; hover=null;
+    if (ha){ const f=ha.object.userData.f; showTip(`<h4>${NV.ent(f.from).short} → ${NV.ent(f.to).short}</h4><div style="color:var(--muted);margin-bottom:6px">${f.nature}</div>${row(PER[state.period].label==='FY27'?'Apr–Oct':PER[state.period].label, fmt.gbp(f.v))}${row('Oct reconciliation', f.diff?fmt.sgbp(f.diff,1):'agreed', f.diff?'adv':'fav')}`, ev.clientX, ev.clientY); }
+    else hideTip(); });
+  renderer.domElement.addEventListener('pointerleave', hideTip);
+  let down=null; renderer.domElement.addEventListener('pointerdown', e=>down=[e.clientX,e.clientY]);
+  renderer.domElement.addEventListener('pointerup', e=>{ if(down && Math.hypot(e.clientX-down[0],e.clientY-down[1])<5 && hover){ set('entity', state.entity===hover?'GRP':hover); } });
+  controls.addEventListener('start', ()=>{ controls.autoRotate=false; });
+  G.focus = (id) => { if(id==='GRP') return; const e=NV.ent(id); const target=camAt(Math.max(-10,Math.min(55,e.lat)), e.lon, camera.position.length()); const from=camera.position.clone(); const o={t:0};
+    controls.autoRotate=false; gsap.to(o,{t:1,duration:RM?0:1.4,ease:'power3.inOut',onUpdate:()=>{ const v=from.clone().normalize().lerp(target.clone().normalize(),o.t).normalize().multiplyScalar(from.length()); camera.position.copy(v); camera.lookAt(0,0,0); }}); };
+  const resize=()=>{ const w=host.clientWidth, h=host.clientHeight; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); };
+  new ResizeObserver(resize).observe(host); resize();
+  const v3=new THREE.Vector3(), camDir=new THREE.Vector3(); let visible=true;
+  new IntersectionObserver(([en])=>visible=en.isIntersecting).observe(host);
+  const clock=new THREE.Clock();
+  renderer.setAnimationLoop(()=>{ if(!visible) return; const t=clock.getElapsedTime(); controls.update();
+    G.arcs.forEach(a=>a.mesh.material.uniforms.uT.value = RM?0.3:t*a.speed);
+    const w=host.clientWidth, h=host.clientHeight; camDir.copy(camera.position).normalize();
+    NV.ENT.forEach(e=>{ const n=G.nodes[e.id]; const s=1+(RM?0:.35*Math.sin(t*2.2+e.lat)); n.ring.scale.setScalar(state.entity===e.id?1.6:s);
+      v3.copy(n.p).applyMatrix4(globe.matrixWorld); const facing=v3.clone().normalize().dot(camDir); v3.project(camera);
+      const lb=G.labels[e.id]; const o=LOFF[e.id]; lb.style.transform=`translate(${(v3.x*.5+.5)*w + o[0]}px, ${(-v3.y*.5+.5)*h + o[1]}px) translate(${o[2]}%,-50%)`; lb.style.opacity = facing>.18 ? (state.entity==='GRP'||state.entity===e.id?1:.4) : 0; lb.classList.toggle('sel', state.entity===e.id); });
+    renderer.render(scene,camera); });
+  G.ok = true;
+}
+function globeRender(first){
+  if(!G.ok) return; const P = PER[state.period]; const flows = NV.ic(P.from, Math.min(P.to, NV.ACT-1));
+  G.buildArcs(flows);
+  G.arcs.forEach((a,i)=>{ const on = state.entity==='GRP' || a.f.from===state.entity || a.f.to===state.entity; const u=a.mesh.material.uniforms;
+    u.uO.value = on?1:.12; if(!on) u.uC.value.set(0x4b5967);
+    gsap.fromTo(u.uP,{value:0},{value:1, duration:RM?0:(first?1.8:1.0), delay:RM?0:(first?1.1:0)+i*0.06, ease:'power2.inOut'}); });
+  NV.ENT.forEach(e=>G.nodes[e.id].ring.material.color.set(state.entity==='GRP'||state.entity===e.id?0xf0a24b:0x4b5967));
+}
+
+/* ---------- render all ---------- */
+let first = true, lastEnt = state.entity;
+function render(){
+  heroRender(); bridgeRender(); growthRender(); forecastRender(); peopleRender(); icRender(); globeRender(first);
+  if(!first && state.entity!==lastEnt && G.focus) G.focus(state.entity); lastEnt=state.entity;
+  if(!first && !RM) gsap.fromTo(['#lede','#sub'],{opacity:.35},{opacity:1,duration:.35,ease:'power2.out',overwrite:true});
+  first = false;
+}
+initGlobe(); render();
+
+/* ---------- entrance + scroll story ---------- */
+const mm = gsap.matchMedia();
+mm.add({ok:'(prefers-reduced-motion: no-preference)'}, ()=>{
+  const tl = gsap.timeline({defaults:{ease:'expo.out'}});
+  tl.from('header.top',{yPercent:-100,duration:.9})
+    .from('#globe canvas',{opacity:0,scale:.92,duration:2.2,ease:'power3.out'},0.1)
+    .from('#dateline',{opacity:0,y:10,duration:.8},.35)
+    .from('#lede',{opacity:0,y:28,clipPath:'inset(0 0 100% 0)',duration:1.2},.45)
+    .from('#sub',{opacity:0,y:14,duration:.9},.7)
+    .from('#kpis .kpi',{opacity:0,y:18,stagger:.07,duration:.9},.8)
+    .from('.globe-foot, #scnote',{opacity:0,duration:.8},1.4);
+  gsap.to('#globe canvas',{scale:.86, opacity:.35, ease:'none', scrollTrigger:{trigger:'.hero', start:'top top', end:'bottom top', scrub:true}});
+  gsap.from('.rail a',{opacity:0,x:-12,stagger:.06,duration:.8,ease:'expo.out',scrollTrigger:{trigger:'.chapters',start:'top 75%'}});
+});
+// charts draw when their chapter arrives
+['variance','growth','forecast','people'].forEach(id=>ScrollTrigger.create({trigger:'#'+id, start:'top 70%', once:true, onEnter:()=>{ ready.add(id); ({variance:bridgeRender, growth:growthRender, forecast:forecastRender, people:peopleRender})[id](); }}));
+// rail progress
+document.querySelectorAll('section.ch').forEach(sec=>ScrollTrigger.create({trigger:sec,start:'top 50%',end:'bottom 50%',onToggle:self=>{ if(self.isActive){ document.querySelectorAll('.rail a').forEach(a=>a.classList.toggle('on', a.getAttribute('href')==='#'+sec.id)); }}}));
+document.querySelectorAll('.rail a').forEach(a=>a.addEventListener('click',e=>{ e.preventDefault(); document.querySelector(a.getAttribute('href')).scrollIntoView({behavior:RM?'auto':'smooth'}); }));
+window.__ready = true;
+</script>
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Northvale Group plc — Budget against actual, FY27 (example data)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@6/dist/echarts.min.js"></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+<style>
+:root{
+  --paper:#f6f6f3; --white:#ffffff; --ink:#0c0c0d; --ink-2:#2b2b2c; --muted:#6a6a66; --faint:#9a9a95; --rule:#d9d9d4; --rule-2:#bdbdb7;
+  --blue:#0a47d1; --blue-10:#e3ebfb; --orange:#e5481d; --orange-10:#fdebe5; --budget:#b4b4ae;
+  --sans:'Host Grotesk', 'Helvetica Neue', Arial, sans-serif; --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --m:40px; --g:24px;
+}
+*{box-sizing:border-box} html{background:var(--paper);scrollbar-color:var(--rule-2) var(--paper)}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 14px/1.45 var(--sans);-webkit-font-smoothing:antialiased;font-feature-settings:"ss01"}
+::selection{background:var(--blue);color:#fff}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+.n{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.fav{color:var(--blue)}.adv{color:var(--orange)}
+.wrap{padding:0 var(--m)}
+.g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g)}
+
+.strip{height:44px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--ink);font-size:12.5px}
+.strip b{font-weight:600}
+.strip .ex{display:flex;align-items:center;gap:8px;color:var(--ink-2)}
+.strip .ex i{width:8px;height:8px;background:var(--orange);display:inline-block}
+.filters{height:60px;display:flex;align-items:center;gap:28px;white-space:nowrap;border-bottom:1px solid var(--rule)}
+.f{display:flex;align-items:center;gap:12px}
+.f>span{font-size:12px;color:var(--muted)}
+.tabs{display:flex;gap:0;border:1px solid var(--rule-2);border-radius:6px;background:var(--white);padding:2px}
+.tabs button{height:28px;padding:0 10px;white-space:nowrap;font-size:12.5px;font-weight:500;color:var(--muted);border-radius:4px;transition:background-color .16s cubic-bezier(.2,0,0,1),color .16s}
+.tabs button:hover{color:var(--ink)}
+.tabs button[aria-checked="true"]{background:var(--ink);color:#fff}
+.tabs button:active{transform:scale(.97)}
+.filters .stamp{margin-left:auto;font-size:12px;color:var(--muted)}
+
+.hero{min-height:calc(100vh - 104px);padding-top:36px;padding-bottom:28px;align-items:stretch}
+.lead{grid-column:1 / span 4;display:flex;flex-direction:column}
+h1{font:600 68px/0.94 var(--sans);letter-spacing:-.045em;margin:0 0 22px}
+.lead p.dek{font-size:15px;line-height:1.5;color:var(--ink-2);margin:0 0 28px;max-width:38ch}
+.ladder{margin-top:auto;border-top:1px solid var(--ink)}
+.rung .v{font-size:32px}
+.rung{display:grid;grid-template-columns:1fr auto;align-items:end;padding:11px 0 10px;border-bottom:1px solid var(--rule)}
+.rung .l{font-size:12.5px;color:var(--muted)}
+.rung .v{font:500 34px/1 var(--mono);letter-spacing:-.04em;font-variant-numeric:tabular-nums;text-align:right}
+.rung .d{grid-column:1 / -1;display:flex;justify-content:space-between;font:400 12px/1.2 var(--mono);color:var(--muted);margin-top:6px}
+.stage{grid-column:5 / span 8;position:relative;display:flex;flex-direction:column;border-left:1px solid var(--rule);padding-left:var(--g)}
+.stage-h{display:flex;justify-content:space-between;align-items:flex-start;gap:24px}
+.stage-h h2{margin:0}
+h2{font:600 22px/1.15 var(--sans);letter-spacing:-.02em;margin:0 0 6px}
+.cap{font-size:12.5px;color:var(--muted);margin:4px 0 0;max-width:62ch}
+#land{position:relative;flex:1;min-height:560px;cursor:grab;margin-top:6px}
+#land:active{cursor:grabbing}
+#land canvas{position:absolute;inset:0;width:100%;height:100%}
+.lbl{position:absolute;left:0;top:0;font:500 11px/1 var(--mono);color:var(--muted);pointer-events:none;white-space:nowrap;will-change:transform}
+.lbl.e{font-family:var(--sans);font-size:12px;color:var(--ink);font-weight:500}
+.lbl.dim{opacity:.35}
+.key{display:flex;gap:18px;font-size:12px;color:var(--muted);align-items:center;flex-wrap:wrap}
+.key i{display:inline-block;width:12px;height:12px;margin-right:6px;vertical-align:-2px}
+.key .ramp{width:84px;height:10px;background:linear-gradient(90deg,#e5481d,#f4b9a6 25%,#ecebe6 50%,#a6c0ee 75%,#0a47d1);margin:0 6px}
+.readout{position:absolute;right:0;bottom:0;width:300px;background:var(--white);border:1px solid var(--ink);padding:14px 16px 12px;font-size:12.5px;box-shadow:0 12px 30px -12px rgba(12,12,13,.18)}
+.readout h3{margin:0 0 8px;font:600 13px/1.2 var(--sans)}
+.readout .r{display:flex;justify-content:space-between;padding:3px 0;border-top:1px solid var(--rule)}
+.readout .r:first-of-type{border-top:0}
+.readout .r span:first-child{color:var(--muted)}
+.readout .r span:last-child{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.readout small{display:block;color:var(--faint);font-size:11.5px;margin-top:8px}
+.metric{display:flex;gap:8px;align-items:center}
+
+.band{padding-top:56px;padding-bottom:56px;border-top:1px solid var(--ink)}
+.col-8{grid-column:span 8}.col-4{grid-column:span 4}.col-6{grid-column:span 6}.col-12{grid-column:span 12}
+.head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;gap:24px}
+.chart{height:380px;width:100%}
+table.x{width:100%;border-collapse:collapse;font-size:12.5px}
+table.x th{font-weight:500;color:var(--muted);text-align:right;padding:0 0 8px;border-bottom:1px solid var(--ink);font-size:12px}
+table.x th:first-child,table.x td:first-child{text-align:left}
+table.x td{padding:9px 0;border-bottom:1px solid var(--rule);text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+table.x td:first-child{font-family:var(--sans);font-weight:500}
+table.x tbody tr{cursor:pointer;transition:background-color .12s}
+table.x tbody tr:hover{background:var(--white)}
+table.x tr.sel td:first-child{box-shadow:inset 3px 0 0 -1px var(--ink);padding-left:10px}
+table.x tfoot td{border-top:1px solid var(--ink);border-bottom:0;font-weight:600}
+.vbar{display:inline-block;height:8px;vertical-align:middle;margin-left:8px}
+
+.matrix{display:grid;grid-template-columns:120px repeat(5,1fr) 96px;border-top:1px solid var(--ink)}
+.matrix div{padding:10px 8px;border-bottom:1px solid var(--rule);font:400 12px/1.2 var(--mono);text-align:right;font-variant-numeric:tabular-nums;position:relative}
+.matrix .h{font:500 12px/1.2 var(--sans);color:var(--muted)}
+.matrix .rh{text-align:left;font:500 12.5px/1.2 var(--sans);color:var(--ink)}
+.matrix .c{transition:background-color .3s}
+.matrix .c.flag::after{content:"";position:absolute;right:0;top:0;border-style:solid;border-width:0 9px 9px 0;border-color:transparent var(--orange) transparent transparent}
+.matrix .diag{color:var(--faint);text-align:center;background:repeating-linear-gradient(-45deg,transparent 0 4px,var(--rule) 4px 5px)}
+.matrix .tot{font-weight:600;border-left:1px solid var(--ink)}
+.matrix .ft{border-top:1px solid var(--ink);border-bottom:0;font-weight:600}
+.note{font-size:12px;color:var(--muted);margin-top:12px}
+footer{border-top:1px solid var(--ink);padding:18px var(--m) 40px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between}
+#tip{position:fixed;z-index:30;pointer-events:none;background:var(--ink);color:#f3f3f0;padding:10px 12px;font-size:12px;min-width:190px;border-radius:2px;opacity:0;transition:opacity .1s}
+#tip.on{opacity:1}
+#tip h4{margin:0 0 6px;font:600 12.5px/1.2 var(--sans)}
+#tip .r{display:flex;justify-content:space-between;gap:18px;font-family:var(--mono);line-height:1.7}
+#tip .r span:first-child{font-family:var(--sans);color:#a8a8a2}
+.glfail{display:none;position:absolute;inset:0;place-items:center;color:var(--muted)}
+@media (prefers-reduced-motion: reduce){*{transition-duration:0s!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="strip"><span><b>Northvale Group plc</b> &nbsp;Management accounts · October 2026 close · GBP</span><span class="ex"><i></i>Example data — fictional company, synthetic figures</span></div>
+  <div class="filters">
+    <div class="f"><span id="fe">Entity</span><div class="tabs" role="radiogroup" aria-labelledby="fe" data-k="entity"></div></div>
+    <div class="f"><span id="fp">Period</span><div class="tabs" role="radiogroup" aria-labelledby="fp" data-k="period"></div></div>
+    <div class="f"><span id="fs">Scenario</span><div class="tabs" role="radiogroup" aria-labelledby="fs" data-k="scenario"></div></div>
+    <span class="stamp n">FY27 · actuals to 31 Oct 26</span>
+  </div>
+
+  <section class="g12 hero">
+    <div class="lead">
+      <h1 id="title">Budget against actual</h1>
+      <p class="dek" id="dek"></p>
+      <div class="ladder" id="ladder"></div>
+    </div>
+    <div class="stage">
+      <div class="stage-h">
+        <div><h2>Entity × month</h2><p class="cap" id="landcap">Bar height is the measure; colour is its variance to budget. Black frames mark budget. Drag to orbit, scroll to zoom, click a bar to pin it.</p></div>
+        <div class="metric"><div class="tabs" role="radiogroup" aria-label="Measure" data-k="metric"></div></div>
+      </div>
+      <div id="land"><div class="glfail" id="glfail">3D view needs WebGL. All figures remain in the tables below.</div>
+        <div class="readout" id="readout"></div>
+      </div>
+      <div class="key"><span>Variance to budget</span><span><span class="n">−8%</span><i class="ramp"></i><span class="n">+8%</span></span><span><i style="border:1.5px solid var(--ink)"></i>Budget</span><span><i style="background:repeating-linear-gradient(-45deg,#cfcfca 0 2px,transparent 2px 4px);border:1px solid #bdbdb7"></i>Forecast month</span></div>
+    </div>
+  </section>
+
+  <section class="g12 band">
+    <div class="col-8"><div class="head"><div><h2>EBITDA bridge</h2><p class="cap" id="bcap"></p></div></div><div class="chart" id="c-bridge"></div></div>
+    <div class="col-4"><div class="head"><div><h2>By entity</h2><p class="cap">Click a row to filter.</p></div></div><table class="x" id="t-ent"></table></div>
+  </section>
+
+  <section class="g12 band">
+    <div class="col-8"><div class="head"><div><h2>Billable utilisation</h2><p class="cap" id="ucap"></p></div></div><div class="chart" id="c-heat" style="height:460px"></div></div>
+    <div class="col-4"><div class="head"><div><h2>Hours by engagement</h2><p class="cap">Billed hours, closed weeks. <span style="color:var(--blue)">■</span> time and materials, <span style="color:var(--ink)">■</span> fixed fee.</p></div></div><div class="chart" id="c-proj" style="height:460px"></div></div>
+  </section>
+
+  <section class="g12 band">
+    <div class="col-6"><div class="head"><div><h2>Intercompany matrix</h2><p class="cap" id="iccap"></p></div></div><div class="matrix" id="matrix"></div><p class="note">Rows sell, columns buy. Values in £k, closed months only. The orange corner marks a pair that did not agree at the October close.</p></div>
+    <div class="col-6"><div class="head"><div><h2>Cash and debtor days</h2><p class="cap" id="ccap"></p></div></div><div class="chart" id="c-cash"></div></div>
+  </section>
+</div>
+<footer><span>Example data. Northvale Group plc and all entities, clients and people are fictional.</span><span class="n">Budget FX €0.855 · $0.785 · S$0.585 per unit</span></footer>
+<div id="tip"></div>
+
+<script>/* Northvale Group plc — EXAMPLE DATA ONLY. Deterministic synthetic model, FY27 (Apr 2026 – Mar 2027). */
+const NV = (() => {
+  function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+  const r = rng(20261104); const n = a => (r()*2-1)*a;
+  const MONTHS = ['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'];
+  const LABELS = MONTHS.map((m,i)=>m+' '+(i<9?'26':'27'));
+  const ACT = 7; // Apr–Oct 2026 closed; Nov–Mar forecast
+  const SEAS = [0.95,1.0,1.02,1.03,0.86,1.02,1.05,1.03,0.82,0.98,1.0,1.04];
+  const FXB = {GBP:1, EUR:0.855, USD:0.785, SGD:0.585};
+  const FXA = {GBP:[1,1,1,1,1,1,1], EUR:[0.851,0.849,0.853,0.858,0.861,0.859,0.862], USD:[0.790,0.788,0.781,0.772,0.765,0.762,0.758], SGD:[0.586,0.584,0.581,0.578,0.575,0.574,0.572]};
+  const ENT = [
+    {id:'NVA',name:'Northvale Advisory Ltd',short:'Advisory UK',city:'London',lat:51.507,lon:-0.128,ccy:'GBP',fte:62,rate:195,util:0.72,vol:-0.035,px:0.028,ohd:0.035,growth:0.08,dR:0.50,oR:0.33,dso:[49,51,53,52,56,55,54],dsoT:50},
+    {id:'NVD',name:'Northvale Digital Ltd',short:'Digital UK',city:'Manchester',lat:53.480,lon:-2.242,ccy:'GBP',fte:48,rate:150,util:0.75,vol:0.045,px:-0.012,ohd:-0.01,growth:0.14,dR:0.53,oR:0.29,dso:[44,45,43,46,47,45,44],dsoT:45},
+    {id:'NVI',name:'Northvale Ireland Ltd',short:'Ireland',city:'Dublin',lat:53.350,lon:-6.260,ccy:'EUR',fte:30,rate:170,util:0.70,vol:0.012,px:0.010,ohd:0.0,growth:0.06,dR:0.52,oR:0.31,dso:[52,50,51,53,55,52,51],dsoT:50},
+    {id:'NVU',name:'Northvale Inc.',short:'North America',city:'New York',lat:40.713,lon:-74.006,ccy:'USD',fte:34,rate:260,util:0.68,vol:-0.075,px:0.015,ohd:0.02,growth:0.11,dR:0.51,oR:0.32,dso:[63,66,68,70,72,71,74],dsoT:60},
+    {id:'NVS',name:'Northvale Asia Pte. Ltd',short:'Asia Pacific',city:'Singapore',lat:1.352,lon:103.820,ccy:'SGD',fte:22,rate:240,util:0.70,vol:0.06,px:0.02,ohd:0.01,growth:0.19,dR:0.50,oR:0.30,dso:[58,57,55,56,54,53,52],dsoT:52},
+  ];
+  const SCEN = {base:{h:1,d:1,label:'Base'}, up:{h:1.045,d:1.01,label:'Upside'}, down:{h:0.92,d:0.985,label:'Downside'}};
+  // ---- entity monthly model ----
+  const M = {};
+  ENT.forEach(e => {
+    const fb = FXB[e.ccy];
+    const bH = SEAS.map(s => e.fte*140*e.util*s);
+    const bRev = bH.map(h => h*e.rate*fb);
+    const avg = bRev.reduce((a,b)=>a+b,0)/12;
+    const bDel = SEAS.map(() => avg*e.dR);
+    const bOH = SEAS.map((s,i) => avg*e.oR*(1 + (i===11?0.04:0) + (i===0?0.02:0)));
+    const act = []; 
+    for (let m=0;m<ACT;m++){
+      const ramp = 0.5 + m/ACT;
+      const aH = bH[m]*(1 + e.vol*ramp + n(0.025) - (m===4 && e.ccy!=='SGD' ? 0.03 : 0));
+      const aRateL = e.rate*(1 + e.px + n(0.007));
+      const fxa = FXA[e.ccy][m];
+      const aDel = bDel[m]*(1 + 0.3*Math.max(0,e.vol) + n(0.012));
+      const aOH = bOH[m]*(1 + e.ohd + n(0.035));
+      act.push({h:aH, rateL:aRateL, fx:fxa, del:aDel, oh:aOH});
+    }
+    const last3 = act.slice(4);
+    const hr = last3.reduce((a,x,i)=>a + x.h/bH[4+i],0)/3, rr = last3.reduce((a,x)=>a+x.rateL,0)/3/e.rate;
+    const fxL = FXA[e.ccy][ACT-1];
+    const pyF = SEAS.map(() => 1/(1+e.growth+n(0.025)));
+    M[e.id] = {e, bH, bRev, bDel, bOH, act, hr: 1+(hr-1)*0.7, rr: 1+(rr-1)*0.85, fxL, pyF, fb};
+  });
+  function series(id, scen='base'){
+    const S = SCEN[scen]||SCEN.base;
+    if (id==='GRP'){ const parts = ENT.map(e=>series(e.id,scen)); return parts[0].map((_,m)=>{ const o={m,label:LABELS[m],isAct:m<ACT}; ['rev','revB','revPY','del','delB','oh','ohB','ebitda','ebitdaB','ebitdaPY','hours','hoursB','vol','price','fx','ar','cap'].forEach(k=>o[k]=parts.reduce((a,p)=>a+p[m][k],0)); o.margin=o.ebitda/o.rev; o.marginB=o.ebitdaB/o.revB; o.util=o.hours/o.cap; o.utilB=o.hoursB/o.cap; return o; }); }
+    const X = M[id], e = X.e; const out = [];
+    for (let m=0;m<12;m++){
+      let h, rateL, fx, del, oh;
+      if (m<ACT){ ({h, rateL, fx, del, oh} = X.act[m]); }
+      else { h = X.bH[m]*X.hr*S.h; rateL = e.rate*X.rr; fx = X.fxL; del = X.bDel[m]*(1+0.3*Math.max(0,e.vol))*S.d; oh = X.bOH[m]*(1+e.ohd*0.6); }
+      const rev = h*rateL*fx, revB = X.bRev[m];
+      const vol = (h - X.bH[m])*e.rate*X.fb, price = h*(rateL-e.rate)*X.fb, fxv = h*rateL*(fx - X.fb);
+      const ebitda = rev - del - oh, ebitdaB = revB - X.bDel[m] - X.bOH[m];
+      const revPY = revB*X.pyF[m]*(1+n(0.0)) , ebitdaPY = revPY*(1-e.dR*1.04-e.oR*1.05);
+      const cap = e.fte*140*SEAS[m];
+      out.push({m,label:LABELS[m],isAct:m<ACT,rev,revB,revPY,del,delB:X.bDel[m],oh,ohB:X.bOH[m],ebitda,ebitdaB,ebitdaPY,hours:h,hoursB:X.bH[m],cap,util:h/cap,utilB:X.bH[m]/cap,vol,price,fx:fxv,margin:ebitda/rev,marginB:ebitdaB/revB});
+    }
+    // receivables from DSO path (3-month count-back)
+    out.forEach((o,m)=>{ const d = m<ACT ? e.dso[m] : e.dso[ACT-1] + (e.dsoT - e.dso[ACT-1])*((m-ACT+1)/5); o.dso=d;
+      const r3 = [m,m-1,m-2].reduce((a,k)=>a+(k>=0?out[k].rev:out[0].revPY),0); o.ar = d/91*r3; });
+    return out;
+  }
+  // ---- aggregation over a month range ----
+  function sum(id, scen, from, to){
+    const s = series(id, scen).slice(from, to+1); const o = {};
+    ['rev','revB','revPY','del','delB','oh','ohB','ebitda','ebitdaB','ebitdaPY','hours','hoursB','cap','vol','price','fx'].forEach(k=>o[k]=s.reduce((a,x)=>a+x[k],0));
+    o.margin=o.ebitda/o.rev; o.marginB=o.ebitdaB/o.revB; o.marginPY=o.ebitdaPY/o.revPY; o.util=o.hours/o.cap; o.utilB=o.hoursB/o.cap;
+    const last = series(id, scen)[to]; o.ar = last.ar; 
+    const sr = series(id,scen); const r3 = [to,to-1,to-2].reduce((a,k)=>a+(k>=0?sr[k].rev:sr[0].revPY),0); o.dso = id==='GRP' ? last.ar/r3*91 : last.dso;
+    o.bridge = [
+      {k:'budget', label:'Budget EBITDA', v:o.ebitdaB, total:true},
+      {k:'vol', label:'Volume (hours)', v:o.vol},
+      {k:'price', label:'Rate / price', v:o.price},
+      {k:'fx', label:'FX translation', v:o.fx},
+      {k:'del', label:'Delivery cost', v:-(o.del-o.delB)},
+      {k:'oh', label:'Overheads', v:-(o.oh-o.ohB)},
+      {k:'actual', label: to<ACT ? 'Actual EBITDA':'Outturn EBITDA', v:o.ebitda, total:true},
+    ];
+    return o;
+  }
+  // ---- group cash ----
+  function cash(scen='base'){
+    const g = series('GRP', scen); let c = 9.18e6; let prevAR = ENT.reduce((a,e)=>a + e.dso[0]/91*3*M[e.id].bRev[11]*M[e.id].pyF[11],0);
+    return g.map((o,m)=>{ const tax = [3,6,9].includes(m)?415000:0, div = m===5?1.6e6:0, capex = 58000 + (m===2?140000:0), fin = 72000;
+      const dAR = o.ar - prevAR; prevAR = o.ar; const flow = o.ebitda - tax - div - capex - fin - dAR; c += flow;
+      return {m,label:o.label,isAct:o.isAct,cash:c,flow,dAR,tax,div,capex,fin,ebitda:o.ebitda}; });
+  }
+  // ---- rolling forecast versions (outturn as forecast at month k) ----
+  function versions(id='GRP'){
+    const out = [{name:'Budget', asAt:-1, vals: series(id).map(o=>o.revB)}];
+    for (let k=2;k<ACT;k++){ // forecast made after closing month k
+      const s = series(id); const ratio = s.slice(0,k+1).reduce((a,x)=>a+x.rev,0)/s.slice(0,k+1).reduce((a,x)=>a+x.revB,0);
+      out.push({name:'RF '+MONTHS[k], asAt:k, vals: s.map((o,m)=> m<=k ? o.rev : o.revB*(1+(ratio-1)*0.8))});
+    }
+    return out;
+  }
+  // ---- intercompany (seller -> buyer), monthly GBP ----
+  const ICDEF = [
+    ['NVA','NVD',38000,'Group management fee'],['NVA','NVI',22000,'Group management fee'],['NVA','NVU',30000,'Group management fee'],['NVA','NVS',16000,'Group management fee'],
+    ['NVD','NVA',145000,'Subcontracted digital delivery'],['NVD','NVU',62000,'Subcontracted digital delivery'],['NVI','NVA',88000,'Nearshore delivery centre'],
+    ['NVS','NVU',54000,'Offshore support desk'],['NVU','NVA',24000,'Secondment recharge'],['NVI','NVD',31000,'Data engineering pods'],
+  ];
+  const IC = ICDEF.map(([from,to,base,nature]) => { const months = SEAS.map((s,m)=> m<ACT ? base*s*(1+n(0.06)) : base*s); return {from,to,nature,months}; });
+  // reconciliation differences at Oct close (seller vs buyer ledger)
+  const ICREC = {'NVS>NVU':12400, 'NVI>NVA':-3150};
+  function ic(from=0,to=ACT-1){ return IC.map(f=>({from:f.from,to:f.to,nature:f.nature,v:f.months.slice(from,to+1).reduce((a,b)=>a+b,0),diff: to===ACT-1 ? (ICREC[f.from+'>'+f.to]||0) : 0})); }
+  // ---- consultants & weekly time ----
+  const PROJ = [
+    {id:'P01',client:'Halden Utilities',name:'ERP finance transformation',ent:'NVA',type:'T&M'},
+    {id:'P02',client:'Marlow Rail',name:'Cost assurance review',ent:'NVA',type:'Fixed fee'},
+    {id:'P03',client:'Corrin Health',name:'Data platform build',ent:'NVD',type:'T&M'},
+    {id:'P04',client:'Ashby Retail',name:'FP&A redesign',ent:'NVD',type:'Fixed fee'},
+    {id:'P05',client:'Keswick Water',name:'Regulatory reporting',ent:'NVI',type:'T&M'},
+    {id:'P06',client:'Brightmere Insurance',name:'IFRS 17 support',ent:'NVU',type:'T&M'},
+    {id:'P07',client:'Orla Energy',name:'Carve-out readiness',ent:'NVS',type:'Fixed fee'},
+  ];
+  const GR = {Director:0.55, Manager:0.70, 'Senior Consultant':0.80, Consultant:0.82, Analyst:0.78};
+  const CDEF = [
+    ['Priya Raman','NVA','Director',['P01','P02']],['Tom Ashworth','NVA','Manager',['P01']],['Eleanor Voss','NVA','Senior Consultant',['P01','P02']],['Daniel Okafor','NVA','Consultant',['P02']],['Hannah Liddell','NVA','Analyst',['P01']],
+    ['Marcus Brennan','NVD','Manager',['P03','P04']],['Aisha Siddiqui','NVD','Senior Consultant',['P03']],['Callum Reid','NVD','Consultant',['P04','P03']],['Zofia Nowak','NVD','Consultant',['P03']],
+    ['Ciarán Doyle','NVI','Manager',['P05','P01']],['Niamh Kelleher','NVI','Senior Consultant',['P05']],
+    ['Jordan Pierce','NVU','Director',['P06']],['Maya Castellanos','NVU','Senior Consultant',['P06']],
+    ['Wei Ling Tan','NVS','Manager',['P07']],['Arjun Mehta','NVS','Consultant',['P07','P06']],['Grace Lim','NVS','Analyst',['P07']],
+  ];
+  const WEEKS = []; { const d0 = new Date(Date.UTC(2026,3,6)); for (let w=0; w<30; w++){ const d = new Date(d0.getTime()+w*7*864e5); const mi = (d.getUTCMonth()+12-3)%12; WEEKS.push({w, label: d.getUTCDate()+' '+MONTHS[mi], m: mi}); } }
+  const CONS = CDEF.map(([name,ent,grade,projects],ci) => {
+    const target = GR[grade]*(1 + (ent==='NVU'?-0.08:0) + (ent==='NVD'?0.04:0));
+    const leave = new Set(); const nl = 2 + Math.floor(r()*3); while (leave.size < nl){ const w = r()<0.55 ? 16+Math.floor(r()*5) : Math.floor(r()*30); leave.add(w); }
+    const weeks = WEEKS.map(W => {
+      const avail = leave.has(W.w) ? (r()<0.5?0:15) : 37.5 - (W.w===7||W.w===21?7.5:0);
+      let bill = Math.max(0, Math.min(avail, avail*target*(1+n(0.14)) + (ci%5===2 && W.w>18 ? -6 : 0)));
+      const split = projects.length===1 ? [1] : [0.68+n(0.1), 0]; if (split.length===2) split[1]=1-split[0];
+      const byP = {}; projects.forEach((p,i)=>byP[p]=bill*split[i]);
+      return {w:W.w, m:W.m, cap:37.5, avail, bill, nonbill: Math.max(0,avail-bill), leave: 37.5-avail, byP, util: avail? bill/avail : 0};
+    });
+    const tot = weeks.reduce((a,x)=>({bill:a.bill+x.bill, avail:a.avail+x.avail}),{bill:0,avail:0});
+    return {name, ent, grade, projects, target, weeks, bill:tot.bill, avail:tot.avail, util: tot.bill/tot.avail};
+  });
+  return {MONTHS, LABELS, ACT, ENT, SCEN, series, sum, cash, versions, ic, IC, PROJ, CONS, WEEKS, FXB, FXA,
+    ent: id => ENT.find(e=>e.id===id)};
+})();
+const fmt = {
+  gbp(v, d){ const a=Math.abs(v), s=v<0?'−':''; if(a>=1e6) return s+'£'+(a/1e6).toFixed(d??(a>=1e7?1:2))+'m'; if(a>=1e3) return s+'£'+(a/1e3).toFixed(d??0)+'k'; return s+'£'+a.toFixed(0); },
+  sgbp(v, d){ return (v>0?'+':'')+fmt.gbp(v,d); },
+  pct(v, d=1){ return (v*100).toFixed(d)+'%'; },
+  spct(v, d=1){ const x=(v*100); return (x>0?'+':x<0?'−':'')+Math.abs(x).toFixed(d)+'%'; },
+  pp(v, d=1){ const x=v*100; return (x>0?'+':x<0?'−':'')+Math.abs(x).toFixed(d)+' pp'; },
+  int(v){ return Math.round(v).toLocaleString('en-GB'); },
+  hrs(v){ return Math.round(v).toLocaleString('en-GB')+' h'; },
+};
+
+window.NV=NV; window.fmt=fmt;
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = s=>document.querySelector(s); const css = k=>getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+const state = {entity:'GRP', period:'YTD', scenario:'base', metric:'rev', pin:{e:'NVU', m:6}};
+const PER = {M:{from:6,to:6,long:'October 2026'}, YTD:{from:0,to:6,long:'Year to date, Apr–Oct'}, FY:{from:0,to:11,long:'Full-year outturn'}};
+const OPTS = {entity:[['GRP','Group'],['NVA','Adv. UK'],['NVD','Digital UK'],['NVI','Ireland'],['NVU','N. America'],['NVS','APAC']], period:[['M','Month'],['YTD','YTD'],['FY','Full year']], scenario:[['base','Base'],['up','Upside'],['down','Downside']], metric:[['rev','Revenue'],['ebitda','EBITDA'],['util','Utilisation']]};
+document.querySelectorAll('.tabs').forEach(t=>{ const k=t.dataset.k; OPTS[k].forEach(([v,l])=>{ const b=document.createElement('button'); b.type='button'; b.role='radio'; b.dataset.v=v; b.textContent=l; b.setAttribute('aria-checked',state[k]===v); b.onclick=()=>set(k,v); t.append(b); });
+  t.addEventListener('keydown',e=>{ if(!['ArrowLeft','ArrowRight'].includes(e.key)) return; const bs=[...t.children]; const i=bs.findIndex(b=>b.dataset.v===state[k]); const j=(i+(e.key==='ArrowRight'?1:-1)+bs.length)%bs.length; set(k,bs[j].dataset.v); bs[j].focus(); }); });
+function set(k,v){ if(state[k]===v) return; state[k]=v; document.querySelectorAll(`.tabs[data-k="${k}"] button`).forEach(b=>b.setAttribute('aria-checked',b.dataset.v===v)); render(k); }
+const tip=$('#tip'); const tr=(a,b,c='')=>`<div class="r"><span>${a}</span><span class="${c}">${b}</span></div>`;
+function showTip(h,x,y){ tip.innerHTML=h; tip.classList.add('on'); const w=tip.offsetWidth, hh=tip.offsetHeight; tip.style.left=Math.min(innerWidth-w-10,x+14)+'px'; tip.style.top=Math.min(innerHeight-hh-10,y+14)+'px'; }
+const hideTip=()=>tip.classList.remove('on');
+function tw(el,to,f){ const from=+el.dataset.v||0; el.dataset.v=to; if(RM||!el.dataset.i){ el.dataset.i=1; el.textContent=f(to); if(RM) return; } const o={v:from}; gsap.to(o,{v:to,duration:.5,ease:'power3.out',overwrite:true,onUpdate:()=>el.textContent=f(o.v)}); }
+
+/* ---------- lead ---------- */
+function leadRender(){
+  const P=PER[state.period], s=NV.sum(state.entity,state.scenario,P.from,P.to), nm = state.entity==='GRP'?'the group':NV.ent(state.entity).short;
+  const v=s.ebitda-s.ebitdaB;
+  $('#dek').innerHTML = `${P.long} for ${nm}${state.period==='FY'?' ('+NV.SCEN[state.scenario].label.toLowerCase()+' case)':''}. Revenue ${fmt.spct(s.rev/s.revB-1)} against budget, EBITDA <span class="${v<0?'adv':'fav'}">${fmt.sgbp(v)}</span>.`;
+  const L=[['Revenue',s.rev,x=>fmt.gbp(x),'Budget '+fmt.gbp(s.revB), fmt.spct(s.rev/s.revB-1), s.rev>=s.revB],
+    ['EBITDA',s.ebitda,x=>fmt.gbp(x),'Budget '+fmt.gbp(s.ebitdaB), fmt.sgbp(s.ebitda-s.ebitdaB), s.ebitda>=s.ebitdaB],
+    ['EBITDA margin',s.margin,x=>fmt.pct(x),'Budget '+fmt.pct(s.marginB), fmt.pp(s.margin-s.marginB), s.margin>=s.marginB],
+    ['Growth on prior year',s.rev/s.revPY-1,x=>fmt.spct(x),'Prior year '+fmt.gbp(s.revPY), fmt.sgbp(s.rev-s.revPY), s.rev>=s.revPY],
+    ['Billable utilisation',s.util,x=>fmt.pct(x),'Plan '+fmt.pct(s.utilB), fmt.pp(s.util-s.utilB), s.util>=s.utilB],
+    ['Debtor days',s.dso,x=>x.toFixed(1),'Target '+(state.entity==='GRP'?52:NV.ent(state.entity).dsoT)+' days', (s.dso-(state.entity==='GRP'?52:NV.ent(state.entity).dsoT)>0?'+':'')+(s.dso-(state.entity==='GRP'?52:NV.ent(state.entity).dsoT)).toFixed(1)+' d', s.dso<=(state.entity==='GRP'?52:NV.ent(state.entity).dsoT)]];
+  const box=$('#ladder'); if(!box.children.length) box.innerHTML=L.map(()=>`<div class="rung"><span class="l"></span><span class="v"></span><div class="d"><span></span><span></span></div></div>`).join('');
+  L.forEach(([l,v,f,a,b,good],i)=>{ const r=box.children[i]; r.querySelector('.l').textContent=l; tw(r.querySelector('.v'),v,f); const d=r.querySelectorAll('.d span'); d[0].textContent=a; d[1].textContent=b; d[1].className=good?'fav':'adv'; });
+}
+
+/* ---------- 3D landscape ---------- */
+const L3 = {};
+const RAMP={adv:['#ecebe6','#f4b9a6','#e5481d'], fav:['#ecebe6','#a6c0ee','#0a47d1']};
+function hexLerp(a,b,t){ const p=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)); const A=p(a),B=p(b); return 'rgb('+A.map((x,i)=>Math.round(x+(B[i]-x)*t)).join(',')+')'; }
+function varColor(x){ const t=Math.max(-1,Math.min(1,x/0.08)), a=Math.pow(Math.abs(t),.85), r=RAMP[t<0?'adv':'fav']; const css = a<.5? hexLerp(r[0],r[1],a*2) : hexLerp(r[1],r[2],(a-.5)*2); return new THREE.Color().setStyle(css); }
+function cellVal(e,m){ const o=NV.series(e,state.scenario)[m]; return state.metric==='rev'?{v:o.rev,b:o.revB,o}: state.metric==='ebitda'?{v:o.ebitda,b:o.ebitdaB,o}:{v:o.util,b:o.utilB,o}; }
+function initLand(){
+  const host=$('#land'); let R; try{ R=new THREE.WebGLRenderer({antialias:true,alpha:true}); }catch(e){ $('#glfail').style.display='grid'; return; }
+  R.setPixelRatio(Math.min(devicePixelRatio,2)); R.shadowMap.enabled=true; R.shadowMap.type=THREE.PCFSoftShadowMap; host.prepend(R.domElement);
+  const scene=new THREE.Scene(); const cam=new THREE.OrthographicCamera(-10,10,10,-10,.1,200);
+  cam.position.set(-12.1,17,23); cam.zoom=1;
+  const ctl=new OrbitControls(cam,R.domElement); ctl.target.set(4.8,1.7,0.6); ctl.enableDamping=true; ctl.dampingFactor=.08; ctl.enablePan=false; ctl.minZoom=.7; ctl.maxZoom=2.2; ctl.maxPolarAngle=Math.PI*.46; ctl.minPolarAngle=.25;
+  scene.add(new THREE.HemisphereLight(0xffffff,0xe6e6e0,1.7));
+  const sun=new THREE.DirectionalLight(0xffffff,2.2); sun.position.set(-8,20,10); sun.castShadow=true; sun.shadow.mapSize.set(2048,2048); Object.assign(sun.shadow.camera,{left:-14,right:14,top:14,bottom:-14}); sun.shadow.radius=6; sun.shadow.bias=-.0005; scene.add(sun);
+  const floor=new THREE.Mesh(new THREE.PlaneGeometry(60,60), new THREE.ShadowMaterial({opacity:.10})); floor.rotation.x=-Math.PI/2; floor.receiveShadow=true; scene.add(floor);
+  const NM=12, NE=5, sx=1.25, sz=1.9, bw=.78, bd=1.05; const x0=-(NM-1)*sx/2, z0=-(NE-1)*sz/2;
+  // floor grid
+  const gl=new THREE.LineBasicMaterial({color:0xcfcfca}); const pts=[];
+  for(let m=0;m<=NM;m++){ const x=x0-sx/2+m*sx; pts.push(new THREE.Vector3(x,0.002,z0-sz/2), new THREE.Vector3(x,0.002,z0+(NE-.5)*sz)); }
+  for(let e=0;e<=NE;e++){ const z=z0-sz/2+e*sz; pts.push(new THREE.Vector3(x0-sx/2,0.002,z), new THREE.Vector3(x0+(NM-.5)*sx,0.002,z)); }
+  scene.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(pts), gl));
+  // actual/forecast divider
+  const dv=x0+(NV.ACT-.5)*sx; const dl=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(dv,0.003,z0-sz/2-.5),new THREE.Vector3(dv,0.003,z0+(NE-.5)*sz)]), new THREE.LineBasicMaterial({color:0x0c0c0d})); scene.add(dl);
+  // hatch texture for forecast
+  const hc=document.createElement('canvas'); hc.width=hc.height=64; const hx=hc.getContext('2d'); hx.fillStyle='#fff'; hx.fillRect(0,0,64,64); hx.strokeStyle='#c9c9c3'; hx.lineWidth=5; for(let i=-64;i<128;i+=14){ hx.beginPath(); hx.moveTo(i,0); hx.lineTo(i+64,64); hx.stroke(); }
+  const hatch=new THREE.CanvasTexture(hc); hatch.wrapS=hatch.wrapT=THREE.RepeatWrapping; hatch.repeat.set(1,3); hatch.colorSpace=THREE.SRGBColorSpace;
+  const box=new THREE.BoxGeometry(bw,1,bd); box.translate(0,.5,0); const edges=new THREE.EdgesGeometry(box);
+  L3.bars=[]; const labels=[];
+  NV.ENT.forEach((e,ei)=>{ for(let m=0;m<NM;m++){
+    const isF=m>=NV.ACT; const mat=new THREE.MeshStandardMaterial({color:0xecebe6, roughness:.82, metalness:0, map:isF?hatch:null});
+    const mesh=new THREE.Mesh(box,mat); mesh.position.set(x0+m*sx,0,z0+ei*sz); mesh.castShadow=true; mesh.receiveShadow=true; mesh.scale.y=.001; mesh.userData={e:e.id,m};
+    const frame=new THREE.LineSegments(edges,new THREE.LineBasicMaterial({color:0x0c0c0d,transparent:true,opacity:.9})); frame.position.copy(mesh.position); frame.scale.set(1.0001,.001,1.0001);
+    scene.add(mesh,frame); L3.bars.push({mesh,frame,e:e.id,m,h:0,bh:0}); } });
+  // labels
+  const host2=host; NV.LABELS.forEach((l,m)=>{ const d=document.createElement('div'); d.className='lbl'; d.textContent=l.split(' ')[0]; host2.append(d); labels.push({d,p:new THREE.Vector3(x0+m*sx,0,z0+(NE-.5)*sz+.55),m}); });
+  NV.ENT.forEach((e,ei)=>{ const d=document.createElement('div'); d.className='lbl e'; d.textContent=e.short; host2.append(d); labels.push({d,p:new THREE.Vector3(x0-sx/2-.35,0,z0+ei*sz),e:e.id,right:true}); });
+  
+  L3.labels=labels;
+  // interaction
+  const ray=new THREE.Raycaster(), mv=new THREE.Vector2(); let hov=null, down=null;
+  const pick=ev=>{ const r=R.domElement.getBoundingClientRect(); mv.set((ev.clientX-r.left)/r.width*2-1,-(ev.clientY-r.top)/r.height*2+1); ray.setFromCamera(mv,cam); const h=ray.intersectObjects(L3.bars.map(b=>b.mesh))[0]; return h?h.object.userData:null; };
+  R.domElement.addEventListener('pointermove',ev=>{ const p=pick(ev); hov=p; L3.bars.forEach(b=>b.mesh.material.emissive.setHex(p&&b.e===p.e&&b.m===p.m?0x222222:0)); R.domElement.style.cursor=p?'pointer':'';
+    if(p){ const {v,b,o}=cellVal(p.e,p.m); const f=state.metric==='util'?fmt.pct:fmt.gbp; showTip(`<h4>${NV.ent(p.e).short} · ${NV.LABELS[p.m]} ${o.isAct?'actual':'forecast'}</h4>${tr(OPTS.metric.find(x=>x[0]===state.metric)[1],f(v))}${tr('Budget',f(b))}${tr('Variance',state.metric==='util'?fmt.pp(v-b):fmt.sgbp(v-b)+' · '+fmt.spct((v-b)/Math.abs(b)), v>=b?'fav':'adv')}`,ev.clientX,ev.clientY); } else hideTip(); });
+  R.domElement.addEventListener('pointerleave',()=>{hideTip(); L3.bars.forEach(b=>b.mesh.material.emissive.setHex(0));});
+  R.domElement.addEventListener('pointerdown',e=>down=[e.clientX,e.clientY]);
+  R.domElement.addEventListener('pointerup',e=>{ if(down&&Math.hypot(e.clientX-down[0],e.clientY-down[1])<4&&hov){ state.pin={...hov}; readoutRender(); landRender(false); } });
+  const size=()=>{ const w=host.clientWidth,h=host.clientHeight; R.setSize(w,h,false); const a=w/h, s=10.0; cam.left=-s*a; cam.right=s*a; cam.top=s; cam.bottom=-s; cam.updateProjectionMatrix(); };
+  new ResizeObserver(size).observe(host); size();
+  const v=new THREE.Vector3(); let vis=true; new IntersectionObserver(([en])=>vis=en.isIntersecting).observe(host);
+  R.setAnimationLoop(()=>{ if(!vis) return; ctl.update(); const w=host.clientWidth,h=host.clientHeight;
+    labels.forEach(l=>{ v.copy(l.p).project(cam); const x=(v.x*.5+.5)*w, y=(-v.y*.5+.5)*h; l.d.style.transform=`translate(${x}px,${y}px) translate(${l.right?'-100%':'-50%'},-50%)`; if(l.e) l.d.classList.toggle('dim', state.entity!=='GRP'&&state.entity!==l.e); if(l.m!=null){ const P=PER[state.period]; l.d.style.color = l.m>=P.from&&l.m<=P.to? 'var(--ink)':'var(--faint)'; } });
+    R.render(scene,cam); });
+  L3.ok=true; L3.cam=cam; L3.ctl=ctl;
+}
+function landRender(animate=true){
+  if(!L3.ok) return; const P=PER[state.period];
+  let max=0; L3.bars.forEach(b=>{ const {v,bv}={...cellVal(b.e,b.m), bv:cellVal(b.e,b.m).b}; max=Math.max(max,v,bv); });
+  const H=6.2;
+  L3.bars.forEach((b,i)=>{ const {v,b:bud}=cellVal(b.e,b.m); const h=Math.max(.02,v/max*H), bh=Math.max(.02,bud/max*H);
+    const inE = state.entity==='GRP'||state.entity===b.e, inP = b.m>=P.from&&b.m<=P.to; const pinned = state.pin&&state.pin.e===b.e&&state.pin.m===b.m;
+    const c = (inE&&inP) ? varColor((v-bud)/Math.abs(bud)) : new THREE.Color(0xf1f1ee);
+    if(pinned) c.set(0x0c0c0d);
+    const mat=b.mesh.material; const d=RM||!animate?0:.7;
+    gsap.to(mat.color,{r:c.r,g:c.g,b:c.b,duration:d*.6,ease:'power2.out',overwrite:'auto'});
+    mat.transparent = !inE; gsap.to(mat,{opacity: inE?1:.35, duration:d*.6});
+    b.frame.material.opacity = inE ? (inP?.9:.35) : .12;
+    gsap.to(b.mesh.scale,{y:h,duration:d,ease:'expo.out',delay: animate&&!RM? (b.m*.018 + NV.ENT.findIndex(e=>e.id===b.e)*.04):0, overwrite:'auto'});
+    gsap.to(b.frame.scale,{y:bh,duration:d,ease:'expo.out',overwrite:'auto'});
+  });
+}
+function readoutRender(){
+  const p=state.pin; if(!p) return; const e=NV.ent(p.e); const o=NV.series(p.e,state.scenario)[p.m];
+  $('#readout').innerHTML=`<h3>${e.short} · ${NV.LABELS[p.m]} <span style="font-weight:400;color:var(--muted)">${o.isAct?'actual':'forecast'}</span></h3>${tr('Revenue',fmt.gbp(o.rev))}${tr('vs budget',fmt.sgbp(o.rev-o.revB),o.rev>=o.revB?'fav':'adv')}${tr('EBITDA',fmt.gbp(o.ebitda)+' · '+fmt.pct(o.margin))}${tr('Billable hours',fmt.int(o.hours)+' / '+fmt.int(o.hoursB))}${tr('Utilisation',fmt.pct(o.util))}${tr('Debtor days',o.dso.toFixed(0))}<small>Pinned cell, shown in black. Click any bar to pin another.</small>`;
+}
+
+/* ---------- ECharts ---------- */
+const EC={}; const ch=id=>{ if(!EC[id]){ EC[id]=echarts.init(document.getElementById(id)); new ResizeObserver(()=>EC[id].resize()).observe(document.getElementById(id)); } return EC[id]; };
+const A={axisLine:{lineStyle:{color:'#0c0c0d'}},axisTick:{show:false},axisLabel:{color:'#6a6a66',fontFamily:'IBM Plex Mono',fontSize:11},splitLine:{lineStyle:{color:'#e3e3de'}}};
+const base={animationDuration:RM?0:700,animationDurationUpdate:RM?0:500,animationEasingUpdate:'cubicOut',textStyle:{fontFamily:'Host Grotesk'}};
+const TT={backgroundColor:'#0c0c0d',borderWidth:0,padding:[10,12],textStyle:{color:'#f3f3f0',fontFamily:'IBM Plex Mono',fontSize:12},extraCssText:'border-radius:2px;box-shadow:none'};
+const trow=(a,b)=>`<div style="display:flex;justify-content:space-between;gap:18px"><span style="font-family:'Host Grotesk';color:#a8a8a2">${a}</span><span>${b}</span></div>`;
+
+function bridgeRender(){
+  const P=PER[state.period], s=NV.sum(state.entity,state.scenario,P.from,P.to);
+  $('#bcap').textContent=`${P.long}. Revenue variance split into hours, rate and FX at budget rates; costs shown as their effect on profit.`;
+  let cum=0; const inv=[],vis=[];
+  s.bridge.forEach(b=>{ if(b.total){ inv.push(0); vis.push({value:b.v,itemStyle:{color:b.k==='budget'?'#fff':'#0c0c0d',borderColor:'#0c0c0d',borderWidth:1.2}}); cum=b.v; } else { inv.push(b.v<0?cum+b.v:cum); vis.push({value:Math.abs(b.v),itemStyle:{color:b.v<0?css('--orange'):css('--blue')}}); cum+=b.v; } });
+  const lv=s.bridge.map((b,i)=>inv[i]+(b.total?b.v:Math.abs(b.v))).concat(inv.filter((x,i)=>!s.bridge[i].total));
+  const lo=Math.min(...lv), hi=Math.max(...lv), st=Math.pow(10,Math.floor(Math.log10(hi))-1), min=Math.max(0,Math.floor((lo-(hi-lo)*.8)/st)*st);
+  ch('c-bridge').setOption({...base,grid:{left:56,right:8,top:30,bottom:28},
+    tooltip:{...TT,trigger:'axis',axisPointer:{type:'shadow',shadowStyle:{color:'rgba(12,12,13,.04)'}},formatter:ps=>{const b=s.bridge[ps[0].dataIndex]; return `<div style="font-family:'Host Grotesk';font-weight:600;margin-bottom:4px">${b.label}</div>`+trow(b.total?'Value':'Effect on EBITDA', b.total?fmt.gbp(b.v):fmt.sgbp(b.v))+(b.total?'':trow('Share of budget',fmt.spct(b.v/s.ebitdaB)));}},
+    xAxis:{type:'category',data:s.bridge.map(b=>b.label),...A,axisLabel:{...A.axisLabel,fontFamily:'Host Grotesk',fontSize:12,color:'#0c0c0d',interval:0}},
+    yAxis:{type:'value',min,...A,axisLine:{show:false},axisLabel:{...A.axisLabel,formatter:v=>fmt.gbp(v,1)}},
+    series:[{type:'bar',stack:'w',data:inv,itemStyle:{color:'transparent'},silent:true,barWidth:'58%'},
+      {type:'bar',stack:'w',data:vis,barWidth:'58%',label:{show:true,position:'top',fontFamily:'IBM Plex Mono',fontSize:12,color:'#0c0c0d',formatter:p=>{const b=s.bridge[p.dataIndex]; return b.total?fmt.gbp(b.v):fmt.sgbp(b.v);}}}]});
+  // entity table
+  const rows=NV.ENT.map(e=>({e,s:NV.sum(e.id,state.scenario,P.from,P.to)})); const g=NV.sum('GRP',state.scenario,P.from,P.to);
+  const mx=Math.max(...rows.map(r=>Math.abs(r.s.ebitda-r.s.ebitdaB)));
+  $('#t-ent').innerHTML=`<thead><tr><th>Entity</th><th>Actual</th><th>Var</th><th style="width:96px"></th></tr></thead><tbody>${rows.map(({e,s})=>{const d=s.ebitda-s.ebitdaB; return `<tr data-e="${e.id}" class="${state.entity===e.id?'sel':''}"><td>${e.short}</td><td>${fmt.gbp(s.ebitda)}</td><td class="${d<0?'adv':'fav'}">${fmt.sgbp(d)}</td><td style="text-align:left"><span class="vbar" style="width:${Math.abs(d)/mx*80}px;background:${d<0?'var(--orange)':'var(--blue)'}"></span></td></tr>`;}).join('')}</tbody><tfoot><tr><td>Group</td><td>${fmt.gbp(g.ebitda)}</td><td class="${g.ebitda<g.ebitdaB?'adv':'fav'}">${fmt.sgbp(g.ebitda-g.ebitdaB)}</td><td></td></tr></tfoot>`;
+  $('#t-ent').querySelectorAll('tbody tr').forEach(r=>r.onclick=()=>set('entity',state.entity===r.dataset.e?'GRP':r.dataset.e));
+}
+function utilRender(){
+  const cons=NV.CONS.filter(c=>state.entity==='GRP'||c.ent===state.entity); const ms=[0,1,2,3,4,5,6];
+  const data=[]; cons.forEach((c,ci)=>ms.forEach(m=>{ const ws=c.weeks.filter(w=>w.m===m); const b=ws.reduce((a,w)=>a+w.bill,0), av=ws.reduce((a,w)=>a+w.avail,0); const u=av?b/av:0; data.push({value:[m,ci,u,b,av,c.target],label:{color:u>.8?'#fff':'#0c0c0d'}}); }));
+  const tb=cons.reduce((a,c)=>a+c.bill,0), ta=cons.reduce((a,c)=>a+c.avail,0);
+  $('#ucap').textContent=`${cons.length} consultants, Apr–Oct. ${fmt.pct(tb/ta)} billable across ${fmt.int(ta)} available hours. Leave weeks are excluded from availability.`;
+  ch('c-heat').setOption({...base,grid:{left:128,right:64,top:8,bottom:28},
+    tooltip:{...TT,formatter:p=>{const [m,ci,u,b,av,t]=p.value; const c=cons[ci]; return `<div style="font-family:'Host Grotesk';font-weight:600;margin-bottom:4px">${c.name} · ${NV.LABELS[m]}</div>`+trow('Billable',fmt.pct(u))+trow('Grade target',fmt.pct(t))+trow('Hours',fmt.int(b)+' / '+fmt.int(av));}},
+    xAxis:{type:'category',data:ms.map(m=>NV.LABELS[m]),...A,axisLine:{show:false},splitArea:{show:false}},
+    yAxis:{type:'category',data:cons.map(c=>c.name),inverse:true,...A,axisLine:{show:false},axisLabel:{...A.axisLabel,fontFamily:'Host Grotesk',fontSize:12,color:'#0c0c0d'}},
+    visualMap:{min:.4,max:.95,calculable:false,orient:'vertical',right:0,top:'middle',itemHeight:180,itemWidth:10,text:['95%','40%'],textStyle:{fontFamily:'IBM Plex Mono',fontSize:11,color:'#6a6a66'},inRange:{color:['#f7cdbf','#f6f6f3','#c3d4f3','#0a47d1']},dimension:2},
+    series:[{type:'heatmap',data,itemStyle:{borderColor:'#f6f6f3',borderWidth:2},label:{show:true,fontFamily:'IBM Plex Mono',fontSize:11,formatter:p=>Math.round(p.value[2]*100)},emphasis:{itemStyle:{borderColor:'#0c0c0d',borderWidth:1.5}}}]},{notMerge:true});
+  const ph={}; cons.forEach(c=>c.weeks.forEach(w=>Object.entries(w.byP).forEach(([p,h])=>ph[p]=(ph[p]||0)+h)));
+  const pl=NV.PROJ.filter(p=>ph[p.id]).sort((a,b)=>ph[a.id]-ph[b.id]);
+  ch('c-proj').setOption({...base,grid:{left:136,right:56,top:8,bottom:4},tooltip:{...TT,trigger:'item',formatter:p=>{const pr=pl[p.dataIndex]; return `<div style="font-family:'Host Grotesk';font-weight:600;margin-bottom:4px">${pr.client}</div>`+trow('Engagement',pr.name)+trow('Lead entity',NV.ent(pr.ent).short)+trow('Basis',pr.type)+trow('Billed',fmt.hrs(ph[pr.id]));}},
+    xAxis:{type:'value',...A,axisLine:{show:false},axisLabel:{show:false},splitLine:{show:false}},
+    yAxis:{type:'category',data:pl.map(p=>p.client),...A,axisLine:{show:false},axisLabel:{...A.axisLabel,fontFamily:'Host Grotesk',fontSize:12,color:'#0c0c0d'}},
+    series:[{type:'bar',data:pl.map(p=>({value:ph[p.id],itemStyle:{color:p.type==='Fixed fee'?'#0c0c0d':css('--blue')}})),barWidth:14,label:{show:true,position:'right',fontFamily:'IBM Plex Mono',fontSize:11,color:'#0c0c0d',formatter:p=>fmt.int(p.value)}}]},{notMerge:true});
+}
+function icRender(){
+  const P=PER[state.period]; const to=Math.min(P.to,NV.ACT-1); const f=NV.ic(P.from,to); const E=NV.ENT.map(e=>e.id);
+  const M={}; f.forEach(x=>M[x.from+x.to]=x); const max=Math.max(...f.map(x=>x.v)); const tot=f.reduce((a,x)=>a+x.v,0);
+  $('#iccap').textContent=`${fmt.gbp(tot)} traded ${P.from===to?'in October':'Apr–Oct'}; eliminated on consolidation.${state.period==='FY'?' Forecast months excluded.':''}`;
+  const short={NVA:'Adv UK',NVD:'Dig UK',NVI:'Ireland',NVU:'N America',NVS:'APAC'};
+  let h=`<div class="h" style="text-align:left">Seller ↓ Buyer →</div>`+E.map(e=>`<div class="h">${short[e]}</div>`).join('')+`<div class="h tot">Sales</div>`;
+  E.forEach(r=>{ const rs=E.reduce((a,c)=>a+(M[r+c]?M[r+c].v:0),0); const dimR = state.entity!=='GRP'&&state.entity!==r;
+    h+=`<div class="rh" style="${dimR?'color:var(--faint)':''}">${NV.ent(r).short}</div>`+E.map(c=>{ if(r===c) return `<div class="diag">—</div>`; const x=M[r+c]; if(!x) return `<div class="c" style="color:var(--faint)">·</div>`; const on=state.entity==='GRP'||r===state.entity||c===state.entity; const a=on?(.08+.62*x.v/max):.03;
+      return `<div class="c ${x.diff?'flag':''}" data-k="${r+c}" style="background:rgba(10,71,209,${a.toFixed(3)});color:${a>.45?'#fff':on?'var(--ink)':'var(--faint)'}">${(x.v/1000).toFixed(0)}</div>`; }).join('')+`<div class="tot">${(rs/1000).toFixed(0)}</div>`; });
+  h+=`<div class="rh ft">Purchases</div>`+E.map(c=>`<div class="ft">${(E.reduce((a,r)=>a+(M[r+c]?M[r+c].v:0),0)/1000).toFixed(0)}</div>`).join('')+`<div class="ft tot">${(tot/1000).toFixed(0)}</div>`;
+  const mEl=$('#matrix'); mEl.innerHTML=h;
+  mEl.querySelectorAll('.c[data-k]').forEach(el=>{ const x=M[el.dataset.k]; el.onmousemove=ev=>showTip(`<h4>${NV.ent(x.from).short} → ${NV.ent(x.to).short}</h4>${tr('Nature',x.nature)}${tr('Value',fmt.gbp(x.v))}${tr('Oct reconciliation',x.diff?fmt.sgbp(x.diff,1):'agreed')}`,ev.clientX,ev.clientY); el.onmouseleave=hideTip; });
+}
+function cashRender(){
+  const c=NV.cash(state.scenario); const A=NV.ACT; const ser=NV.ENT.map(e=>({e,s:NV.series(e.id,state.scenario)}));
+  const end=c[A-1].cash; $('#ccap').textContent=`Group cash ${fmt.gbp(end)} at 31 Oct after the £1.6m September dividend; ${fmt.gbp(c[11].cash)} projected at year end (${NV.SCEN[state.scenario].label.toLowerCase()}). Lines show debtor days by entity.`;
+  ch('c-cash').setOption({...base,grid:{left:52,right:44,top:44,bottom:28},legend:{top:0,left:0,itemWidth:14,itemHeight:2,itemGap:16,textStyle:{fontFamily:'Host Grotesk',fontSize:12,color:'#6a6a66'}},
+    tooltip:{...TT,trigger:'axis',formatter:ps=>{const i=ps[0].dataIndex; return `<div style="font-family:'Host Grotesk';font-weight:600;margin-bottom:4px">${NV.LABELS[i]} ${i<A?'actual':'forecast'}</div>`+trow('Closing cash',fmt.gbp(c[i].cash))+trow('Net flow',fmt.sgbp(c[i].flow))+ser.filter(x=>state.entity==='GRP'||x.e.id===state.entity).map(x=>trow(x.e.short+' DSO',x.s[i].dso.toFixed(0)+' d')).join('');}},
+    xAxis:{type:'category',data:NV.LABELS.map(l=>l.split(' ')[0]),...A},
+    yAxis:[{type:'value',...A,axisLine:{show:false},axisLabel:{...A.axisLabel,formatter:v=>fmt.gbp(v,0)},min:0},{type:'value',...A,axisLine:{show:false},splitLine:{show:false},min:30,max:90,axisLabel:{...A.axisLabel,formatter:'{value} d'}}],
+    series:[{name:'Group cash',type:'bar',barWidth:'52%',data:c.map((x,i)=>({value:x.cash,itemStyle:{color:i<A?'#0c0c0d':'#d4d4cf'}}))},
+      ...ser.map(x=>({name:x.e.short,type:'line',yAxisIndex:1,symbol:'none',data:x.s.map(o=>+o.dso.toFixed(1)),lineStyle:{width:state.entity===x.e.id?2.4:1.3,color:x.e.id==='NVU'?css('--orange'):state.entity===x.e.id?css('--blue'):'#8d8d88',opacity:state.entity==='GRP'||state.entity===x.e.id?1:.25},itemStyle:{color:x.e.id==='NVU'?css('--orange'):'#8d8d88'}}))]},{notMerge:true});
+}
+function render(k){ leadRender(); if(k!=='metric'){ bridgeRender(); utilRender(); icRender(); cashRender(); }
+  if(k==='entity' && state.entity!=='GRP') state.pin={e:state.entity,m:Math.min(PER[state.period].to,NV.ACT-1)};
+  readoutRender(); landRender(!!k); }
+initLand(); render();
+if(!RM){ gsap.from('.strip, .filters',{opacity:0,y:-8,duration:.6,ease:'power3.out',stagger:.05}); gsap.from('h1',{opacity:0,y:16,duration:.8,ease:'expo.out',delay:.1}); gsap.from('.rung',{opacity:0,y:10,stagger:.06,duration:.6,ease:'power3.out',delay:.25}); }
+landRender(true);
+</script>
+</body>
+</html>

@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Northvale Group plc — FY27 in motion (example data)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Martian+Mono:wdth,wght@75..112.5,300..700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@6/dist/echarts.min.js"></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+<style>
+:root{
+  --stage:#1b1a17; --stage-2:#24231f; --stage-3:#302e29; --line:#3b3934; --bone:#efede6; --dim:#a29f95; --dim-2:#8c897f;
+  --alu:#e9e8e3; --alu-2:#dddcd5; --alu-3:#cfcdc5; --ink:#151412; --ink-2:#4a4842; --ink-3:#625f58;
+  --hot:#ff5a1f; --good:#0d7f64; --good-on-dark:#7ad9c4; --bad:#c9341b; --bad-on-dark:#ff8a66;
+  --disp:'Archivo', 'Helvetica Neue', Arial, sans-serif; --mono:'Martian Mono', ui-monospace, monospace;
+  --ease-out:cubic-bezier(.23,1,.32,1);
+}
+*{box-sizing:border-box}
+html{background:var(--stage);color:var(--bone);scrollbar-color:var(--stage-3) var(--stage)}
+body{margin:0;font:400 14px/1.45 var(--disp);font-variation-settings:"wdth" 100;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--hot);color:var(--ink)}
+:focus-visible{outline:2px solid var(--hot);outline-offset:3px;border-radius:6px}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.n{font-family:var(--mono);font-variant-numeric:tabular-nums;font-variation-settings:"wdth" 88}
+.good{color:var(--good)} .bad{color:var(--bad)}
+.dark .good{color:var(--good-on-dark)} .dark .bad{color:var(--bad-on-dark)}
+
+/* top bar */
+.bar{position:relative;z-index:5;height:64px;display:flex;align-items:center;gap:28px;padding:0 36px;border-bottom:1px solid var(--line)}
+.mark{display:flex;align-items:baseline;gap:12px;white-space:nowrap}
+.mark b{font-weight:800;font-size:17px;letter-spacing:-.01em;font-variation-settings:"wdth" 125}
+.mark span{color:var(--dim);font-size:13px}
+.ex{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dim);white-space:nowrap}
+.ex i{width:7px;height:7px;border-radius:50%;background:var(--hot)}
+.seg{position:relative;display:flex;background:var(--stage-2);border:1px solid var(--line);border-radius:999px;padding:3px;white-space:nowrap}
+.seg button{position:relative;z-index:1;height:30px;padding:0 13px;border-radius:999px;font-size:12.5px;font-weight:500;color:var(--dim);transition:color .2s var(--ease-out)}
+.seg button:hover{color:var(--bone)}
+.seg button[aria-checked="true"]{color:var(--ink)}
+.seg .pill{position:absolute;z-index:0;top:3px;height:30px;border-radius:999px;background:var(--alu);box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 4px 10px -2px rgba(0,0,0,.6)}
+.seg button:active{transform:scale(.97)}
+.lbl-s{font-size:12px;color:var(--dim-2);margin-right:-16px}
+
+/* hero */
+.hero{position:relative;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);height:478px;padding:0 36px}
+.lead{position:relative;z-index:3;padding-top:30px;display:flex;flex-direction:column}
+.when{display:flex;align-items:flex-end;gap:16px;line-height:.8}
+.mon{font-weight:800;font-size:150px;letter-spacing:-.04em;font-variation-settings:"wdth" 125;color:var(--bone);display:inline-block;min-width:3.1ch}
+.yr{display:flex;flex-direction:column;gap:12px;padding-bottom:10px}
+.yr .y{font:500 22px/1 var(--mono);color:var(--dim)}
+.state{display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 12px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid var(--line);color:var(--bone);white-space:nowrap}
+.state i{width:6px;height:6px;border-radius:50%;background:var(--good-on-dark)}
+.state.fc i{background:transparent;border:1.5px solid var(--hot)}
+.story{margin:26px 0 0;max-width:30ch;font-size:24px;line-height:1.28;font-weight:400;letter-spacing:-.01em;color:var(--bone);font-variation-settings:"wdth" 92}
+.story em{font-style:normal;font-weight:700}
+.mode{margin-top:auto;margin-bottom:26px;display:flex;align-items:center;gap:14px}
+.mode .seg{display:inline-flex}
+.mode p{margin:0;font-size:12.5px;color:var(--dim-2);max-width:32ch}
+.stage3{position:absolute;inset:0 0 0 34%;z-index:1}
+.stage3 canvas{display:block;width:100%!important;height:100%!important;outline:none;cursor:grab}
+.stage3 canvas:active{cursor:grabbing}
+.slbl{position:absolute;left:0;top:0;pointer-events:none;font:500 10.5px/1 var(--mono);color:var(--dim);white-space:nowrap;will-change:transform}
+.slbl.e{font:600 12px/1 var(--disp);color:var(--bone);text-align:right}
+.slbl.e.off{color:var(--dim-2)}
+.slbl.cur{color:var(--hot)}
+.cap3{position:absolute;right:36px;top:24px;z-index:2;text-align:right;font-size:12.5px;color:var(--dim);line-height:1.5;pointer-events:none}
+.cap3 b{display:block;color:var(--bone);font-weight:600;font-size:14px}
+.key3{position:absolute;right:36px;bottom:22px;z-index:2;display:flex;gap:16px;align-items:center;font-size:11.5px;color:var(--dim);pointer-events:none}
+.key3 .ramp{width:96px;height:6px;border-radius:3px;background:linear-gradient(90deg,#3a3832,#8d8a80 40%,#e9e8e3 74%,#ffa070 86%,#ff5a1f 97%)}
+.key3 .wf{width:16px;height:10px;border:1px dashed #8d8a80;border-radius:2px}
+.glfail{position:absolute;inset:0 0 0 40%;display:none;place-items:center;color:var(--dim);font-size:13px;z-index:2}
+
+/* scrubber */
+.scrub{position:relative;z-index:4;margin:0 36px;height:92px;display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;border-top:1px solid var(--line)}
+.play{width:44px;height:44px;border-radius:50%;background:var(--alu);color:var(--ink);display:grid;place-items:center;box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 8px 18px -6px rgba(0,0,0,.7);transition:transform .16s var(--ease-out)}
+.play:active{transform:scale(.94)}
+.play svg{width:16px;height:16px}
+.track{position:relative;height:60px;touch-action:none;user-select:none;cursor:pointer}
+.rail{position:absolute;left:0;right:0;top:27px;height:6px;border-radius:3px;background:var(--stage-3)}
+.rail .act{position:absolute;left:0;top:0;bottom:0;border-radius:3px 0 0 3px;background:#5e5b53}
+.rail .fc{position:absolute;top:0;bottom:0;right:0;background:repeating-linear-gradient(90deg,#4a4842 0 6px,transparent 6px 10px);border-radius:0 3px 3px 0}
+.rail .fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--hot);transform-origin:left;will-change:transform}
+.tick{position:absolute;top:42px;transform:translateX(-50%);font:500 12px/1 var(--mono);color:var(--dim-2);transition:color .2s}
+.tick.on{color:var(--bone)}
+.tick.past{color:var(--dim)}
+.cutl{position:absolute;top:0;padding-left:10px;font-size:12px;color:var(--dim-2);white-space:nowrap}
+.cutl::after{content:"";position:absolute;left:0;top:0;width:1px;height:34px;background:var(--dim-2)}
+.knob{position:absolute;top:13px;left:0;width:34px;height:34px;margin-left:-17px;border-radius:50%;background:var(--alu);box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 -2px 0 rgba(0,0,0,.08) inset,0 10px 20px -6px rgba(0,0,0,.8),0 0 0 4px rgba(255,90,31,.0);cursor:grab;will-change:transform;transition:box-shadow .2s}
+.knob::after{content:"";position:absolute;inset:12px;border-radius:50%;background:var(--hot)}
+.knob:focus-visible{outline:none;box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 10px 20px -6px rgba(0,0,0,.8),0 0 0 4px rgba(255,90,31,.55)}
+.track.drag .knob{cursor:grabbing}
+
+/* tiles */
+.tiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;padding:6px 36px 0;perspective:1100px}
+.tile{position:relative;border-radius:16px;background:linear-gradient(180deg,#eeede8,#e2e1db);color:var(--ink);transform-style:preserve-3d;will-change:transform;
+  box-shadow:0 1px 0 rgba(255,255,255,.85) inset,0 -1px 0 rgba(0,0,0,.06) inset,var(--sh,0 22px 40px -18px rgba(0,0,0,.85)),0 2px 3px rgba(0,0,0,.35)}
+.tile .sheen{position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.55),transparent 45%)}
+.tile:hover .sheen{opacity:1}
+.kpi{height:196px;padding:16px 18px 14px;display:flex;flex-direction:column}
+.kpi h3{margin:0;font-size:13px;font-weight:600;color:var(--ink-2);display:flex;justify-content:space-between;transform:translateZ(14px)}
+.kpi h3 span{font-weight:400;color:var(--ink-3)}
+.kpi .v{margin-top:10px;font:700 40px/1 var(--disp);font-variation-settings:"wdth" 112;letter-spacing:-.025em;font-variant-numeric:tabular-nums;transform:translateZ(34px)}
+.kpi .d{margin-top:8px;font:500 11.5px/1.3 var(--mono);color:var(--ink-3);display:flex;gap:10px;transform:translateZ(22px)}
+.kpi svg{margin-top:auto;width:100%;height:52px;overflow:visible;transform:translateZ(10px)}
+.kpi .sp{fill:none;stroke:var(--ink);stroke-width:1.6}
+.kpi .spf{fill:none;stroke:var(--ink-3);stroke-width:1.4;stroke-dasharray:3 3}
+.kpi .spb{fill:none;stroke:var(--alu-3);stroke-width:1.2}
+.kpi .dot{fill:var(--hot);stroke:#fff;stroke-width:2}
+.kpi .vl{stroke:var(--hot);stroke-width:1;opacity:.55}
+
+/* chapters */
+main{padding:84px 36px 0}
+.chap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:18px;margin-bottom:18px;perspective:1400px}
+.intro{grid-column:1 / -1;display:flex;justify-content:space-between;align-items:flex-end;margin:40px 0 10px;gap:40px}
+.intro h2{margin:0;font-weight:800;font-size:44px;letter-spacing:-.03em;line-height:1;font-variation-settings:"wdth" 120}
+.intro p{margin:0;max-width:56ch;color:var(--dim);font-size:15px}
+.panel{padding:20px 22px 16px;min-width:0}
+.panel h3{margin:0 0 3px;font-size:17px;font-weight:700;letter-spacing:-.01em;font-variation-settings:"wdth" 108}
+.panel .cap{margin:0;color:var(--ink-3);font-size:12.5px;max-width:64ch}
+.chart{height:330px;margin-top:10px}
+.c7{grid-column:span 7}.c5{grid-column:span 5}.c8{grid-column:span 8}.c4{grid-column:span 4}
+.people{list-style:none;margin:14px 0 0;padding:0}
+.people li{display:grid;grid-template-columns:128px 1fr 44px;align-items:center;gap:10px;height:21px;font-size:12.5px}
+.people .bw{position:relative;height:8px;border-radius:4px;background:var(--alu-3)}
+.people .bw i{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--ink);transform-origin:left;transition:transform .5s var(--ease-out),background-color .3s}
+.people .bw i.lo{background:var(--bad)}
+.people .bw b{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--hot)}
+.people .u{text-align:right;font:500 11.5px/1 var(--mono)}
+.people li.fade{color:var(--ink-3)}
+.rec{list-style:none;margin:14px 0 0;padding:0;font-size:13px}
+.rec li{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:11px 0;border-top:1px solid var(--alu-3)}
+.rec li small{grid-column:1 / -1;color:var(--ink-3);font-size:12px}
+.rec .flag{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--hot);margin-right:6px}
+.foot{display:flex;justify-content:space-between;gap:24px;padding:40px 36px 48px;margin-top:70px;border-top:1px solid var(--line);color:var(--dim-2);font-size:12px}
+.tip{position:fixed;z-index:50;pointer-events:none;min-width:200px;background:var(--ink);color:var(--bone);border-radius:10px;padding:10px 12px;font-size:12.5px;box-shadow:0 18px 40px -10px rgba(0,0,0,.7);opacity:0;transform:translateY(4px);transition:opacity .14s,transform .14s var(--ease-out)}
+.tip.on{opacity:1;transform:none}
+.tip b{display:block;margin-bottom:6px;font-weight:600}
+.tip .r{display:flex;justify-content:space-between;gap:18px;font:500 11.5px/1.7 var(--mono);color:#cfccc2}
+.tip .r span:last-child{color:var(--bone)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion: reduce){ *{transition-duration:.01ms!important} }
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="mark"><b>Northvale</b><span>FY27 · Apr 26 – Mar 27 · GBP</span></div>
+  <span class="lbl-s">Entity</span><div class="seg" role="radiogroup" aria-label="Entity" data-k="entity"></div>
+  <span class="lbl-s">Scenario</span><div class="seg" role="radiogroup" aria-label="Forecast scenario" data-k="scen"></div>
+  <div class="ex"><i></i>Example data, fictional company</div>
+</header>
+
+<section class="hero dark">
+  <div class="lead">
+    <div class="when"><span class="mon" id="mon">Oct</span><div class="yr"><span class="state" id="state"><i></i><span>Closed</span></span><span class="y" id="yr">2026</span></div></div>
+    <p class="story" id="story"></p>
+    <div class="mode"><div class="seg" role="radiogroup" aria-label="Period" data-k="mode"></div><p id="modecap"></p></div>
+  </div>
+  <div class="stage3" id="stage3"></div>
+  <div class="cap3"><b>Billable utilisation, week by week</b>16 consultants × 52 weeks, lightly smoothed. Solid is booked time,<br>the wire mesh is the forecast plan. Drag to turn it, click a week to jump there.</div>
+  <div class="key3"><span>Utilisation</span><span>30%</span><span class="ramp"></span><span>100%</span><span class="wf"></span><span>Forecast plan</span></div>
+  <div class="glfail" id="glfail">3D view needs WebGL, which this browser has turned off. Every figure is still in the panels below.</div>
+</section>
+
+<div class="scrub dark">
+  <button class="play" id="play" type="button" aria-label="Play the year"><svg viewBox="0 0 16 16" aria-hidden="true"><path id="playp" d="M4 2.5v11l9.5-5.5z" fill="currentColor"/></svg></button>
+  <div class="track" id="track">
+    <div class="rail"><span class="act" id="ract"></span><span class="fc" id="rfc"></span><span class="fill" id="fill"></span></div>
+    <span class="cutl" id="cutl">Books closed · forecast from here</span>
+    <div id="ticks"></div>
+    <div class="knob" id="knob" role="slider" tabindex="0" aria-label="Month" aria-valuemin="0" aria-valuemax="11"></div>
+  </div>
+</div>
+
+<section class="tiles" id="kpis"></section>
+
+<main>
+  <div class="chap">
+    <div class="intro dark"><h2>Where the profit went</h2><p id="i1"></p></div>
+    <div class="tile panel c7"><div class="sheen"></div><h3>EBITDA bridge</h3><p class="cap" id="bcap"></p><div class="chart" id="c-bridge"></div></div>
+    <div class="tile panel c5"><div class="sheen"></div><h3>Revenue growth</h3><p class="cap" id="gcap"></p><div class="chart" id="c-growth"></div></div>
+  </div>
+  <div class="chap">
+    <div class="intro dark"><h2>Where the year lands</h2><p id="i2"></p></div>
+    <div class="tile panel c8"><div class="sheen"></div><h3>Rolling forecast</h3><p class="cap" id="fcap"></p><div class="chart" id="c-fc" style="height:360px"></div></div>
+    <div class="tile panel c4"><div class="sheen"></div><h3 id="ptitle">Consultants</h3><p class="cap" id="pcap"></p><ul class="people" id="people"></ul></div>
+  </div>
+  <div class="chap">
+    <div class="intro dark"><h2>Inside the group</h2><p id="i3"></p></div>
+    <div class="tile panel c8"><div class="sheen"></div><h3>Intercompany flows</h3><p class="cap" id="scap"></p><div class="chart" id="c-ic" style="height:380px"></div></div>
+    <div class="tile panel c4"><div class="sheen"></div><h3>Before elimination</h3><p class="cap">Pairs where seller and buyer ledgers disagree at the October close.</p><ul class="rec" id="rec"></ul></div>
+  </div>
+</main>
+<footer class="foot"><span>Example data. Northvale Group plc, its entities, clients and people are fictional and every figure is synthetic.</span><span class="n">Budget FX €0.855 · $0.785 · S$0.585 per unit</span></footer>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script>/* Northvale Group plc — EXAMPLE DATA ONLY. Deterministic synthetic model, FY27 (Apr 2026 – Mar 2027). */
+const NV = (() => {
+  function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+  const r = rng(20261104); const n = a => (r()*2-1)*a;
+  const MONTHS = ['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'];
+  const LABELS = MONTHS.map((m,i)=>m+' '+(i<9?'26':'27'));
+  const ACT = 7; // Apr–Oct 2026 closed; Nov–Mar forecast
+  const SEAS = [0.95,1.0,1.02,1.03,0.86,1.02,1.05,1.03,0.82,0.98,1.0,1.04];
+  const FXB = {GBP:1, EUR:0.855, USD:0.785, SGD:0.585};
+  const FXA = {GBP:[1,1,1,1,1,1,1], EUR:[0.851,0.849,0.853,0.858,0.861,0.859,0.862], USD:[0.790,0.788,0.781,0.772,0.765,0.762,0.758], SGD:[0.586,0.584,0.581,0.578,0.575,0.574,0.572]};
+  const ENT = [
+    {id:'NVA',name:'Northvale Advisory Ltd',short:'Advisory UK',city:'London',lat:51.507,lon:-0.128,ccy:'GBP',fte:62,rate:195,util:0.72,vol:-0.035,px:0.028,ohd:0.035,growth:0.08,dR:0.50,oR:0.33,dso:[49,51,53,52,56,55,54],dsoT:50},
+    {id:'NVD',name:'Northvale Digital Ltd',short:'Digital UK',city:'Manchester',lat:53.480,lon:-2.242,ccy:'GBP',fte:48,rate:150,util:0.75,vol:0.045,px:-0.012,ohd:-0.01,growth:0.14,dR:0.53,oR:0.29,dso:[44,45,43,46,47,45,44],dsoT:45},
+    {id:'NVI',name:'Northvale Ireland Ltd',short:'Ireland',city:'Dublin',lat:53.350,lon:-6.260,ccy:'EUR',fte:30,rate:170,util:0.70,vol:0.012,px:0.010,ohd:0.0,growth:0.06,dR:0.52,oR:0.31,dso:[52,50,51,53,55,52,51],dsoT:50},
+    {id:'NVU',name:'Northvale Inc.',short:'North America',city:'New York',lat:40.713,lon:-74.006,ccy:'USD',fte:34,rate:260,util:0.68,vol:-0.075,px:0.015,ohd:0.02,growth:0.11,dR:0.51,oR:0.32,dso:[63,66,68,70,72,71,74],dsoT:60},
+    {id:'NVS',name:'Northvale Asia Pte. Ltd',short:'Asia Pacific',city:'Singapore',lat:1.352,lon:103.820,ccy:'SGD',fte:22,rate:240,util:0.70,vol:0.06,px:0.02,ohd:0.01,growth:0.19,dR:0.50,oR:0.30,dso:[58,57,55,56,54,53,52],dsoT:52},
+  ];
+  const SCEN = {base:{h:1,d:1,label:'Base'}, up:{h:1.045,d:1.01,label:'Upside'}, down:{h:0.92,d:0.985,label:'Downside'}};
+  // ---- entity monthly model ----
+  const M = {};
+  ENT.forEach(e => {
+    const fb = FXB[e.ccy];
+    const bH = SEAS.map(s => e.fte*140*e.util*s);
+    const bRev = bH.map(h => h*e.rate*fb);
+    const avg = bRev.reduce((a,b)=>a+b,0)/12;
+    const bDel = SEAS.map(() => avg*e.dR);
+    const bOH = SEAS.map((s,i) => avg*e.oR*(1 + (i===11?0.04:0) + (i===0?0.02:0)));
+    const act = []; 
+    for (let m=0;m<ACT;m++){
+      const ramp = 0.5 + m/ACT;
+      const aH = bH[m]*(1 + e.vol*ramp + n(0.025) - (m===4 && e.ccy!=='SGD' ? 0.03 : 0));
+      const aRateL = e.rate*(1 + e.px + n(0.007));
+      const fxa = FXA[e.ccy][m];
+      const aDel = bDel[m]*(1 + 0.3*Math.max(0,e.vol) + n(0.012));
+      const aOH = bOH[m]*(1 + e.ohd + n(0.035));
+      act.push({h:aH, rateL:aRateL, fx:fxa, del:aDel, oh:aOH});
+    }
+    const last3 = act.slice(4);
+    const hr = last3.reduce((a,x,i)=>a + x.h/bH[4+i],0)/3, rr = last3.reduce((a,x)=>a+x.rateL,0)/3/e.rate;
+    const fxL = FXA[e.ccy][ACT-1];
+    const pyF = SEAS.map(() => 1/(1+e.growth+n(0.025)));
+    M[e.id] = {e, bH, bRev, bDel, bOH, act, hr: 1+(hr-1)*0.7, rr: 1+(rr-1)*0.85, fxL, pyF, fb};
+  });
+  function series(id, scen='base'){
+    const S = SCEN[scen]||SCEN.base;
+    if (id==='GRP'){ const parts = ENT.map(e=>series(e.id,scen)); return parts[0].map((_,m)=>{ const o={m,label:LABELS[m],isAct:m<ACT}; ['rev','revB','revPY','del','delB','oh','ohB','ebitda','ebitdaB','ebitdaPY','hours','hoursB','vol','price','fx','ar','cap'].forEach(k=>o[k]=parts.reduce((a,p)=>a+p[m][k],0)); o.margin=o.ebitda/o.rev; o.marginB=o.ebitdaB/o.revB; o.util=o.hours/o.cap; o.utilB=o.hoursB/o.cap; return o; }); }
+    const X = M[id], e = X.e; const out = [];
+    for (let m=0;m<12;m++){
+      let h, rateL, fx, del, oh;
+      if (m<ACT){ ({h, rateL, fx, del, oh} = X.act[m]); }
+      else { h = X.bH[m]*X.hr*S.h; rateL = e.rate*X.rr; fx = X.fxL; del = X.bDel[m]*(1+0.3*Math.max(0,e.vol))*S.d; oh = X.bOH[m]*(1+e.ohd*0.6); }
+      const rev = h*rateL*fx, revB = X.bRev[m];
+      const vol = (h - X.bH[m])*e.rate*X.fb, price = h*(rateL-e.rate)*X.fb, fxv = h*rateL*(fx - X.fb);
+      const ebitda = rev - del - oh, ebitdaB = revB - X.bDel[m] - X.bOH[m];
+      const revPY = revB*X.pyF[m]*(1+n(0.0)) , ebitdaPY = revPY*(1-e.dR*1.04-e.oR*1.05);
+      const cap = e.fte*140*SEAS[m];
+      out.push({m,label:LABELS[m],isAct:m<ACT,rev,revB,revPY,del,delB:X.bDel[m],oh,ohB:X.bOH[m],ebitda,ebitdaB,ebitdaPY,hours:h,hoursB:X.bH[m],cap,util:h/cap,utilB:X.bH[m]/cap,vol,price,fx:fxv,margin:ebitda/rev,marginB:ebitdaB/revB});
+    }
+    // receivables from DSO path (3-month count-back)
+    out.forEach((o,m)=>{ const d = m<ACT ? e.dso[m] : e.dso[ACT-1] + (e.dsoT - e.dso[ACT-1])*((m-ACT+1)/5); o.dso=d;
+      const r3 = [m,m-1,m-2].reduce((a,k)=>a+(k>=0?out[k].rev:out[0].revPY),0); o.ar = d/91*r3; });
+    return out;
+  }
+  // ---- aggregation over a month range ----
+  function sum(id, scen, from, to){
+    const s = series(id, scen).slice(from, to+1); const o = {};
+    ['rev','revB','revPY','del','delB','oh','ohB','ebitda','ebitdaB','ebitdaPY','hours','hoursB','cap','vol','price','fx'].forEach(k=>o[k]=s.reduce((a,x)=>a+x[k],0));
+    o.margin=o.ebitda/o.rev; o.marginB=o.ebitdaB/o.revB; o.marginPY=o.ebitdaPY/o.revPY; o.util=o.hours/o.cap; o.utilB=o.hoursB/o.cap;
+    const last = series(id, scen)[to]; o.ar = last.ar; 
+    const sr = series(id,scen); const r3 = [to,to-1,to-2].reduce((a,k)=>a+(k>=0?sr[k].rev:sr[0].revPY),0); o.dso = id==='GRP' ? last.ar/r3*91 : last.dso;
+    o.bridge = [
+      {k:'budget', label:'Budget EBITDA', v:o.ebitdaB, total:true},
+      {k:'vol', label:'Volume (hours)', v:o.vol},
+      {k:'price', label:'Rate / price', v:o.price},
+      {k:'fx', label:'FX translation', v:o.fx},
+      {k:'del', label:'Delivery cost', v:-(o.del-o.delB)},
+      {k:'oh', label:'Overheads', v:-(o.oh-o.ohB)},
+      {k:'actual', label: to<ACT ? 'Actual EBITDA':'Outturn EBITDA', v:o.ebitda, total:true},
+    ];
+    return o;
+  }
+  // ---- group cash ----
+  function cash(scen='base'){
+    const g = series('GRP', scen); let c = 9.18e6; let prevAR = ENT.reduce((a,e)=>a + e.dso[0]/91*3*M[e.id].bRev[11]*M[e.id].pyF[11],0);
+    return g.map((o,m)=>{ const tax = [3,6,9].includes(m)?415000:0, div = m===5?1.6e6:0, capex = 58000 + (m===2?140000:0), fin = 72000;
+      const dAR = o.ar - prevAR; prevAR = o.ar; const flow = o.ebitda - tax - div - capex - fin - dAR; c += flow;
+      return {m,label:o.label,isAct:o.isAct,cash:c,flow,dAR,tax,div,capex,fin,ebitda:o.ebitda}; });
+  }
+  // ---- rolling forecast versions (outturn as forecast at month k) ----
+  function versions(id='GRP'){
+    const out = [{name:'Budget', asAt:-1, vals: series(id).map(o=>o.revB)}];
+    for (let k=2;k<ACT;k++){ // forecast made after closing month k
+      const s = series(id); const ratio = s.slice(0,k+1).reduce((a,x)=>a+x.rev,0)/s.slice(0,k+1).reduce((a,x)=>a+x.revB,0);
+      out.push({name:'RF '+MONTHS[k], asAt:k, vals: s.map((o,m)=> m<=k ? o.rev : o.revB*(1+(ratio-1)*0.8))});
+    }
+    return out;
+  }
+  // ---- intercompany (seller -> buyer), monthly GBP ----
+  const ICDEF = [
+    ['NVA','NVD',38000,'Group management fee'],['NVA','NVI',22000,'Group management fee'],['NVA','NVU',30000,'Group management fee'],['NVA','NVS',16000,'Group management fee'],
+    ['NVD','NVA',145000,'Subcontracted digital delivery'],['NVD','NVU',62000,'Subcontracted digital delivery'],['NVI','NVA',88000,'Nearshore delivery centre'],
+    ['NVS','NVU',54000,'Offshore support desk'],['NVU','NVA',24000,'Secondment recharge'],['NVI','NVD',31000,'Data engineering pods'],
+  ];
+  const IC = ICDEF.map(([from,to,base,nature]) => { const months = SEAS.map((s,m)=> m<ACT ? base*s*(1+n(0.06)) : base*s); return {from,to,nature,months}; });
+  // reconciliation differences at Oct close (seller vs buyer ledger)
+  const ICREC = {'NVS>NVU':12400, 'NVI>NVA':-3150};
+  function ic(from=0,to=ACT-1){ return IC.map(f=>({from:f.from,to:f.to,nature:f.nature,v:f.months.slice(from,to+1).reduce((a,b)=>a+b,0),diff: to===ACT-1 ? (ICREC[f.from+'>'+f.to]||0) : 0})); }
+  // ---- consultants & weekly time ----
+  const PROJ = [
+    {id:'P01',client:'Halden Utilities',name:'ERP finance transformation',ent:'NVA',type:'T&M'},
+    {id:'P02',client:'Marlow Rail',name:'Cost assurance review',ent:'NVA',type:'Fixed fee'},
+    {id:'P03',client:'Corrin Health',name:'Data platform build',ent:'NVD',type:'T&M'},
+    {id:'P04',client:'Ashby Retail',name:'FP&A redesign',ent:'NVD',type:'Fixed fee'},
+    {id:'P05',client:'Keswick Water',name:'Regulatory reporting',ent:'NVI',type:'T&M'},
+    {id:'P06',client:'Brightmere Insurance',name:'IFRS 17 support',ent:'NVU',type:'T&M'},
+    {id:'P07',client:'Orla Energy',name:'Carve-out readiness',ent:'NVS',type:'Fixed fee'},
+  ];
+  const GR = {Director:0.55, Manager:0.70, 'Senior Consultant':0.80, Consultant:0.82, Analyst:0.78};
+  const CDEF = [
+    ['Priya Raman','NVA','Director',['P01','P02']],['Tom Ashworth','NVA','Manager',['P01']],['Eleanor Voss','NVA','Senior Consultant',['P01','P02']],['Daniel Okafor','NVA','Consultant',['P02']],['Hannah Liddell','NVA','Analyst',['P01']],
+    ['Marcus Brennan','NVD','Manager',['P03','P04']],['Aisha Siddiqui','NVD','Senior Consultant',['P03']],['Callum Reid','NVD','Consultant',['P04','P03']],['Zofia Nowak','NVD','Consultant',['P03']],
+    ['Ciarán Doyle','NVI','Manager',['P05','P01']],['Niamh Kelleher','NVI','Senior Consultant',['P05']],
+    ['Jordan Pierce','NVU','Director',['P06']],['Maya Castellanos','NVU','Senior Consultant',['P06']],
+    ['Wei Ling Tan','NVS','Manager',['P07']],['Arjun Mehta','NVS','Consultant',['P07','P06']],['Grace Lim','NVS','Analyst',['P07']],
+  ];
+  const WEEKS = []; { const d0 = new Date(Date.UTC(2026,3,6)); for (let w=0; w<30; w++){ const d = new Date(d0.getTime()+w*7*864e5); const mi = (d.getUTCMonth()+12-3)%12; WEEKS.push({w, label: d.getUTCDate()+' '+MONTHS[mi], m: mi}); } }
+  const CONS = CDEF.map(([name,ent,grade,projects],ci) => {
+    const target = GR[grade]*(1 + (ent==='NVU'?-0.08:0) + (ent==='NVD'?0.04:0));
+    const leave = new Set(); const nl = 2 + Math.floor(r()*3); while (leave.size < nl){ const w = r()<0.55 ? 16+Math.floor(r()*5) : Math.floor(r()*30); leave.add(w); }
+    const weeks = WEEKS.map(W => {
+      const avail = leave.has(W.w) ? (r()<0.5?0:15) : 37.5 - (W.w===7||W.w===21?7.5:0);
+      let bill = Math.max(0, Math.min(avail, avail*target*(1+n(0.14)) + (ci%5===2 && W.w>18 ? -6 : 0)));
+      const split = projects.length===1 ? [1] : [0.68+n(0.1), 0]; if (split.length===2) split[1]=1-split[0];
+      const byP = {}; projects.forEach((p,i)=>byP[p]=bill*split[i]);
+      return {w:W.w, m:W.m, cap:37.5, avail, bill, nonbill: Math.max(0,avail-bill), leave: 37.5-avail, byP, util: avail? bill/avail : 0};
+    });
+    const tot = weeks.reduce((a,x)=>({bill:a.bill+x.bill, avail:a.avail+x.avail}),{bill:0,avail:0});
+    return {name, ent, grade, projects, target, weeks, bill:tot.bill, avail:tot.avail, util: tot.bill/tot.avail};
+  });
+  return {MONTHS, LABELS, ACT, ENT, SCEN, series, sum, cash, versions, ic, IC, PROJ, CONS, WEEKS, FXB, FXA,
+    ent: id => ENT.find(e=>e.id===id)};
+})();
+const fmt = {
+  gbp(v, d){ const a=Math.abs(v), s=v<0?'−':''; if(a>=1e6) return s+'£'+(a/1e6).toFixed(d??(a>=1e7?1:2))+'m'; if(a>=1e3) return s+'£'+(a/1e3).toFixed(d??0)+'k'; return s+'£'+a.toFixed(0); },
+  sgbp(v, d){ return (v>0?'+':'')+fmt.gbp(v,d); },
+  pct(v, d=1){ return (v*100).toFixed(d)+'%'; },
+  spct(v, d=1){ const x=(v*100); return (x>0?'+':x<0?'−':'')+Math.abs(x).toFixed(d)+'%'; },
+  pp(v, d=1){ const x=v*100; return (x>0?'+':x<0?'−':'')+Math.abs(x).toFixed(d)+' pp'; },
+  int(v){ return Math.round(v).toLocaleString('en-GB'); },
+  hrs(v){ return Math.round(v).toLocaleString('en-GB')+' h'; },
+};
+
+window.NV=NV; window.fmt=fmt;
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $=s=>document.querySelector(s);
+const state={entity:'GRP', scen:'base', mode:'ytd', m:NV.ACT-1};
+const MONTHLONG=['April','May','June','July','August','September','October','November','December','January','February','March'];
+const OPTS={entity:[['GRP','Group'],['NVA','Adv. UK'],['NVD','Digital'],['NVI','Ireland'],['NVU','N. America'],['NVS','APAC']], scen:[['base','Base'],['up','Upside'],['down','Downside']], mode:[['month','Month'],['ytd','Year to date']]};
+const entName=()=>state.entity==='GRP'?'the group':NV.ent(state.entity).short;
+
+/* ---------- springs ---------- */
+function spring(init,{k=320,c=34}={}){ const s={x:init,v:0,t:init,k,c,set(t){this.t=t;}, snap(t){this.x=this.t=t;this.v=0;}}; return s; }
+const springs=new Set();
+function stepSprings(dt){ for(const s of springs){ if(RM){ s.x=s.t; s.v=0; s.cb&&s.cb(s.x); continue; } const f=-s.k*(s.x-s.t)-s.c*s.v; s.v+=f*dt; s.x+=s.v*dt; if(Math.abs(s.x-s.t)<1e-4&&Math.abs(s.v)<1e-3){s.x=s.t;s.v=0;} s.cb&&s.cb(s.x); } }
+const ticker=[]; let last=performance.now();
+function loop(now){ const dt=Math.min(.033,(now-last)/1000); last=now; stepSprings(dt); for(const f of ticker) f(dt,now); requestAnimationFrame(loop); }
+requestAnimationFrame(loop);
+
+/* ---------- segmented controls with sliding pill ---------- */
+document.querySelectorAll('.seg').forEach(g=>{ const k=g.dataset.k; const pill=document.createElement('span'); pill.className='pill'; g.append(pill);
+  OPTS[k].forEach(([v,l])=>{ const b=document.createElement('button'); b.type='button'; b.setAttribute('role','radio'); b.dataset.v=v; b.textContent=l; b.onclick=()=>set(k,v); g.append(b); });
+  const sx=spring(0,{k:420,c:40}), sw=spring(0,{k:420,c:40}); sx.cb=x=>pill.style.transform=`translateX(${x}px)`; sw.cb=w=>pill.style.width=w+'px'; springs.add(sx); springs.add(sw); g._sp=[sx,sw];
+  g.addEventListener('keydown',e=>{ if(!['ArrowLeft','ArrowRight'].includes(e.key)) return; const bs=[...g.querySelectorAll('button')]; const i=bs.findIndex(b=>b.dataset.v===state[k]); const j=(i+(e.key==='ArrowRight'?1:-1)+bs.length)%bs.length; set(k,bs[j].dataset.v); bs[j].focus(); e.preventDefault(); });
+});
+function syncSeg(first){ document.querySelectorAll('.seg').forEach(g=>{ const k=g.dataset.k; let on; g.querySelectorAll('button').forEach(b=>{ const a=b.dataset.v===state[k]; b.setAttribute('aria-checked',a); b.tabIndex=a?0:-1; if(a) on=b; }); const [sx,sw]=g._sp; if(first){ sx.snap(on.offsetLeft); sw.snap(on.offsetWidth); sx.cb(sx.x); sw.cb(sw.x); } else { sx.set(on.offsetLeft); sw.set(on.offsetWidth); } }); }
+function set(k,v){ if(state[k]===v) return; state[k]=v; syncSeg(); render(k); }
+
+/* ---------- tooltip ---------- */
+const tip=$('#tip'); const tr=(a,b)=>`<div class="r"><span>${a}</span><span>${b}</span></div>`;
+function showTip(h,x,y){ tip.innerHTML=h; tip.classList.add('on'); const w=tip.offsetWidth, hh=tip.offsetHeight; tip.style.left=Math.min(innerWidth-w-12,x+16)+'px'; tip.style.top=Math.min(innerHeight-hh-12,y+16)+'px'; }
+const hideTip=()=>tip.classList.remove('on');
+
+/* ---------- number roll ---------- */
+function roll(el,to,f){ const from=el._v??to; el._v=to; if(RM||el._i===undefined){ el._i=1; el.textContent=f(to); return; } const o={v:from}; gsap.to(o,{v:to,duration:.55,ease:'expo.out',overwrite:true,onUpdate:()=>el.textContent=f(o.v)}); }
+
+/* ---------- derived ---------- */
+function rng(){ const from=state.mode==='ytd'?0:state.m; return [from,state.m]; }
+function S(){ const [a,b]=rng(); return NV.sum(state.entity,state.scen,a,b); }
+const dsoT=()=>state.entity==='GRP'?52:NV.ent(state.entity).dsoT;
+
+/* ---------- hero copy ---------- */
+function heroRender(){
+  const m=state.m, s=S(), ser=NV.series(state.entity,state.scen), isA=m<NV.ACT;
+  roll($('#mon'),m,i=>NV.MONTHS[Math.round(i)]); $('#mon').textContent=NV.MONTHS[m];
+  $('#yr').textContent=m<9?'2026':'2027';
+  const st=$('#state'); st.classList.toggle('fc',!isA); st.querySelector('span').textContent=isA?'Closed':'Forecast · '+NV.SCEN[state.scen].label.toLowerCase();
+  const rv=s.rev/s.revB-1, ev=s.ebitda-s.ebitdaB, yoy=s.rev/s.revPY-1;
+  const lead= state.mode==='ytd' ? (m===0?'April':'April to '+MONTHLONG[m]) : MONTHLONG[m];
+  const mom = m>0 ? ser[m].rev/ser[m-1].rev-1 : null;
+  $('#story').innerHTML = `${lead}, ${entName()} ${isA?'booked':'is heading for'} <em>${fmt.gbp(s.rev)}</em> of revenue, ${fmt.spct(rv)} against budget and ${fmt.spct(yoy)} on last year. EBITDA ${isA?'is':'lands'} <em class="${ev<0?'bad':'good'}">${fmt.gbp(Math.abs(ev))}</em> ${ev<0?'behind':'ahead of'} budget${mom!==null&&state.mode==='month'?`; month on month revenue ${mom<0?'fell':'rose'} ${fmt.pct(Math.abs(mom))}`:''}.`;
+  $('#modecap').textContent = state.mode==='ytd' ? 'Totals run from April to the month on the timeline.' : 'Totals cover the single month on the timeline.';
+}
+
+/* ---------- KPI tiles ---------- */
+const KP=[
+  {k:'rev', t:'Revenue', f:v=>fmt.gbp(v), get:s=>s.rev, sub:s=>[fmt.spct(s.rev/s.revB-1)+' vs budget', s.rev>=s.revB], line:o=>o.rev, base:o=>o.revB},
+  {k:'margin', t:'EBITDA margin', f:v=>fmt.pct(v), get:s=>s.margin, sub:s=>[fmt.pp(s.margin-s.marginB)+' vs budget', s.margin>=s.marginB], line:o=>o.margin, base:o=>o.marginB},
+  {k:'cash', t:'Cash', tag:'group', f:v=>fmt.gbp(v), get:()=>NV.cash(state.scen)[state.m].cash, sub:()=>{ const c=NV.cash(state.scen), m=state.m, d=c[m].cash-(m?c[m-1].cash:9.18e6); return [fmt.sgbp(d)+' in the month', d>=0]; }, line:(o,i)=>NV.cash(state.scen)[i].cash},
+  {k:'dso', t:'Debtor days', f:v=>v.toFixed(1), get:s=>s.dso, sub:s=>[`target ${dsoT()} · ${s.dso-dsoT()>0?'+':'−'}${Math.abs(s.dso-dsoT()).toFixed(1)} d`, s.dso<=dsoT()], line:(o,i)=>NV.sum(state.entity,state.scen,i,i).dso, base:()=>dsoT(), lowGood:true},
+  {k:'util', t:'Utilisation', f:v=>fmt.pct(v), get:s=>s.util, sub:s=>[fmt.pp(s.util-s.utilB)+' vs plan', s.util>=s.utilB], line:o=>o.util, base:o=>o.utilB},
+];
+function kpiInit(){ $('#kpis').innerHTML=KP.map(k=>`<article class="tile kpi" data-k="${k.k}"><div class="sheen"></div><h3>${k.t}<span class="tg"></span></h3><div class="v"></div><div class="d"><span class="dd"></span></div><svg viewBox="0 0 240 52" preserveAspectRatio="none"><path class="spb"/><path class="sp"/><path class="spf"/><line class="vl" y1="-4" y2="52"/><circle class="dot" r="4"/></svg></article>`).join(''); }
+function kpiRender(){
+  const s=S(), ser=NV.series(state.entity,state.scen), m=state.m;
+  KP.forEach(k=>{ const el=$(`.kpi[data-k="${k.k}"]`); roll(el.querySelector('.v'),k.get(s),k.f);
+    el.querySelector('.tg').textContent = k.k==='cash'?'group, month end': k.k==='dso'?'at month end': state.mode==='ytd'?'YTD':NV.MONTHS[m];
+    const [txt,good]=k.sub(s); const dd=el.querySelector('.dd'); dd.textContent=txt; dd.className='dd '+(good?'good':'bad');
+    const vals=ser.map((o,i)=>k.line(o,i)), bs=k.base?ser.map(o=>k.base(o)):null; const all=vals.concat(bs||[]); const lo=Math.min(...all), hi=Math.max(...all), pad=(hi-lo)*.12||1;
+    const X=i=>i/11*240, Y=v=>52-(v-lo+pad)/(hi-lo+2*pad)*52; const P=(arr,a,b)=>arr.slice(a,b+1).map((v,j)=>(j?'L':'M')+X(a+j).toFixed(1)+' '+Y(v).toFixed(1)).join('');
+    el.querySelector('.sp').setAttribute('d',P(vals,0,NV.ACT-1)); el.querySelector('.spf').setAttribute('d',P(vals,NV.ACT-1,11)); el.querySelector('.spb').setAttribute('d',bs?P(bs,0,11):'');
+    const dot=el.querySelector('.dot'), vl=el.querySelector('.vl');
+    if(!el._sx){ el._sx=spring(X(m),{k:300,c:30}); el._sy=spring(Y(vals[m]),{k:300,c:30}); el._sx.cb=x=>{dot.setAttribute('cx',x); vl.setAttribute('x1',x); vl.setAttribute('x2',x);}; el._sy.cb=y=>dot.setAttribute('cy',y); springs.add(el._sx); springs.add(el._sy); el._sx.cb(X(m)); el._sy.cb(Y(vals[m])); }
+    el._sx.set(X(m)); el._sy.set(Y(vals[m]));
+  });
+}
+/* tilt: spring-driven, pointer-relative */
+function tilt(el,max=7){ if(RM||matchMedia('(hover: none)').matches) return; const rx=spring(0,{k:170,c:18}), ry=spring(0,{k:170,c:18}), lift=spring(0,{k:200,c:22});
+  const apply=()=>{ el.style.transform=`rotateX(${rx.x}deg) rotateY(${ry.x}deg) translateZ(${lift.x}px)`; el.style.setProperty('--sh',`${(-ry.x*2.4).toFixed(1)}px ${(22+rx.x*2.4+lift.x*.6).toFixed(1)}px ${40+lift.x}px -18px rgba(0,0,0,.85)`); };
+  rx.cb=ry.cb=lift.cb=apply; springs.add(rx); springs.add(ry); springs.add(lift);
+  el.addEventListener('pointermove',e=>{ const r=el.getBoundingClientRect(); const px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height; ry.set((px-.5)*2*max); rx.set(-(py-.5)*2*max); lift.set(14); el.style.setProperty('--mx',px*100+'%'); el.style.setProperty('--my',py*100+'%'); });
+  el.addEventListener('pointerleave',()=>{ rx.set(0); ry.set(0); lift.set(0); }); }
+
+/* ---------- scrubber ---------- */
+const track=$('#track'), knob=$('#knob'), fill=$('#fill');
+const mx=i=>(i+.5)/12*track.clientWidth;
+$('#ticks').innerHTML=NV.LABELS.map((l,i)=>`<span class="tick" data-i="${i}">${l}</span>`).join('');
+const kx=spring(0,{k:520,c:42}); springs.add(kx);
+kx.cb=x=>{ knob.style.transform=`translateX(${x}px)`; fill.style.transform=`scaleX(${Math.max(0,x)/track.clientWidth})`; fill.style.width='100%'; };
+function layoutTrack(){ const w=track.clientWidth, cut=NV.ACT/12*w; $('#ract').style.width=cut+'px'; $('#rfc').style.left=cut+'px'; $('#cutl').style.left=cut+'px'; document.querySelectorAll('.tick').forEach(t=>t.style.left=mx(+t.dataset.i)+'px'); kx.snap(mx(state.m)); kx.cb(kx.x); }
+function syncTicks(){ document.querySelectorAll('.tick').forEach(t=>{ const i=+t.dataset.i; t.classList.toggle('on',i===state.m); t.classList.toggle('past',i<state.m); }); knob.setAttribute('aria-valuenow',state.m); knob.setAttribute('aria-valuetext',NV.LABELS[state.m]+(state.m<NV.ACT?', closed':', forecast')); }
+function setMonth(i,{snap=true}={}){ i=Math.max(0,Math.min(11,i)); if(snap) kx.set(mx(i)); if(i===state.m) return; state.m=i; syncTicks(); render('m'); }
+let dragging=false;
+track.addEventListener('pointerdown',e=>{ dragging=true; track.classList.add('drag'); track.setPointerCapture(e.pointerId); stopPlay(); move(e); });
+track.addEventListener('pointermove',e=>{ if(dragging) move(e); });
+const end=()=>{ if(!dragging) return; dragging=false; track.classList.remove('drag'); kx.set(mx(state.m)); };
+track.addEventListener('pointerup',end); track.addEventListener('pointercancel',end);
+function move(e){ const r=track.getBoundingClientRect(); const x=Math.max(0,Math.min(r.width,e.clientX-r.left)); kx.set(x); setMonth(Math.floor(x/r.width*12),{snap:false}); }
+knob.addEventListener('keydown',e=>{ const d={ArrowLeft:-1,ArrowDown:-1,ArrowRight:1,ArrowUp:1}[e.key]; if(e.key==='Home') setMonth(0); else if(e.key==='End') setMonth(11); else if(d) setMonth(state.m+d); else return; e.preventDefault(); });
+let playT=null; const playP=$('#playp');
+function stopPlay(){ if(playT){ clearInterval(playT); playT=null; playP.setAttribute('d','M4 2.5v11l9.5-5.5z'); $('#play').setAttribute('aria-label','Play the year'); } }
+$('#play').onclick=()=>{ if(playT) return stopPlay(); if(state.m>=11) setMonth(0); playP.setAttribute('d','M3.5 2.5h3.2v11H3.5zM9.3 2.5h3.2v11H9.3z'); $('#play').setAttribute('aria-label','Pause'); playT=setInterval(()=>{ if(state.m>=11) return stopPlay(); setMonth(state.m+1); }, RM?1400:900); };
+
+/* ---------- 3D utilisation surface ---------- */
+const G={};
+const W52=[]; { const d0=Date.UTC(2026,3,6); for(let w=0;w<52;w++){ const d=new Date(d0+w*7*864e5); W52.push({w,m:(d.getUTCMonth()+9)%12,label:d.getUTCDate()+' '+NV.MONTHS[(d.getUTCMonth()+9)%12],xmas:(d.getUTCMonth()===11&&d.getUTCDate()>=19)}); } }
+const NA=30, NC=NV.CONS.length, DX=.2, DZ=.44, HY=2.3;
+function utilAt(c,w){ const C=NV.CONS[c]; if(w<NA){ const x=C.weeks[w]; return x.avail? x.bill/x.avail : null; } const sc=NV.SCEN[state.scen].h; return Math.min(.97,C.target*sc*(W52[w].xmas?.55:1)*(W52[w].m===8?.98:1)); }
+const RAMP=[[.30,'#3a3832'],[.58,'#8d8a80'],[.82,'#e9e8e3'],[.90,'#ffa070'],[.98,'#ff5a1f']].map(([t,c])=>[t,new THREE.Color(c)]);
+function rampC(u,out){ u=Math.max(.3,Math.min(1,u)); for(let i=1;i<RAMP.length;i++){ if(u<=RAMP[i][0]){ const a=RAMP[i-1],b=RAMP[i]; return out.copy(a[1]).lerp(b[1],(u-a[0])/(b[0]-a[0])); } } return out.copy(RAMP[RAMP.length-1][1]); }
+function vis(c,w){ const raw=w=>{ let u=utilAt(c,w); if(u===null){ let a=w-1,b=w+1; while(a>=0&&utilAt(c,a)===null)a--; while(b<NA&&utilAt(c,b)===null)b++; const ua=a>=0?utilAt(c,a):null, ub=b<NA?utilAt(c,b):null; u=ua!==null&&ub!==null?(ua+ub)/2:(ua??ub??.7); } return u; };
+  if(w>=NA) return utilAt(c,w); const p=w>0?raw(w-1):raw(w), n=w<NA-1?raw(w+1):raw(w); return .25*p+.5*raw(w)+.25*n; }
+function initSurface(){
+  const host=$('#stage3'); let R; try{ R=new THREE.WebGLRenderer({antialias:true,alpha:true}); }catch(e){ $('#glfail').style.display='grid'; return; }
+  R.setPixelRatio(Math.min(devicePixelRatio,2)); R.shadowMap.enabled=true; R.shadowMap.type=THREE.PCFSoftShadowMap; R.toneMapping=THREE.ACESFilmicToneMapping; R.toneMappingExposure=1.05; host.append(R.domElement);
+  const scene=new THREE.Scene(); const cam=new THREE.PerspectiveCamera(30,1,.1,200);
+  const ctl=new OrbitControls(cam,R.domElement); ctl.enableDamping=true; ctl.dampingFactor=.07; ctl.enablePan=false; ctl.enableZoom=false; ctl.minPolarAngle=.45; ctl.maxPolarAngle=1.25;
+  const cx=51*DX/2, cz=(NC-1)*DZ/2; ctl.target.set(cx-.2,.55,cz); cam.position.set(cx-9.4,8.6,cz+12.2);
+  scene.add(new THREE.HemisphereLight(0xf6f4ee,0x1b1a17,1.2));
+  const sun=new THREE.DirectionalLight(0xffffff,2.2); sun.position.set(cx-6,12,cz+8); sun.target.position.set(cx,0,cz); sun.castShadow=true; sun.shadow.mapSize.set(2048,2048); Object.assign(sun.shadow.camera,{left:-9,right:9,top:9,bottom:-9}); sun.shadow.bias=-.0008; scene.add(sun,sun.target);
+  const rim=new THREE.DirectionalLight(0xff8a50,.7); rim.position.set(cx+8,4,cz-8); scene.add(rim);
+  // plinth
+  const pw=51*DX+.9, pd=(NC-1)*DZ+.9;
+  const plinth=new THREE.Mesh(new THREE.BoxGeometry(pw,.32,pd), new THREE.MeshStandardMaterial({color:0x2a2925,roughness:.6,metalness:.25})); plinth.position.set(cx,-.17,cz); plinth.receiveShadow=true; scene.add(plinth);
+  const top=new THREE.Mesh(new THREE.PlaneGeometry(pw-.1,pd-.1), new THREE.MeshStandardMaterial({color:0x22211d,roughness:.9})); top.rotation.x=-Math.PI/2; top.position.set(cx,.002,cz); top.receiveShadow=true; scene.add(top);
+  // actual surface (solid)
+  function grid(w0,w1){ const g=new THREE.BufferGeometry(); const nw=w1-w0+1; const pos=new Float32Array(nw*NC*3), col=new Float32Array(nw*NC*3), idx=[];
+    for(let c=0;c<NC;c++) for(let j=0;j<nw;j++){ const i=c*nw+j; pos[i*3]=(w0+j)*DX; pos[i*3+2]=c*DZ; }
+    for(let c=0;c<NC-1;c++) for(let j=0;j<nw-1;j++){ const a=c*nw+j,b=a+1,d=a+nw,e=d+1; idx.push(a,d,b,b,d,e); }
+    g.setIndex(idx); g.setAttribute('position',new THREE.BufferAttribute(pos,3)); g.setAttribute('color',new THREE.BufferAttribute(col,3)); g.userData={w0,nw}; return g; }
+  const gA=grid(0,NA-1);
+  const mA=new THREE.Mesh(gA,new THREE.MeshStandardMaterial({vertexColors:true,roughness:.48,metalness:.12,side:THREE.DoubleSide,flatShading:false})); mA.castShadow=true; mA.receiveShadow=true; scene.add(mA);
+  const gF=grid(NA-1,51);
+  const mF=new THREE.Mesh(gF,new THREE.MeshBasicMaterial({visible:false,side:THREE.DoubleSide})); scene.add(mF);
+  const wire=new THREE.LineSegments(new THREE.WireframeGeometry(gF), new THREE.LineBasicMaterial({color:0x9b978c,transparent:true,opacity:.45})); scene.add(wire);
+  // curtains (front edge drop) give the actual surface a physical edge
+  const cur=new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshStandardMaterial({color:0x4a4842,roughness:.7,side:THREE.DoubleSide})); scene.add(cur);
+  // month slice
+  const slice=new THREE.Mesh(new THREE.BoxGeometry(1,HY*1.08,(NC-1)*DZ+.5), new THREE.MeshBasicMaterial({color:0xff5a1f,transparent:true,opacity:.11,depthWrite:false})); slice.position.set(0,HY*.54,cz); scene.add(slice);
+  const sliceEdge=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(1,HY*1.08,(NC-1)*DZ+.5)), new THREE.LineBasicMaterial({color:0xff5a1f,transparent:true,opacity:.75})); slice.add(sliceEdge);
+  const sx=spring(0,{k:260,c:30}), sw=spring(1,{k:260,c:30}); springs.add(sx); springs.add(sw); sx.cb=()=>{}; sw.cb=()=>{};
+  // morph targets
+  const hA=new Float32Array(NA*NC), hF=new Float32Array(gF.userData.nw*NC); const curH={A:new Float32Array(NA*NC),F:new Float32Array(gF.userData.nw*NC)}; let grow=RM?1:0;
+  const tmpC=new THREE.Color(), dimC=new THREE.Color(0x2a2925);
+  function targets(){ for(let c=0;c<NC;c++){ for(let j=0;j<NA;j++){ hA[c*NA+j]=vis(c,j)*HY; } for(let j=0;j<gF.userData.nw;j++){ const u=utilAt(c,NA-1+j); hF[c*gF.userData.nw+j]=(u??0)*HY; } } }
+  function paint(){ const col=gA.attributes.color; for(let c=0;c<NC;c++){ const on=state.entity==='GRP'||NV.CONS[c].ent===state.entity; for(let j=0;j<NA;j++){ rampC(vis(c,j),tmpC); if(!on) tmpC.lerp(dimC,.86); col.setXYZ(c*NA+j,tmpC.r,tmpC.g,tmpC.b); } } col.needsUpdate=true; }
+  function apply(){ const pa=gA.attributes.position, pf=gF.attributes.position; for(let i=0;i<hA.length;i++){ curH.A[i]+= (hA[i]-curH.A[i])*(RM?1:.14); pa.setY(i,curH.A[i]*grow); } for(let i=0;i<hF.length;i++){ curH.F[i]+=(hF[i]-curH.F[i])*(RM?1:.14); pf.setY(i,curH.F[i]*grow); } pa.needsUpdate=true; pf.needsUpdate=true; gA.computeVertexNormals(); gF.computeBoundingSphere(); gA.computeBoundingSphere();
+    wire.geometry.dispose(); wire.geometry=new THREE.WireframeGeometry(gF);
+    // curtain along front (c = NC-1) and right edge of actual
+    const v=[]; const push=(x,z,y)=>v.push(x,y,z);
+    for(let j=0;j<NA-1;j++){ const z=(NC-1)*DZ, y0=pa.getY((NC-1)*NA+j), y1=pa.getY((NC-1)*NA+j+1), x0=j*DX, x1=(j+1)*DX; push(x0,z,0);push(x1,z,0);push(x0,z,y0); push(x1,z,0);push(x1,z,y1);push(x0,z,y0); }
+    for(let c=0;c<NC-1;c++){ const x=0, y0=pa.getY(c*NA), y1=pa.getY((c+1)*NA), z0=c*DZ, z1=(c+1)*DZ; push(x,z0,0);push(x,z1,0);push(x,z0,y0); push(x,z1,0);push(x,z1,y1);push(x,z0,y0); }
+    cur.geometry.dispose(); const cg=new THREE.BufferGeometry(); cg.setAttribute('position',new THREE.Float32BufferAttribute(v,3)); cg.computeVertexNormals(); cur.geometry=cg; }
+  G.refresh=()=>{ targets(); paint(); G.dirty=40; };
+  G.slice=()=>{ const ws=W52.filter(w=>w.m===state.m); const a=ws[0].w, b=ws[ws.length-1].w; sx.set((a+b)/2*DX); sw.set((b-a)*DX+DX*.9); };
+  targets(); paint(); G.dirty=999; G.slice(); sx.snap(sx.t); sw.snap(sw.t);
+  // labels
+  const lab=[]; const mk=(t,cls,p)=>{ const d=document.createElement('div'); d.className='slbl '+cls; d.textContent=t; host.append(d); lab.push({d,p}); return d; };
+  NV.MONTHS.forEach((mn,i)=>{ const ws=W52.filter(w=>w.m===i); const x=(ws[0].w+ws[ws.length-1].w)/2*DX; const d=mk(mn,'m',new THREE.Vector3(x,0,(NC-1)*DZ+.55)); d.dataset.m=i; });
+  const groups=NV.ENT.map(e=>{ const rows=NV.CONS.map((c,i)=>c.ent===e.id?i:-1).filter(i=>i>=0); return {e,z:(rows[0]+rows[rows.length-1])/2*DZ}; });
+  groups.forEach(g=>{ const d=mk(g.e.short,'e',new THREE.Vector3(-.35,0,g.z)); d.dataset.e=g.e.id; });
+  G.labels=()=>{ lab.forEach(l=>{ if(l.d.dataset.m!==undefined) l.d.classList.toggle('cur',+l.d.dataset.m===state.m); if(l.d.dataset.e) l.d.classList.toggle('off',state.entity!=='GRP'&&l.d.dataset.e!==state.entity); }); };
+  G.labels();
+  const v3=new THREE.Vector3();
+  function place(w,h){ lab.forEach(l=>{ v3.copy(l.p).project(cam); const x=(v3.x*.5+.5)*w, y=(-v3.y*.5+.5)*h; const right=l.d.classList.contains('e'); l.d.style.transform=`translate(${(right?x-l.d.offsetWidth:x-l.d.offsetWidth/2).toFixed(1)}px,${(y-6).toFixed(1)}px)`; }); }
+  // hover + click
+  const ray=new THREE.Raycaster(), pt=new THREE.Vector2(); let hoverW=-1;
+  function pick(e){ const r=R.domElement.getBoundingClientRect(); pt.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1); ray.setFromCamera(pt,cam); const hit=ray.intersectObjects([mA,mF])[0]; if(!hit) return null; const w=Math.round(hit.point.x/DX), c=Math.round(hit.point.z/DZ); if(w<0||w>51||c<0||c>=NC) return null; return {w,c}; }
+  let downAt=null;
+  R.domElement.addEventListener('pointerdown',e=>downAt=[e.clientX,e.clientY]);
+  R.domElement.addEventListener('pointermove',e=>{ const p=pick(e); if(!p){ hideTip(); hoverW=-1; return; } hoverW=p.w; const C=NV.CONS[p.c], W=W52[p.w], u=utilAt(p.c,p.w); const act=p.w<NA;
+    showTip(`<b>${C.name} · w/c ${W.label}</b>`+tr(NV.ent(C.ent).short+', '+C.grade.toLowerCase(),'')+tr(act?'Billable':'Plan', u===null?'on leave':fmt.pct(u))+tr('Grade target',fmt.pct(C.target))+(act?tr('Hours billed',C.weeks[p.w].bill.toFixed(1)+' / '+C.weeks[p.w].avail.toFixed(1)):''),e.clientX,e.clientY); });
+  R.domElement.addEventListener('pointerleave',()=>{ hideTip(); hoverW=-1; });
+  R.domElement.addEventListener('pointerup',e=>{ if(!downAt||Math.hypot(e.clientX-downAt[0],e.clientY-downAt[1])>5) return; const p=pick(e); if(p){ stopPlay(); setMonth(W52[p.w].m); } });
+  // size
+  function size(){ const w=host.clientWidth,h=host.clientHeight; R.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); G.w=w; G.h=h; }
+  size(); addEventListener('resize',size);
+  G.grow=v=>{ grow=v; G.dirty=2; };
+  G.getGrow=()=>grow;
+  let az=0;
+  ticker.push((dt,now)=>{ if(G.dirty>0){ apply(); G.dirty--; } slice.position.x=sx.x; slice.scale.x=Math.max(.05,sw.x); slice.material.opacity=.11; if(!RM && !dragging3){ az=Math.sin(now/5200)*.0009; const off=cam.position.clone().sub(ctl.target); off.applyAxisAngle(new THREE.Vector3(0,1,0),az); cam.position.copy(ctl.target).add(off); } ctl.update(); R.render(scene,cam); place(G.w,G.h); });
+  let dragging3=false; ctl.addEventListener('start',()=>dragging3=true); ctl.addEventListener('end',()=>dragging3=false);
+}
+
+/* ---------- charts ---------- */
+const charts={}; const ch=id=>charts[id]||(charts[id]=echarts.init(document.getElementById(id),null,{renderer:'canvas'}));
+addEventListener('resize',()=>Object.values(charts).forEach(c=>c.resize()));
+const INK='#151412', INK3='#625f58', ALU3='#cfcdc5', HOT='#ff5a1f', GOOD='#0d7f64', BAD='#c9341b';
+const AX={axisLine:{lineStyle:{color:INK}},axisTick:{show:false},axisLabel:{fontFamily:'Martian Mono',fontSize:10.5,color:INK3},splitLine:{lineStyle:{color:ALU3,type:[2,3]}}};
+const TT={backgroundColor:INK,borderWidth:0,padding:[10,12],textStyle:{color:'#efede6',fontFamily:'Archivo',fontSize:12.5},extraCssText:'border-radius:10px;box-shadow:0 18px 40px -10px rgba(0,0,0,.6)'};
+const base={animationDuration:RM?0:700,animationDurationUpdate:RM?0:550,animationEasingUpdate:'cubicOut',textStyle:{fontFamily:'Archivo'}};
+const tb=(t)=>`<div style="font-weight:600;margin-bottom:5px">${t}</div>`;
+const trow=(a,b)=>`<div style="display:flex;justify-content:space-between;gap:20px;font-family:Martian Mono;font-size:11.5px;line-height:1.75;color:#cfccc2"><span>${a}</span><span style="color:#efede6">${b}</span></div>`;
+function periodWords(){ const [a,b]=rng(); return a===b? NV.LABELS[b] : `Apr–${NV.MONTHS[b]} ${b<9?'26':'27'}`; }
+
+function bridgeRender(){
+  const s=S(); const isA=state.m<NV.ACT; let cum=0; const inv=[],vis=[];
+  s.bridge.forEach(b=>{ if(b.total){ inv.push(0); vis.push({value:b.v,itemStyle:{color:b.k==='budget'?ALU3:INK,borderRadius:3}}); cum=b.v; } else { inv.push(b.v<0?cum+b.v:cum); vis.push({value:Math.abs(b.v),itemStyle:{color:b.v<0?BAD:GOOD,borderRadius:3}}); cum+=b.v; } });
+  const lv=s.bridge.map((b,i)=>inv[i]+(b.total?b.v:Math.abs(b.v))).concat(inv.filter((x,i)=>!s.bridge[i].total));
+  const lo=Math.min(...lv), hi=Math.max(...lv), st=Math.pow(10,Math.floor(Math.log10(Math.max(1,hi)))-1), min=Math.max(0,Math.floor((lo-(hi-lo)*.9)/st)*st);
+  $('#bcap').textContent=`${periodWords()}, ${entName()}${isA?'':', '+NV.SCEN[state.scen].label.toLowerCase()+' case'}. Budget EBITDA to ${isA?'actual':'outturn'}, revenue split into hours, rate and FX. Axis starts at ${fmt.gbp(min)}.`;
+  ch('c-bridge').setOption({...base,grid:{left:58,right:8,top:30,bottom:26},
+    tooltip:{...TT,trigger:'axis',axisPointer:{type:'shadow',shadowStyle:{color:'rgba(21,20,18,.05)'}},formatter:ps=>{const b=s.bridge[ps[0].dataIndex]; return tb(b.label)+trow(b.total?'Value':'Effect on EBITDA',b.total?fmt.gbp(b.v):fmt.sgbp(b.v));}},
+    xAxis:{type:'category',data:s.bridge.map(b=>b.label.replace(' EBITDA','').replace(' (hours)','')),...AX,axisLabel:{...AX.axisLabel,fontFamily:'Archivo',fontSize:11.5,color:INK,interval:0}},
+    yAxis:{type:'value',min,...AX,axisLine:{show:false},axisLabel:{...AX.axisLabel,formatter:v=>fmt.gbp(v,1)}},
+    series:[{type:'bar',stack:'w',data:inv,itemStyle:{color:'transparent'},silent:true,barWidth:'56%'},
+      {type:'bar',stack:'w',data:vis,barWidth:'56%',label:{show:true,position:'top',fontFamily:'Martian Mono',fontSize:10.5,color:INK,formatter:p=>{const b=s.bridge[p.dataIndex]; return b.total?fmt.gbp(b.v):fmt.sgbp(b.v);}}}]});
+}
+function growthRender(){
+  const ser=NV.series(state.entity,state.scen), m=state.m;
+  const yoy=ser.map(o=>o.rev/o.revPY-1), mom=ser.map((o,i)=>i? o.rev/ser[i-1].rev-1 : null);
+  $('#gcap').textContent=`Monthly revenue against the same month last year (bars) and against the month before (line). ${NV.LABELS[m]}: ${fmt.spct(yoy[m])} year on year${m?', '+fmt.spct(mom[m])+' month on month':''}.`;
+  ch('c-growth').setOption({...base,grid:{left:44,right:8,top:24,bottom:26},legend:{show:false},
+    tooltip:{...TT,trigger:'axis',formatter:ps=>{const i=ps[0].dataIndex; return tb(NV.LABELS[i]+(i<NV.ACT?' actual':' forecast'))+trow('Revenue',fmt.gbp(ser[i].rev))+trow('Prior year',fmt.gbp(ser[i].revPY))+trow('Year on year',fmt.spct(yoy[i]))+(i?trow('Month on month',fmt.spct(mom[i])):'');}},
+    xAxis:{type:'category',data:NV.MONTHS,...AX},
+    yAxis:{type:'value',...AX,axisLine:{show:false},axisLabel:{...AX.axisLabel,formatter:v=>Math.round(v*100)+'%'}},
+    series:[{type:'bar',barWidth:'52%',data:yoy.map((v,i)=>({value:v,itemStyle:{color:i===m?HOT:i<NV.ACT?INK:'transparent',borderColor:i<NV.ACT||i===m?'transparent':INK3,borderWidth:1,borderType:'dashed',borderRadius:[3,3,0,0]}}))},
+      {type:'line',data:mom,symbol:'circle',symbolSize:5,lineStyle:{color:INK3,width:1.4},itemStyle:{color:INK3},z:3}]});
+}
+function forecastRender(){
+  const id=state.entity, b=NV.series(id,'base'), u=NV.series(id,'up'), d=NV.series(id,'down'), V=NV.versions(id), m=state.m;
+  const lo=d.map(o=>o.rev), band=u.map((o,i)=>o.rev-d[i].rev), cur=NV.series(id,state.scen);
+  const fy=k=>NV.sum(id,k,0,11).rev, bud=NV.sum(id,'base',0,11).revB;
+  $('#fcap').textContent=`Monthly revenue for ${entName()}. Bars are closed months, the band spans downside to upside, thin lines are earlier re-forecasts. Full year: ${fmt.gbp(fy('down'))} to ${fmt.gbp(fy('up'))} against a ${fmt.gbp(bud)} budget.`;
+  $('#i2').textContent=`On the ${NV.SCEN[state.scen].label.toLowerCase()} case ${entName()} closes the year at ${fmt.gbp(fy(state.scen))}, ${fmt.spct(fy(state.scen)/bud-1)} against budget. Move the timeline into the forecast months to see the plan behind each number.`;
+  const lines=V.slice(1).map((v,i)=>({type:'line',name:v.name,data:v.vals.map((x,j)=>j>v.asAt?x:null),symbol:'none',lineStyle:{color:INK3,width:1,opacity:.25+i*.1},z:2,silent:true}));
+  ch('c-fc').setOption({...base,grid:{left:56,right:10,top:30,bottom:26},
+    legend:{top:0,left:0,itemWidth:14,itemHeight:6,itemGap:18,textStyle:{fontFamily:'Archivo',fontSize:12,color:INK3},data:['Actual','Forecast','Budget','Scenario range']},
+    tooltip:{...TT,trigger:'axis',formatter:ps=>{const i=ps[0].dataIndex; return tb(NV.LABELS[i]+(i<NV.ACT?' actual':' forecast'))+(i<NV.ACT?trow('Actual',fmt.gbp(b[i].rev)):trow('Base',fmt.gbp(b[i].rev))+trow('Upside',fmt.gbp(u[i].rev))+trow('Downside',fmt.gbp(d[i].rev)))+trow('Budget',fmt.gbp(b[i].revB));}},
+    xAxis:{type:'category',data:NV.MONTHS,...AX,boundaryGap:true},
+    yAxis:{type:'value',...AX,axisLine:{show:false},min:Math.floor(Math.min(...lo,...b.map(o=>o.rev))*.8/5e5)*5e5,axisLabel:{...AX.axisLabel,formatter:v=>fmt.gbp(v,1)}},
+    series:[
+      {type:'line',name:'lo',data:lo.map((v,i)=>i>=NV.ACT-1?v:null),stack:'band',symbol:'none',lineStyle:{opacity:0},silent:true,stackStrategy:'all'},
+      {type:'line',name:'Scenario range',data:band.map((v,i)=>i>=NV.ACT-1?v:null),stack:'band',symbol:'none',lineStyle:{opacity:0},areaStyle:{color:'rgba(255,90,31,.16)'},itemStyle:{color:'rgba(255,90,31,.35)'},silent:true,stackStrategy:'all'},
+      ...lines,
+      {type:'bar',name:'Actual',barWidth:'50%',data:b.map((o,i)=>i<NV.ACT?{value:o.rev,itemStyle:{color:i===m?HOT:INK,borderRadius:[3,3,0,0]}}:null),itemStyle:{color:INK}},
+      {type:'line',name:'Forecast',data:cur.map((o,i)=>i>=NV.ACT-1?o.rev:null),symbol:'circle',symbolSize:(v,p)=>p.dataIndex===m?11:5,itemStyle:{color:HOT},lineStyle:{color:HOT,width:2},z:5},
+      {type:'line',name:'Budget',data:b.map(o=>o.revB),symbol:'none',lineStyle:{color:INK,width:1.2,type:[4,3]},itemStyle:{color:INK},z:4},
+    ]},{notMerge:true});
+}
+function peopleRender(){
+  const m=state.m, isA=m<NV.ACT; const ws=W52.filter(w=>w.m===m).map(w=>w.w);
+  const rows=NV.CONS.map((c,ci)=>{ let u; if(isA){ const b=ws.reduce((a,w)=>a+c.weeks[w].bill,0), av=ws.reduce((a,w)=>a+c.weeks[w].avail,0); u=av?b/av:0; } else { u=ws.reduce((a,w)=>a+utilAt(ci,w),0)/ws.length; } return {c,u}; }).sort((a,b)=>b.u-a.u);
+  $('#ptitle').textContent=`Consultants, ${MONTHLONG[m]}`;
+  const on=rows.filter(r=>state.entity==='GRP'||r.c.ent===state.entity); const below=on.filter(r=>r.u<r.c.target).length;
+  $('#pcap').textContent=isA?`Billable share of available hours. ${below} of ${on.length} below their grade target (orange tick).`:`Planned utilisation in the ${NV.SCEN[state.scen].label.toLowerCase()} case, including the December holiday weeks.`;
+  const ul=$('#people'); if(!ul.children.length) ul.innerHTML=NV.CONS.map(()=>'<li><span class="nm"></span><span class="bw"><i></i><b></b></span><span class="u"></span></li>').join('');
+  rows.forEach((r,i)=>{ const li=ul.children[i]; li.querySelector('.nm').textContent=r.c.name; const bar=li.querySelector('i'); bar.style.transform=`scaleX(${Math.min(1,r.u)})`; bar.style.width='100%'; bar.classList.toggle('lo',r.u<r.c.target); li.querySelector('b').style.left=`calc(${r.c.target*100}% - 1px)`; li.querySelector('.u').textContent=fmt.pct(r.u,0); li.classList.toggle('fade',state.entity!=='GRP'&&r.c.ent!==state.entity); });
+}
+function icRender(){
+  const [a,b]=rng(); const flows=NV.ic(a,b); const tot=flows.reduce((x,f)=>x+f.v,0); const nm=id=>NV.ent(id).short;
+  const isA=b<NV.ACT;
+  $('#scap').textContent=`${periodWords()}: ${fmt.gbp(tot)} recharged between entities${isA?'':' (forecast months at plan)'}. Sellers on the left, buyers on the right; all of it eliminates on consolidation.`;
+  $('#i3').textContent=`${flows.length} recurring flows across five entities. Hover a ribbon for its nature and value; reconciling items are listed alongside.`;
+  const hot=f=>state.entity==='GRP'||f.from===state.entity||f.to===state.entity;
+  const nodes=[...NV.ENT.map(e=>({name:'s'+e.id,itemStyle:{color:INK}})),...NV.ENT.map(e=>({name:'b'+e.id,itemStyle:{color:INK3}}))];
+  ch('c-ic').setOption({...base,tooltip:{...TT,formatter:p=>{ if(p.dataType==='edge'){ const f=p.data.f; return tb(nm(f.from)+' to '+nm(f.to))+trow(f.nature,'')+trow('Value',fmt.gbp(f.v)); } const id=p.name.slice(1); const side=p.name[0]==='s'?'Sells':'Buys'; return tb(nm(id))+trow(side,fmt.gbp(p.value)); }},
+    series:[{type:'sankey',left:4,right:150,top:10,bottom:10,nodeWidth:12,nodeGap:14,layoutIterations:0,draggable:false,emphasis:{focus:'adjacency'},
+      label:{fontFamily:'Archivo',fontSize:12.5,color:INK,formatter:p=>nm(p.name.slice(1))+'  '+fmt.gbp(p.value)},
+      nodes, links:flows.map(f=>({source:'s'+f.from,target:'b'+f.to,value:Math.max(1,f.v),f,lineStyle:{color:f.diff?HOT:hot(f)?'#8d8a80':'#d8d6cf',opacity:f.diff?.6:hot(f)?.45:.35,curveness:.5}})) }]},{notMerge:true});
+  const rec=flows.filter(f=>NV.ic(0,NV.ACT-1).find(x=>x.from===f.from&&x.to===f.to).diff);
+  const R=NV.ic(0,NV.ACT-1).filter(f=>f.diff);
+  $('#rec').innerHTML=R.map(f=>`<li><span><span class="flag"></span>${nm(f.from)} to ${nm(f.to)}</span><span class="n ${f.diff>0?'bad':'bad'}">${fmt.sgbp(f.diff,1)}</span><small>${f.nature}. ${f.diff>0?'Seller has booked more than the buyer has accrued.':'Buyer has accrued more than the seller has invoiced.'}</small></li>`).join('')
+    + `<li><span>Other ${NV.ic(0,0).length-R.length} pairs</span><span class="n good">agreed</span><small>Matched to the penny at the October close.</small></li>`
+    + `<li><span>Year-to-date total traded</span><span class="n">${fmt.gbp(NV.ic(0,NV.ACT-1).reduce((x,f)=>x+f.v,0))}</span><small>Eliminated in the group figures above.</small></li>`;
+}
+function introRender(){ const s=S(); const top=[...s.bridge].filter(b=>!b.total).sort((a,b)=>Math.abs(b.v)-Math.abs(a.v))[0];
+  $('#i1').textContent=`For ${periodWords()} the largest single driver is ${top.label.toLowerCase()} at ${fmt.sgbp(top.v)}. Every chart on this page follows the timeline above.`; }
+
+function render(k){
+  heroRender(); kpiRender(); bridgeRender(); growthRender(); introRender(); peopleRender(); icRender();
+  if(k!=='m' || !charts['c-fc']) forecastRender(); else { forecastRender(); }
+  if(G.refresh && (k==='entity'||k==='scen')) G.refresh(); if(G.slice) G.slice(); if(G.labels) G.labels();
+}
+
+/* ---------- boot ---------- */
+kpiInit(); syncSeg(true); layoutTrack(); syncTicks();
+addEventListener('resize',()=>{ layoutTrack(); syncSeg(true); });
+try{ initSurface(); }catch(e){ console.error(e); $('#glfail').style.display='grid'; }
+render('init');
+document.querySelectorAll('.tile').forEach(t=>tilt(t, t.classList.contains('kpi')?8:2.5));
+document.fonts && document.fonts.ready.then(()=>{ syncSeg(true); layoutTrack(); });
+
+gsap.registerPlugin(ScrollTrigger);
+const mm=gsap.matchMedia();
+mm.add('(prefers-reduced-motion: no-preference)',()=>{
+  const tl=gsap.timeline({defaults:{ease:'expo.out'}});
+  tl.from('.bar > *',{y:-12,opacity:0,duration:.6,stagger:.04})
+    .from('.mon',{yPercent:40,opacity:0,duration:1.1},.1)
+    .from(['.yr','.story','.mode'],{y:18,opacity:0,duration:.9,stagger:.08},.25)
+    .from('.cap3, .key3',{opacity:0,duration:.8},.6)
+    .from('.scrub',{opacity:0,y:16,duration:.8},.35)
+    .from('.kpi',{y:70,rotateX:-24,opacity:0,duration:1.1,stagger:.07,transformOrigin:'50% 100%'},.45);
+  if(G.grow){ const o={g:0}; tl.to(o,{g:1,duration:2,ease:'power3.inOut',onUpdate:()=>G.grow(o.g)},.2); }
+  gsap.utils.toArray('.chap').forEach(c=>{ gsap.from(c.querySelectorAll('.intro > *'),{y:24,opacity:0,duration:.9,ease:'expo.out',stagger:.08,scrollTrigger:{trigger:c,start:'top 85%'}});
+    gsap.from(c.querySelectorAll('.panel'),{y:60,rotateX:12,opacity:0,duration:1.1,ease:'expo.out',stagger:.1,transformOrigin:'50% 0%',scrollTrigger:{trigger:c,start:'top 80%'},clearProps:'transform'}); });
+});
+if(RM && G.grow) G.grow(1);
+</script>
+</body>
+</html>
