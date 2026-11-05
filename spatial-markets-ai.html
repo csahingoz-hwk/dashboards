@@ -66,6 +66,7 @@ html.no-gl #gl{display:none}
 .globe-pick{position:fixed;z-index:25;top:88px;right:max(20px,env(safe-area-inset-right));pointer-events:auto}
 .globe-pick.seg{background:rgba(8,9,12,.78)}
 html.no-gl .globe-pick{display:none}
+.globe-pick{display:none!important}
 @media (max-width:720px){
   .globe-pick{top:auto;right:auto;left:max(12px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom))}
 }
@@ -427,7 +428,7 @@ Low-power devices and prefers-reduced-motion hold the globe still and drop ambie
   var q=new URLSearchParams(location.search).get('globe');
   var s=q;
   if(s!=='night'&&s!=='hubs'){ try{ s=localStorage.getItem('sma-globe'); }catch(e){ s=null; } }
-  if(s!=='night'&&s!=='hubs') s='night';
+  s='night';
   window.__globePick=s;
   document.querySelectorAll('#globe-pick button').forEach(function(b){
     b.setAttribute('aria-checked', b.getAttribute('data-globe')===s?'true':'false');
@@ -1855,6 +1856,7 @@ function initGlobe(){
   let g=null, muteLoss=0, mode=initialMode();
 
   function initialMode(){
+    return 'night';
     const picked=window.__globePick;
     if(picked==='night'||picked==='hubs') return picked;
     const q=new URLSearchParams(location.search).get('globe');
@@ -2081,7 +2083,7 @@ function initGlobe(){
     }
   }
   function choose(next, persist){
-    if(next!=='night'&&next!=='hubs') return;
+    if(next!=='night') return;
     showChoice(next);
     if(persist) remember(next);
     if(!window.Globe){ mode=next; return; }
