@@ -359,7 +359,8 @@ dialog::backdrop{background:rgba(5,7,10,.72)}
   .hero,.chap,.foot{padding-left:20px;padding-right:20px}
   .board{grid-template-columns:repeat(2,minmax(0,1fr))}
   .meta{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .repo-grid,.split,.cal-layout,.foot,.reader{grid-template-columns:1fr}
+  .repo-grid,.split,.cal-layout,.foot,.reader,.intel-top,.earn-grid,.intel-flows{grid-template-columns:1fr}
+  .intel-news{grid-template-columns:1fr 1fr}
   .sess small{display:none}
 }
 @media (max-width:720px){
@@ -376,7 +377,7 @@ dialog::backdrop{background:rgba(5,7,10,.72)}
   .kpis,.chap,.foot{padding-left:16px;padding-right:16px}
   .kpis{grid-template-columns:1fr}
   .kpi .glass-body{min-height:0}
-  .board,.split,.cal-layout,.repo-grid{grid-template-columns:1fr}
+  .board,.split,.cal-layout,.repo-grid,.intel-top,.intel-news,.earn-grid,.intel-flows,.mv-cols{grid-template-columns:1fr}
   .chart{height:230px}
   .cal li{grid-template-columns:1fr;gap:4px}
   .chip{justify-self:start}
@@ -390,6 +391,55 @@ dialog::backdrop{background:rgba(5,7,10,.72)}
   .reader{max-height:100dvh;display:block}
   .reader-shot img{min-height:200px;max-height:38dvh}
   .foot{grid-template-columns:1fr;padding-bottom:48px}
+}
+.intel-top{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:16px;align-items:start}
+.intel-news{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.intel-flows{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+.earn-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(240px,.85fr);gap:18px 28px;margin-top:8px}
+.intel-top>.tilt,.intel-news>.tilt,.intel-flows>.tilt{min-width:0}
+.intel-meta{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin:-8px 0 18px;color:var(--dim);font-family:var(--mono);font-size:11px;letter-spacing:.04em}
+.mood-label{margin:10px 0 0;font-size:clamp(28px,3.4vw,40px);line-height:1;letter-spacing:-.04em;font-weight:620}
+.mood-score{margin:6px 0 0;font-size:15px;color:var(--dim)}
+.mood-track{position:relative;height:6px;border-radius:99px;margin:22px 6px 12px;background:linear-gradient(90deg,var(--down),#9aa8b5 50%,var(--up))}
+.mood-track i{position:absolute;top:-4px;width:1px;height:14px;background:rgba(232,238,242,.4)}
+.mood-mark{position:absolute;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 4px rgba(8,9,12,.72),0 0 0 5px var(--accent)}
+.mood-scale{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.mv-cols{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;margin-top:12px}
+.mv-cols h4{margin:0 0 6px;font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.mv{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.mv li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:baseline}
+.mv b{font-weight:650;letter-spacing:-.02em}
+.mv span,.flow-px{font-family:var(--mono);font-size:12px}
+.active-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.ncard .glass-body{padding:16px 16px 14px;display:flex;flex-direction:column;gap:8px;min-height:100%}
+.ncard h3{margin:0;font-size:18px;line-height:1.25;letter-spacing:-.03em;font-weight:620}
+.ncard h3 a{text-decoration:underline;text-decoration-color:rgba(126,231,240,.4);text-underline-offset:3px}
+.ncard .clamp{margin:0;color:var(--dim);font-size:13.5px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.nmeta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;font-size:12px;color:var(--dim)}
+.nmeta b{color:var(--ink);font-weight:620}
+.sent{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.ticks{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+.tick{font-family:var(--mono);font-size:10px;letter-spacing:.06em;border:1px solid var(--line);border-radius:999px;padding:3px 7px;color:var(--ink)}
+.quotes{display:flex;flex-direction:column;gap:14px;margin:14px 0 0}
+.quote{margin:0;padding:0 0 0 12px;border-left:2px solid rgba(126,231,240,.7);font-size:15px;line-height:1.45;font-style:normal;overflow-wrap:break-word}
+.ncard h3{overflow-wrap:break-word}
+.quote span{display:block;margin-top:6px;color:var(--dim);font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+.moments{display:flex;flex-direction:column;gap:16px}
+.moments h4{margin:0 0 6px;font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.flow{list-style:none;margin:10px 0 0;padding:0}
+.flow li{display:grid;grid-template-columns:72px minmax(0,1fr);gap:4px 10px;padding:8px 0;border-top:1px solid var(--line);font-size:13px}
+.flow b{font-weight:620;letter-spacing:-.02em}
+.flow small{grid-column:1/-1;color:var(--dim);font-family:var(--mono);font-size:11px}
+.own{margin:8px 0 0;font-size:22px;letter-spacing:-.03em}
+.more-row{margin-top:14px}
+@media (max-width:1000px){
+  .intel-top,.earn-grid,.intel-flows{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  .intel-top,.intel-news,.earn-grid,.intel-flows,.mv-cols{grid-template-columns:1fr}
+  .flow li{grid-template-columns:64px minmax(0,1fr)}
+  .mood-label{font-size:32px}
+  .ncard h3{font-size:17px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
@@ -465,6 +515,7 @@ Low-power devices and prefers-reduced-motion hold the globe still and drop ambie
   </div>
   <nav class="nav" id="nav" aria-label="Sections">
     <a href="#markets" aria-current="true">Markets</a>
+    <a href="#intel">Sentiment</a>
     <a href="#ai">AI news</a>
     <a href="#calendar">Calendar</a>
     <a href="#rankings">Rankings</a>
@@ -528,6 +579,14 @@ Low-power devices and prefers-reduced-motion hold the globe still and drop ambie
       </div>
     </div>
     <div class="board" id="board"></div>
+  </section>
+
+  <section class="chap" id="intel" aria-labelledby="intelh">
+    <div class="intro">
+      <h2 id="intelh">News and sentiment</h2>
+      <p>The tone of coverage, the headlines behind it, and what was said on the calls. Times are London.</p>
+    </div>
+    <div id="intel-root" aria-live="polite"></div>
   </section>
 
   <section class="chap" id="ai" aria-labelledby="aih">
@@ -2170,9 +2229,279 @@ function layoutReels(){
   });
 }
 
+/* ---------- sentiment ---------- */
+function node(tag,cls,text){
+  const n=document.createElement(tag);
+  if(cls) n.className=cls;
+  if(text!=null) n.textContent=text;
+  return n;
+}
+function tone(label,score){
+  const l=String(label||'');
+  if(/bear/i.test(l)||(typeof score==='number'&&score<=-0.15)) return 'down';
+  if(/bull/i.test(l)||(typeof score==='number'&&score>=0.15)) return 'up';
+  return 'flat';
+}
+function signed(n){
+  if(typeof n!=='number'||!Number.isFinite(n)) return '';
+  const digits=Math.abs(n)>=0.1&&Math.abs(n)<0.2?3:2;
+  return (n>0?'+':'')+n.toFixed(digits);
+}
+function ukWhen(iso){
+  if(!iso) return '';
+  const d=new Date(iso);
+  if(Number.isNaN(d.getTime())) return '';
+  const date=new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',hourCycle:'h23',timeZone:'Europe/London'}).format(d);
+  const tz=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',timeZoneName:'short'}).formatToParts(d).find(p=>p.type==='timeZoneName');
+  return date+' '+(tz?tz.value:'UK');
+}
+function movePct(raw){
+  const n=parseFloat(String(raw||'').replace(/%/g,''));
+  if(!Number.isFinite(n)) return '';
+  return (n>0?'+':'')+n.toFixed(1)+'%';
+}
+function px2(v){
+  const n=Number(v);
+  if(!Number.isFinite(n)) return '';
+  return '$'+n.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+function gaugeLeft(score){
+  const s=Math.max(-0.5,Math.min(0.5,Number(score)||0));
+  return ((s+0.5)*100).toFixed(1)+'%';
+}
+function extLink(href,text){
+  const a=document.createElement('a');
+  a.href=href; a.target='_blank'; a.rel='noopener noreferrer'; a.textContent=text||'';
+  return a;
+}
+function sheet(title,cap,kids){
+  const body=[node('h3',null,title)];
+  if(cap) body.push(node('p','cap',cap));
+  (kids||[]).forEach(k=>{ if(k) body.push(k); });
+  return tilt(glass(body,{cls:'panel'}));
+}
+function moodPanel(mood){
+  const label=(mood&&mood.label)||'No score';
+  const score=mood&&typeof mood.score==='number'?mood.score:null;
+  const track=node('div','mood-track');
+  track.setAttribute('role','img');
+  track.setAttribute('aria-label',score==null?'Market mood unavailable':('Market mood '+label+', '+signed(score)+', from Bearish to Bullish'));
+  [-0.35,-0.15,0.15,0.35].forEach(tick=>{
+    const i=document.createElement('i');
+    i.style.left=gaugeLeft(tick);
+    track.append(i);
+  });
+  if(score!=null){
+    const mark=node('b','mood-mark');
+    mark.style.left=gaugeLeft(score);
+    track.append(mark);
+  }
+  const scale=node('div','mood-scale');
+  scale.append(node('span',null,'Bearish'), node('span',null,'Bullish'));
+  return sheet('Market mood','Mean of Alpha Vantage article scores. Bearish at −0.35 and below, bullish at 0.35 and above.',[
+    node('p','mood-label '+tone(label,score),label),
+    node('p','mood-score n',score==null?'Waiting for article scores':signed(score)+' · '+(mood.article_count||0)+' articles'),
+    track, scale
+  ]);
+}
+function moverCol(title,rows,cls){
+  const box=node('div');
+  box.append(node('h4',null,title));
+  const ul=node('ul','mv');
+  (rows||[]).forEach(row=>{
+    const li=document.createElement('li');
+    li.append(node('b',null,row.ticker||''), node('span',cls,movePct(row.change_percentage)));
+    ul.append(li);
+  });
+  if(!(rows||[]).length) ul.append(node('li',null,'None today'));
+  box.append(ul);
+  return box;
+}
+function moversPanel(movers){
+  const cols=node('div','mv-cols');
+  cols.append(moverCol('Gainers',movers&&movers.gainers,'up'), moverCol('Losers',movers&&movers.losers,'down'));
+  const kids=[cols];
+  const active=(movers&&movers.active)||[];
+  if(active.length){
+    const lab=node('p','cap','Most active');
+    lab.style.margin='14px 0 0';
+    const row=node('div','active-row');
+    active.forEach(item=>row.append(node('span','tick',(item.ticker||'')+' '+movePct(item.change_percentage))));
+    kids.push(lab,row);
+  }
+  const when=movers&&movers.last_updated?('US session, '+movers.last_updated):'US session leaders.';
+  return sheet('Top movers',when,kids);
+}
+function newsCard(item){
+  const source=node('div','nmeta');
+  source.append(node('b',null,item.source||'Wire'));
+  const time=node('time',null,ukWhen(item.published_at));
+  if(item.published_at) time.dateTime=item.published_at;
+  source.append(time);
+  source.append(node('span','sent '+(item.sentiment_label?tone(item.sentiment_label,item.sentiment):'flat'), item.sentiment_label||'Unscored'));
+  const h=node('h3');
+  if(item.url) h.append(extLink(item.url,item.headline||''));
+  else h.textContent=item.headline||'';
+  const kids=[source,h];
+  if(item.summary) kids.push(node('p','clamp',item.summary));
+  const symbols=(item.symbols||[]).slice(0,4);
+  if(symbols.length){
+    const ticks=node('div','ticks');
+    symbols.forEach(sym=>ticks.append(node('span','tick',sym)));
+    kids.push(ticks);
+  }
+  return tilt(glass(kids,{tag:'article',cls:'card ncard'}));
+}
+function quoteEl(q){
+  if(!q||!q.text) return null;
+  const bq=node('blockquote','quote');
+  const who=[q.role,q.speaker,q.sentiment_label].filter(Boolean).join(' · ');
+  bq.append(document.createTextNode(q.text), node('span',null,who));
+  return bq;
+}
+function earningsBlock(list){
+  const calls=(list||[]).filter(c=>c&&c.summary);
+  if(!calls.length) return sheet('Earnings calls','No recent transcript in this snapshot.',[]);
+  const head=node('div','phead');
+  const titles=node('div');
+  titles.append(node('h3',null,'Earnings calls'));
+  titles.append(node('p','cap','Pulled from the transcript: the opening, two executive lines, and the highest and lowest turns. A model summary can be added later without changing this layout.'));
+  head.append(titles);
+  const stage=node('div');
+  function show(call){
+    const sum=call.summary||{};
+    const meta=[call.symbol,call.quarter,sum.sentiment_label].filter(Boolean).join(' · ');
+    const when=call.reported_date?('Reported '+fd(call.reported_date)):meta;
+    const grid=node('div','earn-grid');
+    const left=node('div');
+    if(sum.overview) left.append(node('p',null,sum.overview));
+    const quotes=node('div','quotes');
+    (sum.quotes||[]).forEach(q=>{ const el=quoteEl(q); if(el) quotes.append(el); });
+    left.append(quotes);
+    const right=node('div','moments');
+    [['Most bullish',sum.bullish],['Most bearish',sum.bearish]].forEach(([title,moment])=>{
+      if(!moment||!moment.text) return;
+      const block=node('div');
+      const heading=title==='Most bearish'&&typeof moment.sentiment==='number'&&moment.sentiment>-0.15?'Lowest tone':title;
+      block.append(node('h4',null,heading));
+      const q=quoteEl(moment); if(q) block.append(q);
+      right.append(block);
+    });
+    grid.append(left,right);
+    stage.replaceChildren(node('p','lab',when==meta?meta:(meta+' · '+when)), grid);
+  }
+  if(calls.length>1){
+    const pick=node('div','seg');
+    pick.setAttribute('role','radiogroup');
+    pick.setAttribute('aria-label','Earnings call');
+    head.append(pick);
+    seg(pick, calls.map((c,i)=>[String(i),(c.symbol||'Call')+' '+(c.quarter||'')]), '0', i=>show(calls[Number(i)]));
+  }
+  show(calls[0]);
+  return tilt(glass([head,stage],{cls:'panel'}));
+}
+function filingList(rows, fill){
+  const ul=node('ul','flow');
+  if(!rows.length){ ul.append(node('li',null,'Nothing in this snapshot.')); return ul; }
+  rows.slice(0,5).forEach(row=>{
+    const li=document.createElement('li');
+    fill(li,row);
+    ul.append(li);
+  });
+  return ul;
+}
+function insiderPanel(rows){
+  return sheet('Insiders','Open-market purchases and sales when the filing marks them that way.',[
+    filingList(rows||[],(li,row)=>{
+      li.append(node('span','n',fd(row.date)||''));
+      const who=node('div');
+      who.append(node('b',null,row.name||row.symbol||''));
+      li.append(who);
+      const toneCls=row.code==='S'?'down':row.code==='P'?'up':'flat';
+      li.append(node('small',toneCls,[row.action,row.shares&&(row.shares+' shares'),row.price&&px2(row.price)].filter(Boolean).join(' · ')));
+    })
+  ]);
+}
+function congressPanel(rows){
+  return sheet('Congress','Disclosed trades, newest first.',[
+    filingList(rows||[],(li,row)=>{
+      li.append(node('span','n',fd(row.date)||''));
+      const who=node('div');
+      who.append(node('b',null,row.name||''));
+      li.append(who);
+      const side=/sell/i.test(row.action||'')?'down':/buy|purchase/i.test(row.action||'')?'up':'flat';
+      const who2=[row.action,row.party,row.state].filter(Boolean).join(' · ');
+      li.append(node('small',side,[who2,row.amount].filter(Boolean).join(' · ')));
+    })
+  ]);
+}
+function holdersPanel(blocks){
+  const kids=[];
+  (blocks||[]).slice(0,2).forEach(block=>{
+    const own=[block.symbol,block.ownership].filter(Boolean).join(' · ');
+    kids.push(node('p','own n',own||'Holdings'));
+    const counts=[block.holders&&(Number(block.holders).toLocaleString('en-GB')+' holders'), block.increased&&(Number(block.increased).toLocaleString('en-GB')+' added'), block.decreased&&(Number(block.decreased).toLocaleString('en-GB')+' cut')].filter(Boolean);
+    if(counts.length) kids.push(node('p','cap',counts.join(' · ')));
+    kids.push(filingList(block.top||[],(li,row)=>{
+      const raw=String(row.change||'');
+      const cut=/decreas|cut/i.test(String(row.change_type||''))||/^-/.test(raw);
+      const shown=raw&&!/^[+-]/.test(raw)?((cut?'-':'+')+raw):raw;
+      li.append(node('span','n '+(cut?'down':'up'), shown));
+      li.append(node('div',null,(row.name||'')+(row.shares?(' · '+row.shares):'')));
+    }));
+  });
+  if(!kids.length) kids.push(node('p','cap','No holdings in this snapshot.'));
+  return sheet('Institutions','Largest reported holders.',kids);
+}
+function loadIntel(){
+  const host=$('#intel-root');
+  if(!host) return;
+  fetch('data/intel.json',{cache:'no-cache'}).then(r=>{
+    if(!r.ok) throw new Error(String(r.status));
+    return r.json();
+  }).then(data=>{
+    if(!data||typeof data!=='object') throw new Error('bad');
+    host.replaceChildren();
+    const meta=node('p','intel-meta');
+    meta.textContent='Updated '+(data.updated_london||'—');
+    if(data.sample) meta.append(document.createTextNode(' '), node('span','chip','Sample'));
+    host.append(meta);
+    if(data.sample) host.append(node('p','cap','Sample from the public demo key: AAPL headlines, IBM filings and the first-quarter 2024 call, plus AAPL congressional trades. The weekday job replaces it.'));
+    else if(data.stale) host.append(node('p','cap','Showing the previous snapshot. The latest refresh was rate-limited.'));
+    const top=node('div','intel-top');
+    top.append(moodPanel(data.mood), moversPanel(data.movers));
+    host.append(top);
+    const news=(Array.isArray(data.news)?data.news:[]).slice(0,12);
+    if(!news.length) host.append(sheet('Headlines','No headlines in this snapshot.',[]));
+    else {
+      const grid=node('div','intel-news');
+      let shown=Math.min(6,news.length);
+      const paint=()=>{ grid.replaceChildren(); news.slice(0,shown).forEach(item=>grid.append(newsCard(item))); bindTilt(grid); };
+      paint();
+      host.append(grid);
+      if(news.length>6){
+        const row=node('div','more-row');
+        const btn=node('button','navbtn','More headlines');
+        btn.type='button';
+        btn.addEventListener('click',()=>{ shown=news.length; paint(); row.remove(); });
+        row.append(btn);
+        host.append(row);
+      }
+    }
+    host.append(earningsBlock(data.earnings));
+    const flows=data.flows||{};
+    const grid=node('div','intel-flows');
+    grid.append(insiderPanel(flows.insider||[]), congressPanel(flows.congress||[]), holdersPanel(flows.institutional||[]));
+    host.append(grid);
+    bindTilt(host);
+  }).catch(()=>{
+    host.replaceChildren(sheet('Sentiment','The sentiment file is not in this copy yet. Markets, AI news and the globe are unchanged.',[]));
+  });
+}
+
 /* ---------- scroll ---------- */
 const nav=$('#nav');
-const SPY=[['markets','Markets'],['ai','AI news'],['calendar','Calendar'],['rankings','Rankings'],['repos','Repos']];
+const SPY=[['markets','Markets'],['intel','Sentiment'],['ai','AI news'],['calendar','Calendar'],['rankings','Rankings'],['repos','Repos']];
 function updateSpy(){
   let cur=SPY[0];
   for(const s of SPY){
@@ -2275,6 +2604,7 @@ renderRank(N.rankings[0].id);
 renderLeaders();
 renderRepos();
 renderFoot();
+loadIntel();
 layoutReels();
 bindTilt(document);
 io.observe($('#pulse')); io.observe($('#calendar')); io.observe($('#stars'));
