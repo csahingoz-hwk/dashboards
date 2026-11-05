@@ -60,7 +60,15 @@ a{color:inherit}
 .skip:focus{top:12px}
 
 #gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block}
-html.rm #gl,html.no-gl #gl{display:none}
+#gl, #gl *{pointer-events:none}
+#gl .scene-nav-info,#gl .float-tooltip-kap{display:none}
+html.no-gl #gl{display:none}
+.globe-pick{position:fixed;z-index:25;top:88px;right:max(20px,env(safe-area-inset-right));pointer-events:auto}
+.globe-pick.seg{background:rgba(8,9,12,.78)}
+html.no-gl .globe-pick{display:none}
+@media (max-width:720px){
+  .globe-pick{top:auto;right:auto;left:max(12px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom))}
+}
 #sky{position:fixed;inset:0;z-index:0;pointer-events:none;background:
   radial-gradient(900px 520px at 72% 18%,rgba(126,231,240,.10),transparent 60%),
   radial-gradient(700px 480px at 18% 80%,rgba(126,231,240,.05),transparent 55%),
@@ -395,7 +403,7 @@ html.rm .od-s,html.low .od-s{transition:none}
 <body>
 <!--
 Effects, and where they live
-WebGL globe, arcs between NYSE, LSE and Borsa Istanbul, volumetric fog, additive bloom, film grain: canvas#gl, initGlobe.
+Globe.gl background, Night or Hubs, chosen with #globe-pick (?globe= and localStorage): #gl, initGlobe.
 Glass refraction, chromatic edge, specular highlight, 3D tilt and magnetic hover: .glass, bindTilt.
 Odometer digits, self-drawing sparklines, flash on change: setOdo, sparkSVG, .kpi.
 Kinetic variable-weight headline and volatility waveform: #hero-title, canvas#pulse.
@@ -406,10 +414,26 @@ GitHub constellation, drag to orbit: canvas#stars.
 Smooth scroll (Lenis) and pinned scrubbed camera (GSAP ScrollTrigger): bootScroll.
 Cursor spotlight and trail, sound toggle off by default: #spot, #trail, #sound.
 View Transitions between sections and a shared-element reader: nav handler, openReader.
-Low-power devices and prefers-reduced-motion keep a static sky and drop ambient motion.
+Low-power devices and prefers-reduced-motion hold the globe still and drop ambient motion.
 -->
 <a class="skip" href="#main">Skip to content</a>
-<canvas id="gl" aria-hidden="true"></canvas>
+<div id="gl" aria-hidden="true"></div>
+<div class="globe-pick seg" id="globe-pick" role="radiogroup" aria-label="Globe style">
+  <button type="button" role="radio" data-globe="night" aria-checked="false">Night</button>
+  <button type="button" role="radio" data-globe="hubs" aria-checked="false">Hubs</button>
+</div>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search).get('globe');
+  var s=q;
+  if(s!=='night'&&s!=='hubs'){ try{ s=localStorage.getItem('sma-globe'); }catch(e){ s=null; } }
+  if(s!=='night'&&s!=='hubs') s='night';
+  window.__globePick=s;
+  document.querySelectorAll('#globe-pick button').forEach(function(b){
+    b.setAttribute('aria-checked', b.getAttribute('data-globe')===s?'true':'false');
+  });
+})();
+</script>
 <div id="sky" aria-hidden="true">
   <div class="planet">
     <i class="city c-ny"></i><i class="city c-ldn"></i><i class="city c-ist"></i>
@@ -1810,409 +1834,295 @@ function drawPulse(now){
   g.shadowColor='#7ee7f0'; g.shadowBlur=8; g.stroke(); g.shadowBlur=0;
 }
 
-/* ---------- WebGL globe ---------- */
+/* ---------- globe.gl ---------- */
 function initGlobe(){
-  if(RM){ root.classList.add('no-gl'); return null; }
-  const canvas=$('#gl');
-  const gl=canvas.getContext('webgl2',{alpha:false,antialias:false,depth:true,stencil:false,powerPreference:'default',preserveDrawingBuffer:false,failIfMajorPerformanceCaveat:false});
-  if(!gl){ root.classList.add('no-gl'); return null; }
-  const compile=(vs,fs)=>{
-    const p=gl.createProgram();
-    for(const [type,src] of [[gl.VERTEX_SHADER,vs],[gl.FRAGMENT_SHADER,fs]]){
-      const s=gl.createShader(type);
-      gl.shaderSource(s,src); gl.compileShader(s);
-      if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)){ console.error(gl.getShaderInfoLog(s)); return null; }
-      gl.attachShader(p,s);
+  const host=$('#gl');
+  const pick=$('#globe-pick');
+  if(!host||!pick){ root.classList.add('no-gl'); return null; }
+  const NIGHT_URL='https://cdn.jsdelivr.net/npm/three-globe@2.45.0/example/img/earth-night.jpg';
+  const HUBS=[
+    {id:'ny',name:'New York',lat:40.71,lng:-74.01,tz:'America/New_York',hours:[[570,960]]},
+    {id:'lon',name:'London',lat:51.51,lng:-0.13,tz:'Europe/London',hours:[[480,990]]},
+    {id:'fra',name:'Frankfurt',lat:50.11,lng:8.68,tz:'Europe/Berlin',hours:[[540,1050]]},
+    {id:'tyo',name:'Tokyo',lat:35.68,lng:139.76,tz:'Asia/Tokyo',hours:[[540,690],[750,900]]},
+    {id:'hk',name:'Hong Kong',lat:22.32,lng:114.17,tz:'Asia/Hong_Kong',hours:[[570,720],[780,960]]},
+    {id:'sha',name:'Shanghai',lat:31.23,lng:121.47,tz:'Asia/Shanghai',hours:[[570,690],[780,900]]},
+    {id:'sin',name:'Singapore',lat:1.29,lng:103.85,tz:'Asia/Singapore',hours:[[540,720],[780,1020]]},
+    {id:'syd',name:'Sydney',lat:-33.87,lng:151.21,tz:'Australia/Sydney',hours:[[600,960]]}
+  ];
+  const LINKS=[['ny','lon'],['lon','fra'],['lon','sin'],['sin','hk'],['hk','sha'],['sha','tyo'],['tyo','syd'],['ny','tyo']];
+  const animate=!RM&&!LOW;
+  let g=null, muteLoss=0, mode=initialMode();
+
+  function initialMode(){
+    const picked=window.__globePick;
+    if(picked==='night'||picked==='hubs') return picked;
+    const q=new URLSearchParams(location.search).get('globe');
+    if(q==='night'||q==='hubs') return q;
+    try{
+      const s=localStorage.getItem('sma-globe');
+      if(s==='night'||s==='hubs') return s;
+    }catch(e){}
+    return 'night';
+  }
+  function minutesIn(tz, now){
+    let parts;
+    try{
+      parts=new Intl.DateTimeFormat('en-US',{timeZone:tz,weekday:'short',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(now);
+    }catch(e){ return null; }
+    const get=t=>{ const p=parts.find(x=>x.type===t); return p?p.value:''; };
+    const wd=get('weekday');
+    if(wd==='Sat'||wd==='Sun') return null;
+    let hour=parseInt(get('hour'),10);
+    const minute=parseInt(get('minute'),10);
+    if(!Number.isFinite(hour)||!Number.isFinite(minute)) return null;
+    const period=get('dayPeriod');
+    if(period){
+      const pm=/pm/i.test(period);
+      if(hour===12) hour=pm?12:0;
+      else if(pm) hour+=12;
     }
-    gl.linkProgram(p);
-    if(!gl.getProgramParameter(p,gl.LINK_STATUS)){ console.error(gl.getProgramInfoLog(p)); return null; }
-    return p;
-  };
-  const globeP=compile(`#version 300 es
-layout(location=0) in vec3 aPos;
-layout(location=1) in vec3 aNrm;
-uniform mat4 uMVP; uniform mat4 uModel;
-out vec3 vObj; out vec3 vN; out vec3 vW;
-void main(){
-  vObj=aPos;
-  vec4 w=uModel*vec4(aPos,1.0);
-  vW=w.xyz;
-  vN=mat3(uModel)*aNrm;
-  gl_Position=uMVP*vec4(aPos,1.0);
-}`,`#version 300 es
-precision highp float;
-in vec3 vObj; in vec3 vN; in vec3 vW;
-uniform vec3 uEye; uniform vec3 uCity[3]; uniform vec3 uCityCol[3]; uniform float uPulse[3]; uniform float uTime;
-out vec4 o;
-void main(){
-  vec3 N=normalize(vN);
-  vec3 V=normalize(uEye-vW);
-  float fres=pow(1.0-max(dot(N,V),0.0),2.6);
-  vec3 sp=normalize(vObj);
-  float lat=asin(clamp(sp.y,-1.0,1.0));
-  float lon=atan(sp.z,sp.x);
-  float latL=abs(fract((lat/3.1415926+0.5)*9.0)-0.5);
-  float lonL=abs(fract((lon/6.2831853+0.5)*14.0)-0.5);
-  float grid=smoothstep(0.06,0.0,min(latL,lonL));
-  vec3 col=vec3(0.02,0.03,0.04);
-  col+=vec3(0.28,0.72,0.78)*grid*0.32;
-  vec3 L=normalize(vec3(-0.35,0.65,0.45));
-  col+=vec3(0.05,0.08,0.09)*max(dot(N,L),0.0);
-  float spec=pow(max(dot(reflect(-L,N),V),0.0),30.0);
-  col+=vec3(0.8,0.95,1.0)*spec*0.45;
-  col+=vec3(0.25,0.78,0.86)*fres*0.55;
-  for(int i=0;i<3;i++){
-    float d=length(sp-uCity[i]);
-    float g=exp(-d*d*70.0);
-    float p=0.45+0.55*sin(uTime*uPulse[i]+float(i)*1.7);
-    col+=uCityCol[i]*g*p*2.4;
+    if(hour===24) hour=0;
+    return hour*60+minute;
   }
-  float fog=smoothstep(2.4,6.8,length(vW-uEye));
-  col=mix(col,vec3(0.02,0.035,0.045),fog*0.5);
-  o=vec4(col,1.0);
-}`);
-  const arcP=compile(`#version 300 es
-layout(location=0) in vec3 aPos;
-uniform mat4 uMVP;
-void main(){ gl_Position=uMVP*vec4(aPos,1.0); }`,`#version 300 es
-precision mediump float;
-uniform vec3 uCol; uniform float uA;
-out vec4 o; void main(){ o=vec4(uCol,uA); }`);
-  const atmoP=compile(`#version 300 es
-layout(location=0) in vec3 aPos;
-layout(location=1) in vec3 aNrm;
-uniform mat4 uMVP; uniform mat4 uModel;
-out vec3 vN; out vec3 vW;
-void main(){
-  vec4 w=uModel*vec4(aPos,1.0);
-  vW=w.xyz; vN=mat3(uModel)*aNrm;
-  gl_Position=uMVP*vec4(aPos,1.0);
-}`,`#version 300 es
-precision mediump float;
-in vec3 vN; in vec3 vW; uniform vec3 uEye;
-out vec4 o;
-void main(){
-  vec3 N=normalize(vN); vec3 V=normalize(uEye-vW);
-  float fres=pow(1.0-max(dot(N,V),0.0),2.1);
-  o=vec4(vec3(0.45,0.90,0.96),fres*0.72);
-}`);
-  const starP=compile(`#version 300 es
-layout(location=0) in vec3 aPos; uniform mat4 uMVP;
-void main(){ gl_Position=uMVP*vec4(aPos,1.0); gl_PointSize=1.7; }`,`#version 300 es
-precision mediump float; out vec4 o; void main(){ o=vec4(0.75,0.9,0.95,0.55); }`);
-  if(!globeP||!arcP||!atmoP||!starP){ root.classList.add('no-gl'); return null; }
-  const quadP=(!IOS&&!LOW)?compile(`#version 300 es
-layout(location=0) in vec2 a; out vec2 vUv;
-void main(){ vUv=a*0.5+0.5; gl_Position=vec4(a,0.0,1.0); }`,`#version 300 es
-precision mediump float; uniform sampler2D uTex; uniform vec2 uDir; in vec2 vUv; out vec4 o;
-vec3 samp(vec2 uv){ vec3 c=texture(uTex,uv).rgb; float l=max(c.r,max(c.g,c.b)); return c*smoothstep(0.28,0.85,l); }
-void main(){
-  vec3 c=samp(vUv)*0.227;
-  c+=samp(vUv+uDir*1.4)*0.316; c+=samp(vUv-uDir*1.4)*0.316;
-  c+=samp(vUv+uDir*3.3)*0.07; c+=samp(vUv-uDir*3.3)*0.07;
-  o=vec4(c,1.0);
-}`):null;
-  const compP=quadP?compile(`#version 300 es
-layout(location=0) in vec2 a; out vec2 vUv;
-void main(){ vUv=a*0.5+0.5; gl_Position=vec4(a,0.0,1.0); }`,`#version 300 es
-precision highp float;
-uniform sampler2D uScene; uniform sampler2D uBloom; uniform float uTime;
-in vec2 vUv; out vec4 o;
-float hash(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }
-void main(){
-  vec3 s=texture(uScene,vUv).rgb;
-  vec3 b=texture(uBloom,vUv).rgb;
-  vec3 c=s+b*1.2;
-  vec2 q=vUv*2.0-1.0;
-  c*=1.0-dot(q,q)*0.26;
-  float n=hash(gl_FragCoord.xy+fract(uTime*13.0)*40.0);
-  c+=(n-0.5)*0.04;
-  o=vec4(c,1.0);
-}`):null;
-  function mesh(pos,nrm,idx){
-    const vao=gl.createVertexArray(); gl.bindVertexArray(vao);
-    const pb=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,pb);
-    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(pos),gl.STATIC_DRAW);
-    gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0,3,gl.FLOAT,false,0,0);
-    if(nrm){
-      const nb=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,nb);
-      gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(nrm),gl.STATIC_DRAW);
-      gl.enableVertexAttribArray(1); gl.vertexAttribPointer(1,3,gl.FLOAT,false,0,0);
-    }
-    const ib=gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(idx),gl.STATIC_DRAW);
-    gl.bindVertexArray(null);
-    return {vao,count:idx.length};
+  function isOpen(h, now){
+    const mins=minutesIn(h.tz, now);
+    if(mins==null) return false;
+    return h.hours.some(([a,b])=>mins>=a&&mins<b);
   }
-  function makeSphere(lat,lon){
-    const pos=[],nrm=[],idx=[];
-    for(let y=0;y<=lat;y++){
-      const th=y/lat*Math.PI, st=Math.sin(th), ct=Math.cos(th);
-      for(let x=0;x<=lon;x++){
-        const ph=x/lon*Math.PI*2;
-        const px=st*Math.cos(ph), py=ct, pz=st*Math.sin(ph);
-        pos.push(px,py,pz); nrm.push(px,py,pz);
-      }
-    }
-    for(let y=0;y<lat;y++) for(let x=0;x<lon;x++){
-      const a=y*(lon+1)+x, b=a+lon+1;
-      idx.push(a,b,a+1, b,b+1,a+1);
-    }
-    return {pos,nrm,idx};
-  }
-  const sph=makeSphere(IOS?28:40, IOS?48:64);
-  const globe=mesh(sph.pos,sph.nrm,sph.idx);
-  function ll(lat,lon){
-    const p=lat*Math.PI/180, l=-lon*Math.PI/180, c=Math.cos(p);
-    return [c*Math.cos(l), Math.sin(p), c*Math.sin(l)];
-  }
-  function slerp(a,b,t){
-    let d=a[0]*b[0]+a[1]*b[1]+a[2]*b[2]; d=Math.max(-1,Math.min(1,d));
-    const om=Math.acos(d); if(om<1e-3) return a.slice();
-    const s=Math.sin(om), x=Math.sin((1-t)*om)/s, y=Math.sin(t*om)/s;
-    return [a[0]*x+b[0]*y,a[1]*x+b[1]*y,a[2]*x+b[2]*y];
-  }
-  function ribbon(a,b,lift,width){
-    const pts=[];
-    for(let i=0;i<=40;i++){
-      const t=i/40, p=slerp(a,b,t), len=Math.hypot(...p)||1;
-      const r=1.025+Math.sin(t*Math.PI)*lift;
-      pts.push([p[0]/len*r,p[1]/len*r,p[2]/len*r]);
-    }
-    const pos=[],idx=[];
-    for(let i=0;i<pts.length;i++){
-      const p=pts[i], prev=pts[Math.max(0,i-1)], next=pts[Math.min(pts.length-1,i+1)];
-      const tx=next[0]-prev[0], ty=next[1]-prev[1], tz=next[2]-prev[2];
-      let sx=p[1]*tz-p[2]*ty, sy=p[2]*tx-p[0]*tz, sz=p[0]*ty-p[1]*tx;
-      const sl=Math.hypot(sx,sy,sz)||1; sx=sx/sl*width; sy=sy/sl*width; sz=sz/sl*width;
-      pos.push(p[0]+sx,p[1]+sy,p[2]+sz, p[0]-sx,p[1]-sy,p[2]-sz);
-    }
-    for(let i=0;i<pts.length-1;i++){ const q=i*2; idx.push(q,q+1,q+2, q+1,q+3,q+2); }
-    return mesh(pos,null,idx);
-  }
-  const cities=[[40.7069,-74.0113,'spx'],[51.5145,-0.0931,'ftse'],[41.035,28.984,'xu100']];
-  const C=cities.map(c=>ll(c[0],c[1]));
-  const cols=cities.map(c=>byId[c[2]].pct>=0?[0.239,0.863,0.592]:[1,0.361,0.416]);
-  const pulses=new Float32Array(cities.map(c=>1.15+Math.min(8,Math.abs(byId[c[2]].pct))*0.3));
-  const cityPos=new Float32Array(C.flat());
-  const cityCol=new Float32Array(cols.flat());
-  const arcs=[];
-  [[0,1],[1,2],[0,2]].forEach(([a,b])=>{
-    const col=cols[a].map((v,i)=>(v+cols[b][i])*0.5);
-    arcs.push({mesh:ribbon(C[a],C[b],0.18,0.012), glow:ribbon(C[a],C[b],0.18,0.045), col});
-  });
-  const starPos=[];
-  for(let i=0;i<160;i++){
-    const u=Math.random(), v=Math.random();
-    const th=2*Math.PI*u, ph=Math.acos(2*v-1), r=5+Math.random()*2.2;
-    starPos.push(r*Math.sin(ph)*Math.cos(th), r*Math.cos(ph)*0.55, r*Math.sin(ph)*Math.sin(th));
-  }
-  const starVAO=gl.createVertexArray(); gl.bindVertexArray(starVAO);
-  const sb=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,sb);
-  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(starPos),gl.STATIC_DRAW);
-  gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0,3,gl.FLOAT,false,0,0);
-  gl.bindVertexArray(null);
-  let quadVAO=null;
-  if(quadP){
-    quadVAO=gl.createVertexArray(); gl.bindVertexArray(quadVAO);
-    const qb=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,qb);
-    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
-    gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);
-    gl.bindVertexArray(null);
-  }
-  const lons=cities.map(c=>-c[1]);
-  const L=lons.reduce((a,b)=>a+b,0)/lons.length*Math.PI/180;
-  const baseYaw=L-Math.PI/2;
-  let spin=0, bufW=2, bufH=2, scene=null, blurA=null, blurB=null, useBloom=!!(quadP&&compP);
-  function killTarget(t){
-    if(!t) return;
-    gl.deleteTexture(t.tex); gl.deleteFramebuffer(t.fb); if(t.depth) gl.deleteRenderbuffer(t.depth);
-  }
-  function makeTarget(w,h,depth){
-    const tex=gl.createTexture();
-    gl.bindTexture(gl.TEXTURE_2D,tex);
-    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA8,w,h,0,gl.RGBA,gl.UNSIGNED_BYTE,null);
-    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
-    const fb=gl.createFramebuffer();
-    gl.bindFramebuffer(gl.FRAMEBUFFER,fb);
-    gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,tex,0);
-    let dep=null;
-    if(depth){
-      dep=gl.createRenderbuffer();
-      gl.bindRenderbuffer(gl.RENDERBUFFER,dep);
-      gl.renderbufferStorage(gl.RENDERBUFFER,gl.DEPTH_COMPONENT24,w,h);
-      gl.framebufferRenderbuffer(gl.FRAMEBUFFER,gl.DEPTH_ATTACHMENT,gl.RENDERBUFFER,dep);
-    }
-    const ok=gl.checkFramebufferStatus(gl.FRAMEBUFFER)===gl.FRAMEBUFFER_COMPLETE;
-    gl.bindFramebuffer(gl.FRAMEBUFFER,null);
-    return ok?{tex,fb,depth:dep,w,h}:null;
-  }
-  function resize(){
-    const dpr=Math.min(devicePixelRatio||1,2);
-    let w=Math.floor(innerWidth*dpr), h=Math.floor(innerHeight*dpr);
-    const cap=IOS?1280:1600;
-    const m=Math.max(w,h);
-    if(m>cap){ const s=cap/m; w=Math.floor(w*s); h=Math.floor(h*s); }
-    w=Math.max(2,w); h=Math.max(2,h);
-    if(w===bufW&&h===bufH) return;
-    bufW=w; bufH=h; canvas.width=w; canvas.height=h;
-    if(useBloom){
-      killTarget(scene); killTarget(blurA); killTarget(blurB);
-      scene=makeTarget(w,h,true);
-      blurA=makeTarget(Math.max(2,w>>1),Math.max(2,h>>1),false);
-      blurB=makeTarget(Math.max(2,w>>1),Math.max(2,h>>1),false);
-      if(!scene||!blurA||!blurB){ useBloom=false; killTarget(scene); killTarget(blurA); killTarget(blurB); scene=blurA=blurB=null; }
-    }
-  }
-  function mul(a,b){
-    const o=new Float32Array(16);
-    for(let c=0;c<4;c++) for(let r=0;r<4;r++)
-      o[c*4+r]=a[r]*b[c*4]+a[4+r]*b[c*4+1]+a[8+r]*b[c*4+2]+a[12+r]*b[c*4+3];
-    return o;
-  }
-  function rotY(A){ const c=Math.cos(A),s=Math.sin(A); return new Float32Array([c,0,-s,0, 0,1,0,0, s,0,c,0, 0,0,0,1]); }
-  function persp(fov,aspect,n,f){
-    const t=1/Math.tan(fov/2), o=new Float32Array(16);
-    o[0]=t/aspect; o[5]=t; o[10]=(n+f)/(n-f); o[11]=-1; o[14]=2*n*f/(n-f); return o;
-  }
-  function lookAt(eye,center,up){
-    const f=norm([center[0]-eye[0],center[1]-eye[1],center[2]-eye[2]]);
-    const s=norm(cross(f,up)); const u=cross(s,f);
-    return new Float32Array([
-      s[0],u[0],-f[0],0, s[1],u[1],-f[1],0, s[2],u[2],-f[2],0,
-      -dot(s,eye),-dot(u,eye),dot(f,eye),1
-    ]);
-  }
-  const norm=v=>{ const l=Math.hypot(...v)||1; return v.map(x=>x/l); };
-  const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]];
-  const dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
-  function drawScene(M,MVP,MVPstar,eye,time){
-    gl.clearColor(0.031,0.035,0.047,1);
-    gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
-    gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA,gl.ONE); gl.disable(gl.DEPTH_TEST);
-    gl.useProgram(starP); gl.uniformMatrix4fv(gl.getUniformLocation(starP,'uMVP'),false,MVPstar);
-    gl.bindVertexArray(starVAO); gl.drawArrays(gl.POINTS,0,starPos.length/3);
-    gl.enable(gl.DEPTH_TEST); gl.depthMask(true); gl.disable(gl.BLEND); gl.enable(gl.CULL_FACE); gl.cullFace(gl.BACK);
-    gl.useProgram(globeP);
-    gl.uniformMatrix4fv(gl.getUniformLocation(globeP,'uMVP'),false,MVP);
-    gl.uniformMatrix4fv(gl.getUniformLocation(globeP,'uModel'),false,M);
-    gl.uniform3fv(gl.getUniformLocation(globeP,'uEye'),eye);
-    gl.uniform3fv(gl.getUniformLocation(globeP,'uCity'),cityPos);
-    gl.uniform3fv(gl.getUniformLocation(globeP,'uCityCol'),cityCol);
-    gl.uniform1fv(gl.getUniformLocation(globeP,'uPulse'),pulses);
-    gl.uniform1f(gl.getUniformLocation(globeP,'uTime'),time);
-    gl.bindVertexArray(globe.vao); gl.drawElements(gl.TRIANGLES,globe.count,gl.UNSIGNED_SHORT,0);
-    gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA,gl.ONE); gl.depthMask(false); gl.disable(gl.CULL_FACE);
-    gl.useProgram(arcP);
-    gl.uniformMatrix4fv(gl.getUniformLocation(arcP,'uMVP'),false,MVP);
-    arcs.forEach(a=>{
-      gl.uniform3fv(gl.getUniformLocation(arcP,'uCol'),a.col);
-      gl.uniform1f(gl.getUniformLocation(arcP,'uA'),0.22);
-      gl.bindVertexArray(a.glow.vao); gl.drawElements(gl.TRIANGLES,a.glow.count,gl.UNSIGNED_SHORT,0);
-      gl.uniform1f(gl.getUniformLocation(arcP,'uA'),0.9);
-      gl.bindVertexArray(a.mesh.vao); gl.drawElements(gl.TRIANGLES,a.mesh.count,gl.UNSIGNED_SHORT,0);
+  function model(){
+    const now=new Date();
+    const hubs=HUBS.map(h=>({...h, hub:true, open:isOpen(h, now)}));
+    const by=Object.fromEntries(hubs.map(h=>[h.id,h]));
+    const arcs=LINKS.map(([a,b],i)=>{
+      const A=by[a], B=by[b];
+      const span=Math.min(Math.abs(A.lng-B.lng), 360-Math.abs(A.lng-B.lng));
+      return {
+        startLat:A.lat, startLng:A.lng, endLat:B.lat, endLng:B.lng,
+        alt:Math.min(0.5, 0.12+Math.hypot(span, A.lat-B.lat)/360),
+        gap:(i*0.17)%1,
+        live:A.open||B.open
+      };
     });
-    const S=1.07;
-    const Ms=mul(M,new Float32Array([S,0,0,0, 0,S,0,0, 0,0,S,0, 0,0,0,1]));
-    const MVPs=mul(mul(MVP, inverseGuess(M)), Ms);
-    gl.enable(gl.CULL_FACE);
-    gl.useProgram(atmoP);
-    gl.uniformMatrix4fv(gl.getUniformLocation(atmoP,'uMVP'),false,mul(perspEye.P, mul(perspEye.V, Ms)));
-    gl.uniformMatrix4fv(gl.getUniformLocation(atmoP,'uModel'),false,Ms);
-    gl.uniform3fv(gl.getUniformLocation(atmoP,'uEye'),eye);
-    gl.bindVertexArray(globe.vao); gl.drawElements(gl.TRIANGLES,globe.count,gl.UNSIGNED_SHORT,0);
-    gl.depthMask(true); gl.disable(gl.BLEND);
+    return {hubs, arcs, open:hubs.filter(h=>h.open)};
   }
-  const perspEye={P:null,V:null};
-  function inverseGuess(){ return null; }
-  resize();
-  root.classList.add('has-gl');
-  if(useBloom) root.classList.add('bloom');
-  canvas.addEventListener('webglcontextlost',e=>{ e.preventDefault(); root.classList.remove('has-gl'); root.classList.add('no-gl'); });
-  return {
-    resize,
-    draw(dt,now){
-      if(root.classList.contains('no-gl')) return;
-      if(!LOW) spin+=dt*0.05;
-      const yaw=baseYaw+spin+pageP*1.15+heroP*0.8;
-      const camZ=3.25-heroP*0.7;
-      const eye=[0, 0.16+heroP*0.32, camZ];
-      const aspect=bufW/bufH;
-      const P=persp(0.72,aspect,0.08,30);
-      const V=lookAt(eye,[0,0,0],[0,1,0]);
-      perspEye.P=P; perspEye.V=V;
-      const M=rotY(yaw);
-      const MVP=mul(mul(P,V),M);
-      const MVPstar=mul(P,V);
-      const time=(now||performance.now())/1000;
-      const S=1.075;
-      const Ms=mul(M,new Float32Array([S,0,0,0, 0,S,0,0, 0,0,S,0, 0,0,0,1]));
-      if(useBloom&&scene){
-        gl.bindFramebuffer(gl.FRAMEBUFFER,scene.fb);
-        gl.viewport(0,0,scene.w,scene.h);
-        gl.clearColor(0.031,0.035,0.047,1);
-        gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
-        paint(M,MVP,MVPstar,Ms,mul(mul(P,V),Ms),eye,time);
-        gl.bindFramebuffer(gl.FRAMEBUFFER,blurA.fb); gl.viewport(0,0,blurA.w,blurA.h);
-        gl.useProgram(quadP); gl.bindVertexArray(quadVAO);
-        gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D,scene.tex);
-        gl.uniform1i(gl.getUniformLocation(quadP,'uTex'),0);
-        gl.uniform2f(gl.getUniformLocation(quadP,'uDir'),1/scene.w,0);
-        gl.disable(gl.DEPTH_TEST); gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
-        gl.bindFramebuffer(gl.FRAMEBUFFER,blurB.fb); gl.viewport(0,0,blurB.w,blurB.h);
-        gl.bindTexture(gl.TEXTURE_2D,blurA.tex);
-        gl.uniform2f(gl.getUniformLocation(quadP,'uDir'),0,1/blurA.h);
-        gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
-        gl.bindFramebuffer(gl.FRAMEBUFFER,null); gl.viewport(0,0,bufW,bufH);
-        gl.useProgram(compP); gl.bindVertexArray(quadVAO);
-        gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D,scene.tex);
-        gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D,blurB.tex);
-        gl.uniform1i(gl.getUniformLocation(compP,'uScene'),0);
-        gl.uniform1i(gl.getUniformLocation(compP,'uBloom'),1);
-        gl.uniform1f(gl.getUniformLocation(compP,'uTime'),time);
-        gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
-      }else{
-        gl.bindFramebuffer(gl.FRAMEBUFFER,null);
-        gl.viewport(0,0,bufW,bufH);
-        paint(M,MVP,MVPstar,Ms,mul(mul(P,V),Ms),eye,time);
+  function dotField(step){
+    const pts=[];
+    for(let lat=-78; lat<=78; lat+=step){
+      for(let lng=-180; lng<180; lng+=step) pts.push({lat, lng, hub:false, open:false});
+    }
+    return pts;
+  }
+  function showChoice(next){
+    pick.querySelectorAll('button').forEach(b=>{
+      b.setAttribute('aria-checked', b.dataset.globe===next?'true':'false');
+    });
+  }
+  function remember(next){
+    try{ localStorage.setItem('sma-globe', next); }catch(e){}
+    const u=new URL(location.href);
+    if(u.searchParams.get('globe')!==next){
+      u.searchParams.set('globe', next);
+      history.replaceState(null, '', u);
+    }
+  }
+  function fit(inst){
+    const narrow=matchMedia('(max-width:760px)').matches;
+    const pr=Math.min(devicePixelRatio||1, (IOS||COARSE||narrow)?1:1.5);
+    const w=Math.max(1, innerWidth), h=Math.max(1, innerHeight);
+    const renderer=inst.renderer();
+    renderer.setPixelRatio(pr);
+    renderer.setSize(w, h, false);
+    const comp=inst.postProcessingComposer();
+    if(comp&&comp.setSize) comp.setSize(w, h);
+    const cam=inst.camera();
+    cam.aspect=w/h;
+    cam.updateProjectionMatrix();
+    renderer.domElement.style.width=w+'px';
+    renderer.domElement.style.height=h+'px';
+    const box=renderer.domElement.parentElement;
+    if(box){ box.style.width=w+'px'; box.style.height=h+'px'; }
+  }
+  function destroy(){
+    if(!g) return;
+    muteLoss++;
+    const prev=g;
+    g=null;
+    let gl=null;
+    try{ gl=prev.renderer().getContext(); }catch(e){}
+    try{ prev._destructor(); }catch(e){ console.error(e); }
+    try{
+      const ext=gl&&gl.getExtension('WEBGL_lose_context');
+      if(ext) ext.loseContext();
+    }catch(e){}
+    host.replaceChildren();
+    setTimeout(()=>{ muteLoss=Math.max(0, muteLoss-1); }, 1000);
+  }
+  function create(next){
+    mode=next;
+    const night=next==='night';
+    const narrow=IOS||COARSE||matchMedia('(max-width:760px)').matches;
+    const built=model();
+    const dots=night?[]:dotField(narrow?12:8);
+    host.dataset.ready='';
+    host.dataset.mode=next;
+    host.dataset.open=built.open.map(h=>h.id).join(' ');
+    const inst=Globe({
+      animateIn:false,
+      waitForGlobeReady:false,
+      rendererConfig:{
+        antialias:false,
+        alpha:false,
+        powerPreference:(IOS||narrow)?'low-power':'default',
+        stencil:false,
+        depth:true,
+        preserveDrawingBuffer:false
       }
-      function paint(M,MVP,MVPstar,Ms,MVPs,eye,time){
-        gl.clearColor(0.031,0.035,0.047,1);
-        gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
-        gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA,gl.ONE); gl.disable(gl.DEPTH_TEST);
-        gl.useProgram(starP); gl.uniformMatrix4fv(gl.getUniformLocation(starP,'uMVP'),false,MVPstar);
-        gl.bindVertexArray(starVAO); gl.drawArrays(gl.POINTS,0,starPos.length/3);
-        gl.enable(gl.DEPTH_TEST); gl.depthMask(true); gl.disable(gl.BLEND); gl.enable(gl.CULL_FACE); gl.cullFace(gl.BACK);
-        gl.useProgram(globeP);
-        gl.uniformMatrix4fv(gl.getUniformLocation(globeP,'uMVP'),false,MVP);
-        gl.uniformMatrix4fv(gl.getUniformLocation(globeP,'uModel'),false,M);
-        gl.uniform3fv(gl.getUniformLocation(globeP,'uEye'),new Float32Array(eye));
-        gl.uniform3fv(gl.getUniformLocation(globeP,'uCity'),cityPos);
-        gl.uniform3fv(gl.getUniformLocation(globeP,'uCityCol'),cityCol);
-        gl.uniform1fv(gl.getUniformLocation(globeP,'uPulse'),pulses);
-        gl.uniform1f(gl.getUniformLocation(globeP,'uTime'),time);
-        gl.bindVertexArray(globe.vao); gl.drawElements(gl.TRIANGLES,globe.count,gl.UNSIGNED_SHORT,0);
-        gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA,gl.ONE); gl.depthMask(false); gl.disable(gl.CULL_FACE);
-        gl.useProgram(arcP); gl.uniformMatrix4fv(gl.getUniformLocation(arcP,'uMVP'),false,MVP);
-        arcs.forEach(a=>{
-          gl.uniform3fv(gl.getUniformLocation(arcP,'uCol'),new Float32Array(a.col));
-      gl.uniform1f(gl.getUniformLocation(arcP,'uA'),0.45);
-      gl.bindVertexArray(a.glow.vao); gl.drawElements(gl.TRIANGLES,a.glow.count,gl.UNSIGNED_SHORT,0);
-      gl.uniform1f(gl.getUniformLocation(arcP,'uA'),1.0);
-          gl.bindVertexArray(a.mesh.vao); gl.drawElements(gl.TRIANGLES,a.mesh.count,gl.UNSIGNED_SHORT,0);
-        });
-        gl.enable(gl.CULL_FACE);
-        gl.useProgram(atmoP);
-        gl.uniformMatrix4fv(gl.getUniformLocation(atmoP,'uMVP'),false,MVPs);
-        gl.uniformMatrix4fv(gl.getUniformLocation(atmoP,'uModel'),false,Ms);
-        gl.uniform3fv(gl.getUniformLocation(atmoP,'uEye'),new Float32Array(eye));
-        gl.bindVertexArray(globe.vao); gl.drawElements(gl.TRIANGLES,globe.count,gl.UNSIGNED_SHORT,0);
-        gl.depthMask(true); gl.disable(gl.BLEND); gl.disable(gl.CULL_FACE);
+    })(host);
+    inst
+      .backgroundColor('#08090c')
+      .showAtmosphere(true)
+      .atmosphereColor(night?'#b9d6ff':'#67e4ee')
+      .atmosphereAltitude(night?0.22:0.16)
+      .globeCurvatureResolution(narrow?8:4)
+      .pointsMerge(true)
+      .pointResolution(narrow?5:7)
+      .pointsTransitionDuration(0)
+      .arcsTransitionDuration(0)
+      .pointLat('lat')
+      .pointLng('lng')
+      .pointColor(p=>p.hub?(p.open?'#e9fdff':(night?'#d5e4ea':'#9eb4c0')):'#3ec3d0')
+      .pointRadius(p=>p.hub?(p.open?(narrow?0.9:0.75):(night?0.32:0.5)):(narrow?0.42:0.3))
+      .pointAltitude(p=>p.hub?0.02:0.005)
+      .pointsData(dots.concat(built.hubs))
+      .arcStartLat('startLat')
+      .arcStartLng('startLng')
+      .arcEndLat('endLat')
+      .arcEndLng('endLng')
+      .arcAltitude('alt')
+      .arcStroke(narrow?0.7:0.55)
+      .arcColor(a=>a.live?['rgba(126,231,240,.15)','#7ee7f0']:['rgba(176,190,198,.08)','rgba(176,190,198,.65)'])
+      .arcDashLength(0.45)
+      .arcDashGap(0.22)
+      .arcDashInitialGap('gap')
+      .arcDashAnimateTime((animate&&!night)?2400:0)
+      .arcsData(night?[]:built.arcs)
+      .ringLat('lat')
+      .ringLng('lng')
+      .ringAltitude(0.02)
+      .ringColor(()=>t=>'rgba(126,231,240,'+(0.7*(1-t)).toFixed(3)+')')
+      .ringMaxRadius(narrow?3.2:3.6)
+      .ringPropagationSpeed(animate?1.2:0)
+      .ringRepeatPeriod(1700)
+      .ringsData(animate?built.open:[]);
+    g=inst;
+    const reveal=()=>{
+      if(g!==inst) return;
+      host.dataset.ready='1';
+      root.classList.add('has-gl');
+      if(!animate) inst.pauseAnimation();
+    };
+    if(night){
+      const useSmall=IOS||narrow;
+      if(useSmall){
+        fetch(NIGHT_URL).then(r=>r.blob()).then(async blob=>{
+          let bmp;
+          try{ bmp=await createImageBitmap(blob,{resizeWidth:1024,resizeHeight:512}); }
+          catch(e){ bmp=await createImageBitmap(blob); }
+          const c=document.createElement('canvas');
+          c.width=1024; c.height=512;
+          c.getContext('2d').drawImage(bmp,0,0,1024,512);
+          if(bmp.close) bmp.close();
+          if(g===inst) inst.globeImageUrl(c.toDataURL('image/jpeg',0.85));
+        }).catch(()=>{ if(g===inst) inst.globeImageUrl(NIGHT_URL); });
+      } else inst.globeImageUrl(NIGHT_URL);
+      const started=performance.now();
+      const timer=setInterval(()=>{
+        if(g!==inst){ clearInterval(timer); return; }
+        const mat=inst.globeMaterial();
+        const img=mat&&mat.map&&mat.map.image;
+        const bigEnough=!useSmall||(img&&img.width&&img.width<=1024);
+        if((mat&&mat.map&&bigEnough)||performance.now()-started>12000){
+          clearInterval(timer);
+          reveal();
+        }
+      }, 40);
+    } else {
+      requestAnimationFrame(()=>requestAnimationFrame(reveal));
+    }
+    if(!night){
+      const mat=inst.globeMaterial();
+      if(mat&&mat.color&&mat.color.setHex){
+        mat.color.setHex(0x0a1420);
+        if(mat.specular&&mat.specular.setHex) mat.specular.setHex(0x16303a);
+        mat.shininess=12;
+        mat.needsUpdate=true;
       }
     }
+    fit(inst);
+    inst.pointOfView({lat:12, lng:122, altitude:narrow?2.5:2.16}, 0);
+    const ctl=inst.controls();
+    ctl.autoRotate=!!animate;
+    ctl.autoRotateSpeed=narrow?0.22:0.38;
+    ctl.enableZoom=false;
+    ctl.enableRotate=false;
+    ctl.enablePan=false;
+    inst.enablePointerInteraction(false);
+    const canvas=inst.renderer().domElement;
+    canvas.addEventListener('webglcontextlost', ev=>{
+      ev.preventDefault();
+      if(muteLoss) return;
+      root.classList.remove('has-gl');
+      root.classList.add('no-gl');
+    });
+    if(!inst.renderer().getContext()){
+      destroy();
+      root.classList.add('no-gl');
+    }
+  }
+  function choose(next, persist){
+    if(next!=='night'&&next!=='hubs') return;
+    showChoice(next);
+    if(persist) remember(next);
+    if(!window.Globe){ mode=next; return; }
+    if(g&&mode===next&&host.dataset.mode===next) return;
+    destroy();
+    try{ create(next); }
+    catch(err){ console.error(err); root.classList.add('no-gl'); }
+  }
+  showChoice(mode);
+  const q=new URLSearchParams(location.search).get('globe');
+  if(q==='night'||q==='hubs') remember(q);
+  pick.addEventListener('click', e=>{
+    const b=e.target.closest('button');
+    if(!b||!b.dataset.globe) return;
+    choose(b.dataset.globe, true);
+  });
+  pick.addEventListener('keydown', e=>{
+    if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft') return;
+    e.preventDefault();
+    const next=mode==='night'?'hubs':'night';
+    choose(next, true);
+    const btn=pick.querySelector('[data-globe="'+next+'"]');
+    if(btn) btn.focus();
+  });
+  function boot(){
+    if(!window.Globe){ root.classList.add('no-gl'); return; }
+    try{ create(mode); }
+    catch(err){ console.error(err); root.classList.add('no-gl'); }
+  }
+  if(window.Globe) boot();
+  else {
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/globe.gl@2.46.2/dist/globe.gl.min.js';
+    s.async=true;
+    s.onload=boot;
+    s.onerror=()=>root.classList.add('no-gl');
+    document.head.appendChild(s);
+  }
+  return {
+    resize(){ if(g) fit(g); },
+    draw(){}
   };
 }
 
