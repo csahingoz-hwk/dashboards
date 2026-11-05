@@ -1,13 +1,18 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-05T03:08:26.034033Z",
-  "updated_london": "5 Nov 2026, 03:08 GMT",
+  "generated_at": "2026-11-05T09:17:27.971889Z",
+  "updated_london": "5 Nov 2026, 09:17 GMT",
   "timezone": "Europe/London",
-  "sample": true,
+  "sample": false,
   "stale": false,
-  "alphavantage_calls": 6,
+  "alphavantage_calls": 17,
   "notes": [
-    "Sample from the Alpha Vantage demo key: AAPL headlines, IBM insider filings and the IBM 2024Q1 call, AAPL congressional trades, IBM institutional holdings. The scheduled job fills Alpaca and the rest of the watchlist."
+    "NEWS_SENTIMENT returned no rows.",
+    "NEWS_SENTIMENT returned no rows.",
+    "NEWS_SENTIMENT returned no rows.",
+    "NEWS_SENTIMENT returned no rows.",
+    "NEWS_SENTIMENT returned no rows.",
+    "NEWS_SENTIMENT returned no rows."
   ],
   "watchlist": [
     "AAPL",
@@ -19,290 +24,275 @@
     "TSLA",
     "JPM"
   ],
-  "mood": {
-    "score": 0.1455,
-    "label": "Neutral",
-    "article_count": 50,
-    "scale": "Bearish ≤ -0.35 < Somewhat-Bearish ≤ -0.15 < Neutral < 0.15 ≤ Somewhat-Bullish < 0.35 ≤ Bullish"
-  },
+  "mood": null,
   "news": [
     {
-      "id": "av-0b9f2eed474b",
-      "headline": "Apple’s Latest Siri Announcement Could Mean the End of Apps on Your iPhone",
-      "summary": "Apple's recent announcement to open Siri AI to all developers could fundamentally change how iPhone users interact with their devices, potentially making traditional apps obsolete.",
-      "source": "Inc.com",
-      "url": "https://www.inc.com/jason-aten/apples-latest-siri-announcement-could-mean-the-end-of-apps-on-your-iphone/91431395",
-      "symbols": [
-        "AAPL"
-      ],
-      "published_at": "2026-11-05T00:57:16Z",
-      "sentiment": 0.3161,
-      "sentiment_label": "Somewhat-Bullish",
-      "origin": "alphavantage",
-      "sample": true
-    },
-    {
-      "id": "av-90ec0a4ad625",
-      "headline": "ANTITRUST—W.D. Wash.: Walmart, eBay shoppers granted certification in Amazon Marketplace price parity clause suit",
-      "summary": "A federal district court in Seattle has granted class certification in a lawsuit alleging that Amazon's \"most-favored nation restraints\" on third-party merchants using its Marketplace platform resulted in customers paying supracompetitive prices.",
-      "source": "VitalLaw.com",
-      "url": "https://www.vitallaw.com/news/antitrust-w-d-wash-walmart-ebay-shoppers-granted-certification-in-amazon-marketplace-price-parity-clause-suit/ald01ebe3a7f3d5cd4f5bbd7e8039fb1dd791",
-      "symbols": [
-        "AMZN",
-        "WMT",
-        "EBAY",
-        "AAPL"
-      ],
-      "published_at": "2026-11-04T23:15:13Z",
-      "sentiment": -0.1244,
-      "sentiment_label": "Neutral",
-      "origin": "alphavantage",
-      "sample": true
-    },
-    {
-      "id": "av-dda06764b4db",
-      "headline": "Apple shares hit new all-time intraday and closing highs",
-      "summary": "Apple Inc. (AAPL) reached new all-time intraday and closing highs on November 4, 2026, with shares closing at $349.51 and an intraday high of $354.47. The company's market value now stands at $5.079 trillion, making it the world's second-most valuable company.",
-      "source": "MacDailyNews",
-      "url": "https://macdailynews.com/2026/11/04/apple-shares-hit-new-all-time-intraday-and-closing-highs-94/",
+      "id": "alpaca-62904872",
+      "headline": "Dan Ives Warns Chip Stocks Aren't Done Falling, Sees Another 12% Drop — But Tom Lee Calls AI Selloff an 'Overreaction,' Predicts 20% Tech Rally",
+      "summary": "Dan Ives sees another 10%-12% drop for chip stocks, while Tom Lee calls the AI selloff an overreaction and sees 20% tech upside.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/markets/tech/26/11/62904872/dan-ives-warns-chip-stocks-arent-done-falling-sees-another-12-drop-but-tom-lee-calls-ai-selloff-an-overreaction-predicts-20-tech-rally",
       "symbols": [
         "AAPL",
-        "NVDA",
-        "MSFT",
-        "GOOGL"
+        "DIA",
+        "INTC",
+        "PLTR"
       ],
-      "published_at": "2026-11-04T23:09:37Z",
-      "sentiment": 0.3857,
-      "sentiment_label": "Bullish",
-      "origin": "alphavantage",
-      "sample": true
+      "published_at": "2026-11-05T09:08:34Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
     },
     {
-      "id": "av-37ce6bff68cf",
-      "headline": "Form 8K Matrix Service Co For: 4 November By Investing.com",
-      "summary": "This article announces that Matrix Service Co. has filed a Form 8K for November 4th. The filing is an important regulatory disclosure for the company. The article, published by Investing.com, also includes various market data and other news.",
-      "source": "Investing.com Canada",
-      "url": "https://ca.investing.com/news/stock-market-news/form-8k-matrix-service-co-for-4-november-93CH-4932036",
+      "id": "alpaca-62904858",
+      "headline": "Jim Cramer Warns Friday's Jobs Report Could 'Repeal' Midterm Rally, Says Elections 'Did Not Upend' Business Cycle: ‘I Hesitate To Guess Where We Go Next’",
+      "summary": "Jim Cramer warns Friday&#39;s jobs report could &#39;repeal&#39; the midterm rally, arguing elections did not upend the business cycle.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/markets/equities/26/11/62904858/jim-cramer-warns-fridays-jobs-report-could-repeal-midterm-rally-says-elections-did-not-upend-business-cycle-i-hesitate-to-guess-where-we-go-next",
       "symbols": [
-        "MTRX",
-        "AAPL",
-        "AVGO",
-        "TSLA"
-      ],
-      "published_at": "2026-11-04T22:42:01Z",
-      "sentiment": -0.1919,
-      "sentiment_label": "Somewhat-Bearish",
-      "origin": "alphavantage",
-      "sample": true
-    },
-    {
-      "id": "av-08399f7df95b",
-      "headline": "Power Integrations earnings beat by $0.05, revenue fell short of estimates",
-      "summary": "Power Integrations (NASDAQ: POWI) reported Q3 EPS of $0.46, surpassing analyst estimates by $0.05, though revenue of $125.47M fell slightly short of the $125.96M consensus. The company issued Q4 2026 revenue guidance between $118.00M and $126.00M, against an analyst consensus of $124.40M.",
-      "source": "Investing.com",
-      "url": "https://www.investing.com/news/earnings/power-integrations-earnings-beat-by-005-revenue-fell-short-of-estimates-5001732",
-      "symbols": [
-        "POWI",
         "AAPL",
         "AMZN",
+        "APLD",
+        "CRWV"
+      ],
+      "published_at": "2026-11-05T09:07:28Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-62904812",
+      "headline": "Kevin O'Leary Predicts Political U-Turn on AI Data Centers, Says They Will Become a Middle-Class Wealth Engine: 'Resistance is Going to Disappear'",
+      "summary": "Kevin O’Leary predicts opposition to U.S. AI data centers will fade as states embrace high-paying jobs and major power investments.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/markets/tech/26/11/62904812/kevin-oleary-ai-data-centers-middle-class-wealth-engine-states-embrace-projects",
+      "symbols": [
+        "AMD",
+        "GOOG",
+        "GOOGL",
+        "SPCX"
+      ],
+      "published_at": "2026-11-05T09:00:02Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-62904721",
+      "headline": "'Microsoft Rejects Multibillion-Dollar AI Deal with UK’s Nscale' - FT",
+      "summary": "",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/news/26/11/62904721/microsoft-rejects-multibillion-dollar-ai-deal-uk-s-nscale-ft",
+      "symbols": [
         "MSFT"
       ],
-      "published_at": "2026-11-04T22:41:05Z",
-      "sentiment": 0.1785,
-      "sentiment_label": "Somewhat-Bullish",
-      "origin": "alphavantage",
-      "sample": true
+      "published_at": "2026-11-05T08:46:49Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
     },
     {
-      "id": "av-584c6ea7f27a",
-      "headline": "Coherent Posts 91% Profit Surge as AI Data Center Optics Demand Accelerates",
-      "summary": "Coherent Corp. reported a significant surge in its fiscal first-quarter profit and revenue, driven by accelerating demand for optical connectivity gear in AI data centers. Adjusted net earnings increased by 91% to $422 million, with revenue rising 49.9% to $2.37 billion.",
-      "source": "BigGo Finance",
-      "url": "https://finance.biggo.com/news/3c386147-cf97-4542-881b-e9d02ab05320",
+      "id": "alpaca-62904506",
+      "headline": "Apple’s Slow Breakup With Qualcomm Still Hurts — China Android Is Rebounding, But Handset Revenue Is Set to Slip as QCOM Raises Prices",
+      "summary": "Qualcomm Inc (NASDAQ: QCOM) said its China Android business hit bottom in the June quarter and has grown sequentially since, but the chipmaker is raising prices, still losing Apple revenue, and facing skepticism over its handset outlook.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/markets/tech/26/11/62904506/apples-slow-breakup-with-qualcomm-still-hurts-china-android-is-rebounding-but-handset-revenue-is-set-to-slip-as-qcom-raises-prices",
       "symbols": [
-        "IIVI",
-        "NVDA",
         "AAPL"
       ],
-      "published_at": "2026-11-04T22:10:10Z",
-      "sentiment": 0.1684,
-      "sentiment_label": "Somewhat-Bullish",
-      "origin": "alphavantage",
-      "sample": true
+      "published_at": "2026-11-05T08:23:25Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
     },
     {
-      "id": "av-014bf1116f3b",
-      "headline": "Form 4 Seacoast Banking Corporation of Florida: Tracey Dexter (EVP & CFO) For: 2 November",
-      "summary": "This article reports on a Form 4 filing for Seacoast Banking Corporation of Florida, specifically detailing transactions by Tracey Dexter, the EVP & CFO. The filing pertains to activities that occurred on November 2nd. The content highlights this as an insider trading report.",
-      "source": "Investing.com Canada",
-      "url": "https://ca.investing.com/news/stock-market-news/form-4-seacoast-banking-corporation-of-florida-tracey-dexter-evp--cfo-for-2-november-93CH-4931837",
+      "id": "alpaca-62904059",
+      "headline": "Tesla Bulls Could Get Burned? Gary Black Sees Trouble With SpaceX All-Stock Merger: Warns 24% Premium 'Can Quickly Go Negative'",
+      "summary": "Gary Black warns a Tesla-SpaceX stock merger could dilute Tesla holders, citing losses after Marvell-Lumentum’s premium deal.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/markets/tech/26/11/62904059/tesla-bulls-could-get-burned-gary-black-sees-trouble-with-spacex-all-stock-merger-warns-24-premium-can-quickly-go-negative",
       "symbols": [
-        "SBCF",
-        "AVGO",
-        "AAPL",
+        "LITE",
+        "MRVL",
+        "SPCX",
         "TSLA"
       ],
-      "published_at": "2026-11-04T21:41:56Z",
-      "sentiment": 0.0141,
-      "sentiment_label": "Neutral",
-      "origin": "alphavantage",
-      "sample": true
+      "published_at": "2026-11-05T07:29:23Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
     },
     {
-      "id": "av-b50a588b0684",
-      "headline": "Apple Reportedly Tightens the Belt On Employee AI Budgets Amid Cost-Cutting Drive",
-      "summary": "Apple Inc. is reportedly scaling back daily AI usage budgets for its engineers and staff, reducing spending caps from $300 to $200 and potentially further to $100. This move is part of a broader corporate cost-cutting initiative led by CEO John Ternus to streamline operations and run the company leaner.",
-      "source": "Stocktwits",
-      "url": "https://stocktwits.com/news-articles/markets/equity/apple-reportedly-tightens-the-belt-on-employee-ai-budgets-amid-cost-cutting-drive/cNGL8Z8R9EG",
+      "id": "alpaca-62903942",
+      "headline": "Microsoft Is the Last Big Tech Buyback Holdout: Alphabet, Meta, Amazon Go Dark as AI Spending Eats Cash, Says This Market Commentator",
+      "summary": "Big Tech’s era of mega buybacks is giving way to mega AI spending, as companies put their cash into data centers, not their own stock.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/markets/tech/26/11/62903942/big-tech-stock-buybacks-lowest-since-2017-ai-spending-microsoft-alphabet-meta",
       "symbols": [
-        "AAPL",
-        "MSFT",
-        "TSLA",
-        "UBER"
-      ],
-      "published_at": "2026-11-04T21:39:48Z",
-      "sentiment": -0.1546,
-      "sentiment_label": "Somewhat-Bearish",
-      "origin": "alphavantage",
-      "sample": true
-    },
-    {
-      "id": "av-97f5186e41cb",
-      "headline": "Qualcomm falls 3% as handset revenue misses estimates, costs rise",
-      "summary": "Qualcomm (NASDAQ: QCOM) shares fell 3% after the chipmaker reported weaker-than-expected handset revenue and warned of rising semiconductor input costs, despite overall quarterly earnings and revenue topping analyst estimates.",
-      "source": "Investing.com",
-      "url": "https://www.investing.com/news/stock-market-news/qualcomm-falls-3-as-handset-revenue-misses-estimates-costs-rise-5001230",
-      "symbols": [
-        "QCOM",
+        "AMZN",
+        "GOOG",
         "GOOGL",
-        "AAPL",
+        "META"
+      ],
+      "published_at": "2026-11-05T07:14:39Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-62903627",
+      "headline": "Dow Jumps Over 1,500 Points After Midterms: Investor Sentiment Improves, Greed Index Moves To ‘Fear’ Zone",
+      "summary": "CNN Fear &amp; Greed rose to 27 in the Fear zone as U.S. stocks surged after Democrats won Congress; oil fell and most sectors gained.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/markets/market-summary/26/11/62903627/dow-jumps-over-1500-points-after-midterms-investor-sentiment-improves-greed-index-moves-to-fear-zone",
+      "symbols": [
+        "ABNB",
+        "CAH",
+        "MCD",
+        "MSFT"
+      ],
+      "published_at": "2026-11-05T06:45:59Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-62903277",
+      "headline": "TSLA, SPCX Stocks Fall Overnight as Ted Cruz Says Democrats Will ‘Persecute’ Elon Musk: Ron DeSantis Warns ‘I Guarantee You They Will Do That’",
+      "summary": "Tesla and SpaceX shares fell overnight as warnings of Democrats making Musk a target begins gathering pace, raising concerns.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/markets/equities/26/11/62903277/tsla-spcx-stocks-fall-overnight-ted-cruz-desantis-warn-democrats-persecute-elon-musk",
+      "symbols": [
+        "SPCX",
+        "TSLA"
+      ],
+      "published_at": "2026-11-05T06:03:49Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-113686316",
+      "headline": "Apple Updates Insider Trading Policy to Ban Prediction Market Betting",
+      "summary": "Apple has updated its insider trading policy to explicitly prohibit employees from using confidential company information to bet on prediction markets.",
+      "source": "fiscal.ai",
+      "url": "https://www.tradingview.com/news/financemagnates:a2edf84a9094b:0-apple-bars-staff-from-using-company-secrets-on-prediction-markets/",
+      "symbols": [
+        "AAPL"
+      ],
+      "published_at": "2026-11-05T03:01:27Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-62902639",
+      "headline": "Trump to Pardon Elon Musk Soon? Crypto Punters Bet as Ross Gerber Calls GOP Midterm Loss 'Worst Possible Outcome' for SpaceX CEO",
+      "summary": "Cryptocurrency punters think President Donald Trump is most likely to pardon Elon Musk, as Ross Gerber said the Republican midterm defeat could create difficulties for the world&#39;s richest person.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/markets/prediction-markets/26/11/62902639/trump-elon-musk-pardon-democrats-midterms-ross-gerber",
+      "symbols": [
+        "BTCUSD",
+        "POLUSD",
+        "TSLA",
+        "ZECUSD"
+      ],
+      "published_at": "2026-11-05T02:47:51Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-62902549",
+      "headline": "Cathie Wood Buys $47.4 Million of SpaceX as Democratic Congress Looms Over Elon Musk’s Businesses After Midterms",
+      "summary": "Ark added 348,406 SpaceX shares across three funds and trimmed Alphabet for a second straight session.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/etfs/broad-u-s-equity-etfs/26/11/62902549/cathie-wood-ark-buys-spacex-elon-musk-midterms",
+      "symbols": [
+        "AMZN",
+        "ARKK",
+        "ARKQ",
+        "ARKW"
+      ],
+      "published_at": "2026-11-05T02:27:27Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-113680583",
+      "headline": "Apple Reportedly Reduces Employee AI Spending Budgets",
+      "summary": "Apple has reportedly implemented cuts to internal budgets allocated for employee AI spending.",
+      "source": "fiscal.ai",
+      "url": "https://www.marketscreener.com/news/apple-cuts-employee-ai-spending-budgets-ce785fdfde8cf12d",
+      "symbols": [
+        "AAPL"
+      ],
+      "published_at": "2026-11-05T01:01:58Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-113479902",
+      "headline": "Meta Platforms Prices $15 Billion USD Bond Offering",
+      "summary": "Meta Platforms, Inc. has priced a $15 billion, five-tranche bond offering with maturities ranging from 2031 to 2056.",
+      "source": "fiscal.ai",
+      "url": "https://www.tradingview.com/news/gurufocus:36533a7da094b:0-meta-stocks-rise-1-77-while-15-billion-bond-deal-adds-a-cash-hurdle/",
+      "symbols": [
+        "META"
+      ],
+      "published_at": "2026-11-04T22:31:45Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-113479899",
+      "headline": "Microsoft Updates Clarity Analytics Tool with AI Agent Tracking Features",
+      "summary": "Microsoft has introduced three new features to its Clarity analytics platform to help website owners monitor interactions from both human users and AI agents.",
+      "source": "fiscal.ai",
+      "url": "https://www.pymnts.com/news/artificial-intelligence/2026/microsoft-clarity-helps-merchants-welcome-ai-shopping-agents/",
+      "symbols": [
+        "MSFT"
+      ],
+      "published_at": "2026-11-04T22:31:39Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-62893642",
+      "headline": "Arm-based PCs Have Now Reached ~20% Of Global Shipments, Reflecting Growing Adoption Of Arm In Personal Computing. Google Introduced GoogleBook, A New Category Of AI-Native Laptops Built For Gemini Intelligence, With Arm Serving As A Primary Compute Platform For Many Models. NVIDIA’s RTX Spark, Built On Arm, Further Expands Our Reach Into Local AI, Content Creation And Gaming",
+      "summary": "",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/quote/NVDA",
+      "symbols": [
+        "ARM",
+        "GOOG",
+        "GOOGL",
         "NVDA"
       ],
-      "published_at": "2026-11-04T21:38:22Z",
-      "sentiment": 0.0373,
-      "sentiment_label": "Neutral",
-      "origin": "alphavantage",
-      "sample": true
-    },
-    {
-      "id": "av-45a629d4d0bf",
-      "headline": "Qualcomm Q4 Highlights: Double Beat, Company Looks Ahead to 'Ramp of our Data Center Business'",
-      "summary": "Qualcomm Inc. reported a strong fourth quarter, beating Street estimates for both revenue and adjusted earnings, with significant growth in its automotive and IoT segments. The company renewed key licensing agreements and announced collaborations with Amazon for AI data centers and Starlink for mobile service.",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/markets/earnings/26/11/62892347/qualcomm-q4-highlights-double-beat-company-looks-ahead-to-ramp-of-our-data-center-business",
-      "symbols": [
-        "QCOM",
-        "AMZN",
-        "AAPL"
-      ],
-      "published_at": "2026-11-04T21:26:22Z",
-      "sentiment": 0.1978,
-      "sentiment_label": "Somewhat-Bullish",
-      "origin": "alphavantage",
-      "sample": true
-    },
-    {
-      "id": "av-e5840e632d80",
-      "headline": "Invesco MSCI USA ETF Overview (PBUS)",
-      "summary": "This article provides an overview of the Invesco MSCI USA ETF (PBUS), detailing its key fund data, historical total returns compared to its category and the S&P 500, and its distribution history. It also lists the ETF's major holdings, which include top tech companies and other prominent corporations.",
-      "source": "Barron's",
-      "url": "https://www.barrons.com/market-data/funds/pbus?countrycode=mx",
-      "symbols": [
-        "PBUS",
-        "NVDA",
-        "AAPL",
-        "MSFT"
-      ],
-      "published_at": "2026-11-04T21:12:23Z",
-      "sentiment": 0.2967,
-      "sentiment_label": "Somewhat-Bullish",
-      "origin": "alphavantage",
-      "sample": true
-    },
-    {
-      "id": "av-d53db8f8a7a8",
-      "headline": "Apple reportedly lowers daily AI spending limits for engineers",
-      "summary": "Apple Inc. is reportedly reducing the daily spending limits for its engineers' AI usage, cutting caps from $300 to $200, and potentially to as low as $100 for some teams. This move is part of a broader cost-cutting initiative, despite Apple's strategic focus on AI development.",
-      "source": "Investing.com",
-      "url": "https://www.investing.com/news/stock-market-news/apple-reportedly-lowers-daily-ai-spending-limits-for-engineers-5001119",
-      "symbols": [
-        "AAPL",
-        "GOOGL",
-        "MSFT"
-      ],
-      "published_at": "2026-11-04T20:09:56Z",
-      "sentiment": -0.1525,
-      "sentiment_label": "Somewhat-Bearish",
-      "origin": "alphavantage",
-      "sample": true
-    },
-    {
-      "id": "av-55ed2cc7e38c",
-      "headline": "Apple, Tesla Supplier Is Taking on 3M: Here's What Investors Should Know",
-      "summary": "Crown New Materials, a Chinese supplier to Apple, Tesla, and other tech giants, recently saw its shares surge on its Shenzhen debut, turning its founders into billionaires. The company, which makes industrial adhesives and functional films, competes directly with established players like 3M Company and Japan's Nitto…",
-      "source": "TradingView",
-      "url": "https://www.tradingview.com/news/benzinga:0fbece188094b:0-apple-tesla-supplier-is-taking-on-3m-here-s-what-investors-should-know/",
-      "symbols": [
-        "AAPL",
-        "TSLA",
-        "MMM"
-      ],
-      "published_at": "2026-11-04T19:09:20Z",
-      "sentiment": 0.1435,
-      "sentiment_label": "Neutral",
-      "origin": "alphavantage",
-      "sample": true
-    },
-    {
-      "id": "av-38766f8c4373",
-      "headline": "Subway, Kroger among ‘most bipartisan’ brands",
-      "summary": "New data from YouGov's U.S. Bipartisan Brand Rankings 2026 report identifies Subway as America’s \"most bipartisan brand,\" equally favored by Democrats and Republicans. Kroger was recognized as the most bipartisan grocer, while Buffalo Wild Wings and BP led their respective categories.",
-      "source": "MIDLAND • Packaging • Paper",
-      "url": "https://www.midlandco.com/subway-kroger-among-most-bipartisan-brands/",
-      "symbols": [
-        "KR",
-        "AMZN",
-        "MSFT",
-        "GOOGL"
-      ],
-      "published_at": "2026-11-04T18:47:25Z",
-      "sentiment": 0.2235,
-      "sentiment_label": "Somewhat-Bullish",
-      "origin": "alphavantage",
-      "sample": true
-    },
-    {
-      "id": "av-e146eb7a4e7b",
-      "headline": "Final Trades: Amazon, Coeur Mining, FTAI Aviation and Apple",
-      "summary": "The Investment Committee has provided its top stock picks to watch for the second half of the year. The featured stocks include Amazon (AMZN), Coeur Mining (CDE), FTAI Aviation (FTAI), and Apple (AAPL). This report offers insights into these companies for potential investors.",
-      "source": "CNBC",
-      "url": "https://www.cnbc.com/video/2026/11/04/final-trades-amazon-coeur-mining-ftai-aviation-apple.html",
-      "symbols": [
-        "CDE",
-        "AMZN",
-        "AAPL"
-      ],
-      "published_at": "2026-11-04T18:41:40Z",
-      "sentiment": 0.1497,
-      "sentiment_label": "Neutral",
-      "origin": "alphavantage",
-      "sample": true
-    },
-    {
-      "id": "av-66a2c3a7c1c4",
-      "headline": "Burford Capital (BUR) Q3 2026 Earnings Call Transcript",
-      "summary": "Burford Capital (NYSE:BUR) reported a strong third quarter of 2026, highlighted by $100 million in debt reduction and achieving $4 billion in cumulative cash realizations since its inception.",
-      "source": "The Globe and Mail",
-      "url": "https://www.theglobeandmail.com/investing/markets/markets-news/motley/8652502/burford-capital-bur-q3-2026-earnings-call-transcript/",
-      "symbols": [
-        "BUR",
-        "AAPL"
-      ],
-      "published_at": "2026-11-04T18:22:28Z",
-      "sentiment": 0.3259,
-      "sentiment_label": "Somewhat-Bullish",
-      "origin": "alphavantage",
-      "sample": true
+      "published_at": "2026-11-04T21:34:55Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
     }
   ],
   "movers": {
@@ -400,129 +390,261 @@
   },
   "earnings": [
     {
-      "symbol": "IBM",
-      "quarter": "2024Q1",
-      "reported_date": null,
-      "fiscal_date_ending": null,
-      "reported_eps": null,
-      "estimated_eps": null,
-      "surprise_percentage": null,
+      "symbol": "GOOGL",
+      "quarter": "2026Q3",
+      "reported_date": "2026-10-28",
+      "fiscal_date_ending": "2026-09-30",
+      "reported_eps": "2.12",
+      "estimated_eps": "2.94",
+      "surprise_percentage": "-27.8912",
       "summary": {
         "method": "extractive",
         "llm": null,
-        "sentiment_score": 0.4135,
+        "sentiment_score": 0.3611,
         "sentiment_label": "Bullish",
-        "turn_count": 37,
-        "overview": "In the first quarter, we had solid performance across revenue and cash flow. These results are further proof of the quality of our portfolio and our hybrid cloud and AI strategy.",
+        "turn_count": 36,
+        "overview": "Q3 was a strong quarter for Alphabet. Our deep full-stack approach is driving momentum across the business with many opportunities ahead.",
         "quotes": [
           {
             "role": "CEO",
-            "speaker": "Arvind Krishna",
+            "speaker": "Sundar Pichai",
             "title": "CEO",
-            "text": "Since we put the world's first Quantum system on the cloud in 2016, we have deployed over 80 Quantum systems, and our users have run over 3 trillion programs to date.",
-            "sentiment": 0.8,
+            "text": "Our first-party model APIs are now processing nearly 32 billion tokens per minute, 40% more than last quarter and more than 4x what we processed a year ago.",
+            "sentiment": 0.9,
             "sentiment_label": "Bullish"
           },
           {
             "role": "CFO",
-            "speaker": "James Kavanaugh",
+            "speaker": "Anat Ashkenazi",
             "title": "CFO",
-            "text": "And to put that in perspective, we see this business profile moving from about a mid-single-digit free cash flow margin business to about a 30% to 40% free cash flow margin business in a handful of years, free cash flow accretive by the end of year 2.",
+            "text": "Our full-year 2026 CapEx guidance range of $195 billion to $205 billion remains unchanged.",
             "sentiment": 0.7,
             "sentiment_label": "Bullish"
           }
         ],
         "bullish": {
-          "speaker": "Arvind Krishna",
+          "speaker": "Sundar Pichai",
           "title": "CEO",
           "role": "CEO",
-          "text": "Now turning back to the quarter.",
-          "sentiment": 0.8,
+          "text": "Q3 was a strong quarter for Alphabet.",
+          "sentiment": 0.9,
           "sentiment_label": "Bullish"
         },
         "bearish": {
-          "speaker": "James Kavanaugh",
+          "speaker": "Anat Ashkenazi",
           "title": "CFO",
           "role": "CFO",
-          "text": "Arvind, just building on your point, we are very confident in the capital structure of this company.",
-          "sentiment": 0.3,
-          "sentiment_label": "Somewhat-Bullish"
+          "text": "And on the second question, with regards to my comments, I believe you're referring to the outlook with regards to Search.",
+          "sentiment": 0.1,
+          "sentiment_label": "Neutral"
         }
       },
-      "sample": true
+      "sample": false
+    },
+    {
+      "symbol": "AMZN",
+      "quarter": "2026Q3",
+      "reported_date": "2026-10-29",
+      "fiscal_date_ending": "2026-09-30",
+      "reported_eps": "1.89",
+      "estimated_eps": "2.01",
+      "surprise_percentage": "-5.9701",
+      "summary": {
+        "method": "extractive",
+        "llm": null,
+        "sentiment_score": 0.34,
+        "sentiment_label": "Somewhat-Bullish",
+        "turn_count": 25,
+        "overview": "We're reporting $201.9 billion in revenue, up 12% year-over-year. Operating income was $28.1 billion, up 61% year-over-year.",
+        "quotes": [
+          {
+            "role": "CEO",
+            "speaker": "Andy Jassy",
+            "title": "CEO",
+            "text": "First, we shifted Prime Day into Q2 for most countries, moving significant sales and ad revenue that were in Q3 2025 into Q2 2026, a tailwind to our Q2 2026 rate and a headwind to Q3 2026.",
+            "sentiment": 0.9,
+            "sentiment_label": "Bullish"
+          },
+          {
+            "role": "CFO",
+            "speaker": "Brian Olsavsky",
+            "title": "CFO",
+            "text": "Worldwide revenue was $201.9 billion, a 12% increase year-over-year, and a 13% increase year-over-year excluding the impact of foreign exchange.",
+            "sentiment": 0.8,
+            "sentiment_label": "Bullish"
+          }
+        ],
+        "bullish": {
+          "speaker": "Andy Jassy",
+          "title": "CEO",
+          "role": "CEO",
+          "text": "We're reporting $201.9 billion in revenue, up 12% year-over-year.",
+          "sentiment": 0.9,
+          "sentiment_label": "Bullish"
+        },
+        "bearish": {
+          "speaker": "Brian Olsavsky",
+          "title": "CFO",
+          "role": "CFO",
+          "text": "Justin, on your question about fuel and line-haul inflation, I would say I don't have an exact number for you, but it is higher in Q4 than it was in Q3.",
+          "sentiment": -0.1,
+          "sentiment_label": "Neutral"
+        }
+      },
+      "sample": false
     }
   ],
   "flows": {
     "symbols": [
-      "IBM",
-      "AAPL"
+      "GOOGL",
+      "AMZN"
     ],
     "insider": [
       {
-        "symbol": "IBM",
-        "date": "2026-08-26",
-        "name": "Robert David Thomas",
-        "title": "Senior Vice President",
+        "symbol": "GOOGL",
+        "date": "2026-10-29",
+        "name": "Frances Arnold",
+        "title": "Director",
         "action": "Sale",
         "code": "S",
-        "shares": "25k",
-        "price": "230.3235"
+        "shares": "82",
+        "price": "284.0"
       },
       {
-        "symbol": "IBM",
-        "date": "2026-02-25",
-        "name": "Michael Miebach",
+        "symbol": "GOOGL",
+        "date": "2026-09-30",
+        "name": "Frances Arnold",
         "title": "Director",
-        "action": "Purchase",
-        "code": "P",
-        "shares": "434",
-        "price": "233.3261"
+        "action": "Sale",
+        "code": "S",
+        "shares": "83",
+        "price": "340.45"
       },
       {
-        "symbol": "IBM",
-        "date": "2026-02-25",
-        "name": "Michelle J Howard",
+        "symbol": "GOOGL",
+        "date": "2026-08-28",
+        "name": "Frances Arnold",
         "title": "Director",
-        "action": "Purchase",
-        "code": "P",
-        "shares": "50",
-        "price": "237.8293"
+        "action": "Sale",
+        "code": "S",
+        "shares": "82",
+        "price": "337.71"
       },
       {
-        "symbol": "IBM",
-        "date": "2026-01-30",
-        "name": "David N Farr",
+        "symbol": "GOOGL",
+        "date": "2026-07-30",
+        "name": "Frances Arnold",
         "title": "Director",
-        "action": "Purchase",
-        "code": "P",
+        "action": "Sale",
+        "code": "S",
+        "shares": "82",
+        "price": "333.39"
+      },
+      {
+        "symbol": "GOOGL",
+        "date": "2026-07-29",
+        "name": "Marsida Saraci",
+        "title": "VP, Chief Accounting Officer",
+        "action": "Sale",
+        "code": "S",
+        "shares": "449",
+        "price": "333.2"
+      },
+      {
+        "symbol": "AMZN",
+        "date": "2026-10-01",
+        "name": "Douglas J Herrington",
+        "title": "CEO Worldwide Amazon Stores",
+        "action": "Sale",
+        "code": "S",
         "shares": "1000",
-        "price": "304.0"
+        "price": "251.5"
       },
       {
-        "symbol": "IBM",
-        "date": "2025-03-03",
-        "name": "Robert David Thomas",
+        "symbol": "AMZN",
+        "date": "2026-09-01",
+        "name": "Douglas J Herrington",
+        "title": "CEO Worldwide Amazon Stores",
+        "action": "Sale",
+        "code": "S",
+        "shares": "1000",
+        "price": "254.77"
+      },
+      {
+        "symbol": "AMZN",
+        "date": "2026-08-24",
+        "name": "David Zapolsky",
         "title": "Senior Vice President",
         "action": "Sale",
         "code": "S",
-        "shares": "27k",
-        "price": "253.0098"
+        "shares": "9258",
+        "price": "259.77"
       }
     ],
     "congress": [
       {
-        "symbol": "AAPL",
-        "date": "2026-10-02",
+        "symbol": "GOOGL",
+        "date": "2026-09-14",
         "name": "Pete Sessions",
         "party": "R",
         "state": "TX",
         "chamber": "House",
         "action": "Sell",
-        "amount": "$250k–$500k"
+        "amount": "$15k–$50k"
       },
       {
-        "symbol": "AAPL",
-        "date": "2026-09-22",
+        "symbol": "GOOGL",
+        "date": "2026-09-04",
+        "name": "Ro Khanna",
+        "party": "D",
+        "state": "CA",
+        "chamber": "House",
+        "action": "Sell",
+        "amount": "$1k–$15k"
+      },
+      {
+        "symbol": "GOOGL",
+        "date": "2026-08-27",
+        "name": "Thomas H. Kean, Jr.",
+        "party": "R",
+        "state": "NJ",
+        "chamber": "House",
+        "action": "Sell",
+        "amount": "$1k–$15k"
+      },
+      {
+        "symbol": "GOOGL",
+        "date": "2026-08-24",
+        "name": "Michael A. Rulli",
+        "party": "R",
+        "state": "OH",
+        "chamber": "House",
+        "action": "Sell",
+        "amount": "$50k–$100k"
+      },
+      {
+        "symbol": "GOOGL",
+        "date": "2026-08-11",
+        "name": "David J. Taylor",
+        "party": "R",
+        "state": "OH",
+        "chamber": "House",
+        "action": "Buy",
+        "amount": "$1k–$15k"
+      },
+      {
+        "symbol": "AMZN",
+        "date": "2026-10-27",
+        "name": "Pete Sessions",
+        "party": "R",
+        "state": "TX",
+        "chamber": "House",
+        "action": "Sell",
+        "amount": "$15k–$50k"
+      },
+      {
+        "symbol": "AMZN",
+        "date": "2026-10-02",
         "name": "Pete Sessions",
         "party": "R",
         "state": "TX",
@@ -531,31 +653,11 @@
         "amount": "$100k–$250k"
       },
       {
-        "symbol": "AAPL",
-        "date": "2026-09-08",
-        "name": "Cleo Fields",
+        "symbol": "AMZN",
+        "date": "2026-09-04",
+        "name": "Ro Khanna",
         "party": "D",
-        "state": "LA",
-        "chamber": "House",
-        "action": "Buy",
-        "amount": "$1k–$15k"
-      },
-      {
-        "symbol": "AAPL",
-        "date": "2026-09-08",
-        "name": "Kevin Hern",
-        "party": "R",
-        "state": "OK",
-        "chamber": "House",
-        "action": "Sell",
-        "amount": "$1k–$15k"
-      },
-      {
-        "symbol": "AAPL",
-        "date": "2026-09-08",
-        "name": "Kevin Hern",
-        "party": "R",
-        "state": "OK",
+        "state": "CA",
         "chamber": "House",
         "action": "Sell",
         "amount": "$1k–$15k"
@@ -563,37 +665,74 @@
     ],
     "institutional": [
       {
-        "symbol": "IBM",
-        "ownership": "75%",
-        "holders": "3893",
-        "increased": "1893",
-        "decreased": "1583",
+        "symbol": "GOOGL",
+        "ownership": "90%",
+        "holders": "6116",
+        "increased": "2812",
+        "decreased": "2753",
         "top": [
           {
             "name": "Vanguard Group Inc",
-            "shares": "97.2m",
-            "change": "1.50%",
+            "shares": "529.0m",
+            "change": "2.43%",
             "change_type": "increased",
             "reported": "2025-12-31"
           },
           {
             "name": "Blackrock",
-            "shares": "76.8m",
-            "change": "-1.03%",
-            "change_type": "decreased",
+            "shares": "461.0m",
+            "change": "3.13%",
+            "change_type": "increased",
             "reported": "2026-06-30"
           },
           {
             "name": "Vanguard Capital Management Llc",
-            "shares": "61.4m",
-            "change": "0.89%",
+            "shares": "383.0m",
+            "change": "1.24%",
+            "change_type": "increased",
+            "reported": "2026-06-30"
+          },
+          {
+            "name": "Fmr Llc",
+            "shares": "250.7m",
+            "change": "5.99%",
+            "change_type": "increased",
+            "reported": "2026-06-30"
+          }
+        ]
+      },
+      {
+        "symbol": "AMZN",
+        "ownership": "76%",
+        "holders": "6488",
+        "increased": "3383",
+        "decreased": "2591",
+        "top": [
+          {
+            "name": "Vanguard Group Inc",
+            "shares": "845.4m",
+            "change": "-0.58%",
+            "change_type": "decreased",
+            "reported": "2025-12-31"
+          },
+          {
+            "name": "Blackrock",
+            "shares": "748.4m",
+            "change": "1.75%",
+            "change_type": "increased",
+            "reported": "2026-06-30"
+          },
+          {
+            "name": "Vanguard Capital Management Llc",
+            "shares": "635.8m",
+            "change": "0.73%",
             "change_type": "increased",
             "reported": "2026-06-30"
           },
           {
             "name": "State Street Corp",
-            "shares": "56.0m",
-            "change": "2.66%",
+            "shares": "397.2m",
+            "change": "1.73%",
             "change_type": "increased",
             "reported": "2026-06-30"
           }
