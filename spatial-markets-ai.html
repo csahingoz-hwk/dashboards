@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<title>Markets &amp; AI, 4 Nov 2026</title>
+<title>Markets &amp; AI, news updated 6 Nov 2026</title>
 <script>
 (function(){
   var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -987,7 +987,7 @@ function tilt(node, extra){
   const s=byId.spx,f=byId.ftse,x=byId.xu100,br=byId.brent,au=byId.gold;
   const em=i=>`<em class="${cls(i.pct)}">${esc(i.pct_fmt)}</em>`;
   $('#story').innerHTML=`Wall Street ${s.pct>=0?'closed higher':'slipped'}: the S&P 500 ${word(s.pct)} ${em(s)}. London's FTSE 100 ${word(f.pct)} ${em(f)} and Istanbul's BIST 100 ${word(x.pct)} ${em(x)}. Brent ${word(br.pct)} ${em(br)} to $${esc(br.last_fmt)}, and gold ${word(au.pct)} ${em(au)}.`;
-  $('#mintro').textContent=`US, UK and Turkish markets have closed for the day; crypto trades around the clock. Prices are from ${D.generated.london}, and each tile shows its own delay.`;
+  $('#mintro').textContent=`Market prices are an embedded snapshot from ${D.generated.london}; the news feed includes updates through 6 Nov 2026. Each tile shows its own delay.`;
   ['c-ny','c-ldn','c-ist'].forEach((c,i)=>{
     const id=['spx','ftse','xu100'][i];
     const n=document.querySelector('.'+c); if(!n) return;
