@@ -66,7 +66,10 @@ html.no-gl #gl{display:none}
 .globe-pick{position:fixed;z-index:25;top:88px;right:max(20px,env(safe-area-inset-right));pointer-events:auto}
 .globe-pick.seg{background:rgba(8,9,12,.78)}
 html.no-gl .globe-pick{display:none}
-.globe-pick{display:none!important}
+@media (max-width:420px){
+  .globe-pick.seg{gap:2px;padding:3px;max-width:calc(100vw - 24px)}
+  .globe-pick button{padding:5px 7px;font-size:10px}
+}
 @media (max-width:720px){
   .globe-pick{top:auto;right:auto;left:max(12px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom))}
 }
@@ -454,7 +457,7 @@ html.rm .od-s,html.low .od-s{transition:none}
 <body>
 <!--
 Effects, and where they live
-Globe.gl background, Night or Hubs, chosen with #globe-pick (?globe= and localStorage): #gl, initGlobe.
+Globe.gl background, Night / Hubs / Hologram / Dots, chosen with #globe-pick (?globe= and localStorage): #gl, initGlobe.
 Glass refraction, chromatic edge, specular highlight, 3D tilt and magnetic hover: .glass, bindTilt.
 Odometer digits, self-drawing sparklines, flash on change: setOdo, sparkSVG, .kpi.
 Kinetic variable-weight headline and volatility waveform: #hero-title, canvas#pulse.
@@ -470,18 +473,22 @@ Low-power devices and prefers-reduced-motion hold the globe still and drop ambie
 <a class="skip" href="#main">Skip to content</a>
 <div id="gl" aria-hidden="true"></div>
 <div class="globe-pick seg" id="globe-pick" role="radiogroup" aria-label="Globe style">
-  <button type="button" role="radio" data-globe="night" aria-checked="false">Night</button>
-  <button type="button" role="radio" data-globe="hubs" aria-checked="false">Hubs</button>
+  <button type="button" role="radio" data-globe="night" aria-checked="true" tabindex="0">Night</button>
+  <button type="button" role="radio" data-globe="hubs" aria-checked="false" tabindex="-1">Hubs</button>
+  <button type="button" role="radio" data-globe="hologram" aria-checked="false" tabindex="-1">Hologram</button>
+  <button type="button" role="radio" data-globe="dots" aria-checked="false" tabindex="-1">Dots</button>
 </div>
 <script>
 (function(){
-  var q=new URLSearchParams(location.search).get('globe');
-  var s=q;
-  if(s!=='night'&&s!=='hubs'){ try{ s=localStorage.getItem('sma-globe'); }catch(e){ s=null; } }
-  s='night';
+  var ok=['night','hubs','hologram','dots'];
+  var s=new URLSearchParams(location.search).get('globe');
+  if(ok.indexOf(s)<0){ try{ s=localStorage.getItem('sma-globe'); }catch(e){ s=null; } }
+  if(ok.indexOf(s)<0) s='night';
   window.__globePick=s;
   document.querySelectorAll('#globe-pick button').forEach(function(b){
-    b.setAttribute('aria-checked', b.getAttribute('data-globe')===s?'true':'false');
+    var on=b.getAttribute('data-globe')===s;
+    b.setAttribute('aria-checked', on?'true':'false');
+    b.tabIndex=on?0:-1;
   });
 })();
 </script>
@@ -1899,7 +1906,9 @@ function initGlobe(){
   const host=$('#gl');
   const pick=$('#globe-pick');
   if(!host||!pick){ root.classList.add('no-gl'); return null; }
-  const NIGHT_URL='https://cdn.jsdelivr.net/npm/three-globe@2.45.0/example/img/earth-night.jpg';
+  const CDN='https://cdn.jsdelivr.net/npm/three-globe@2.45.0/example/img/';
+  const NIGHT_URL=CDN+'earth-night.jpg';
+  const NAMES=['night','hubs','hologram','dots'];
   const HUBS=[
     {id:'ny',name:'New York',lat:40.71,lng:-74.01,tz:'America/New_York',hours:[[570,960]]},
     {id:'lon',name:'London',lat:51.51,lng:-0.13,tz:'Europe/London',hours:[[480,990]]},
@@ -1910,19 +1919,19 @@ function initGlobe(){
     {id:'sin',name:'Singapore',lat:1.29,lng:103.85,tz:'Asia/Singapore',hours:[[540,720],[780,1020]]},
     {id:'syd',name:'Sydney',lat:-33.87,lng:151.21,tz:'Australia/Sydney',hours:[[600,960]]}
   ];
-  const LINKS=[['ny','lon'],['lon','fra'],['lon','sin'],['sin','hk'],['hk','sha'],['sha','tyo'],['tyo','syd'],['ny','tyo']];
+  const LINKS=[['ny','lon'],['lon','fra'],['lon','sin'],['sin','hk'],['hk','sha'],['sha','tyo'],['tyo','syd'],['ny','tyo'],['fra','tyo'],['lon','hk'],['sin','syd'],['ny','sin']];
   const animate=!RM&&!LOW;
-  let g=null, muteLoss=0, mode=initialMode();
+  let g=null, muteLoss=0, mode=initialMode(), texCache={};
 
   function initialMode(){
-    return 'night';
-    const picked=window.__globePick;
-    if(picked==='night'||picked==='hubs') return picked;
-    const q=new URLSearchParams(location.search).get('globe');
-    if(q==='night'||q==='hubs') return q;
+    const ok=n=>NAMES.indexOf(n)>=0?n:null;
+    const picked=ok(window.__globePick);
+    if(picked) return picked;
+    const q=ok(new URLSearchParams(location.search).get('globe'));
+    if(q) return q;
     try{
-      const s=localStorage.getItem('sma-globe');
-      if(s==='night'||s==='hubs') return s;
+      const s=ok(localStorage.getItem('sma-globe'));
+      if(s) return s;
     }catch(e){}
     return 'night';
   }
@@ -1960,8 +1969,8 @@ function initGlobe(){
       const span=Math.min(Math.abs(A.lng-B.lng), 360-Math.abs(A.lng-B.lng));
       return {
         startLat:A.lat, startLng:A.lng, endLat:B.lat, endLng:B.lng,
-        alt:Math.min(0.5, 0.12+Math.hypot(span, A.lat-B.lat)/360),
-        gap:(i*0.17)%1,
+        alt:Math.min(0.5, 0.1+Math.hypot(span, A.lat-B.lat)/360),
+        gap:(i*0.137)%1,
         live:A.open||B.open
       };
     });
@@ -1969,14 +1978,44 @@ function initGlobe(){
   }
   function dotField(step){
     const pts=[];
-    for(let lat=-78; lat<=78; lat+=step){
+    for(let lat=-76; lat<=76; lat+=step){
       for(let lng=-180; lng<180; lng+=step) pts.push({lat, lng, hub:false, open:false});
+    }
+    return pts;
+  }
+  /* Coastline dots: sample the night-lights texture so the dots sit on land only. */
+  function landDots(step){
+    const img=texCache.land;
+    if(!img||!img.width) return dotField(step);
+    const c=document.createElement('canvas');
+    c.width=img.width; c.height=img.height;
+    const cx=c.getContext('2d',{willReadFrequently:true});
+    cx.drawImage(img,0,0);
+    let data;
+    try{ data=cx.getImageData(0,0,c.width,c.height).data; }
+    catch(e){ return dotField(step); }
+    const at=(lat,lng)=>{
+      const x=Math.min(c.width-1, Math.max(0, Math.floor((lng+180)/360*c.width)));
+      const y=Math.min(c.height-1, Math.max(0, Math.floor((90-lat)/180*c.height)));
+      const i=(y*c.width+x)*4;
+      return (data[i]+data[i+1]+data[i+2])/3;
+    };
+    const pts=[];
+    for(let lat=-74; lat<=74; lat+=step){
+      const scale=Math.max(0.25, Math.cos(lat*Math.PI/180));
+      for(let lng=-180; lng<180; lng+=step/scale){
+        const v=at(lat,lng);
+        if(v>34||at(lat+0.4,lng)>30||at(lat-0.4,lng)>30||at(lat,lng+0.4)>30||at(lat,lng-0.4)>30){
+          pts.push({lat, lng:((lng+540)%360)-180, hub:false, open:false});
+        }
+      }
     }
     return pts;
   }
   function showChoice(next){
     pick.querySelectorAll('button').forEach(b=>{
       b.setAttribute('aria-checked', b.dataset.globe===next?'true':'false');
+      b.tabIndex=b.dataset.globe===next?0:-1;
     });
   }
   function remember(next){
@@ -2019,12 +2058,42 @@ function initGlobe(){
     host.replaceChildren();
     setTimeout(()=>{ muteLoss=Math.max(0, muteLoss-1); }, 1000);
   }
+  /* Load a texture once, and shrink it for phones so iOS does not choke on it. */
+  function loadTex(url, maxW){
+    const key=url+(maxW||'');
+    if(texCache[key]) return Promise.resolve(texCache[key]);
+    return fetch(url,{mode:'cors'}).then(r=>r.blob()).then(blob=>{
+      const opts=maxW?{resizeWidth:maxW, resizeHeight:Math.round(maxW/2)}:undefined;
+      return createImageBitmap(blob, opts).catch(()=>createImageBitmap(blob));
+    }).then(bmp=>{
+      if(maxW&&bmp.width>maxW){
+        const c=document.createElement('canvas');
+        c.width=maxW; c.height=Math.round(maxW/2);
+        c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);
+        if(bmp.close) bmp.close();
+        texCache[key]=c;
+      } else {
+        texCache[key]=bmp;
+      }
+      return texCache[key];
+    });
+  }
+  function toTexture(img){
+    const c=document.createElement('canvas');
+    c.width=img.width||1024; c.height=img.height||512;
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+    return c.toDataURL('image/jpeg',0.86);
+  }
+
   function create(next){
     mode=next;
-    const night=next==='night';
     const narrow=IOS||COARSE||matchMedia('(max-width:760px)').matches;
     const built=model();
-    const dots=night?[]:dotField(narrow?12:8);
+    const texW=narrow?1024:4096;
+    const isNight=next==='night';
+    const isHubs=next==='hubs';
+    const isHolo=next==='hologram';
+    const isDots=next==='dots';
     host.dataset.ready='';
     host.dataset.mode=next;
     host.dataset.open=built.open.map(h=>h.id).join(' ');
@@ -2040,11 +2109,12 @@ function initGlobe(){
         preserveDrawingBuffer:false
       }
     })(host);
+    const accent=isNight?'#b9d6ff':isHolo?'#67e4ee':isDots?'#9fb4c8':'#4fd8e4';
     inst
       .backgroundColor('#08090c')
       .showAtmosphere(true)
-      .atmosphereColor(night?'#b9d6ff':'#67e4ee')
-      .atmosphereAltitude(night?0.22:0.16)
+      .atmosphereColor(accent)
+      .atmosphereAltitude(isNight?0.24:isDots?0.14:0.18)
       .globeCurvatureResolution(narrow?8:4)
       .pointsMerge(true)
       .pointResolution(narrow?5:7)
@@ -2052,79 +2122,129 @@ function initGlobe(){
       .arcsTransitionDuration(0)
       .pointLat('lat')
       .pointLng('lng')
-      .pointColor(p=>p.hub?(p.open?'#e9fdff':(night?'#d5e4ea':'#9eb4c0')):'#3ec3d0')
-      .pointRadius(p=>p.hub?(p.open?(narrow?0.9:0.75):(night?0.32:0.5)):(narrow?0.42:0.3))
-      .pointAltitude(p=>p.hub?0.02:0.005)
-      .pointsData(dots.concat(built.hubs))
       .arcStartLat('startLat')
       .arcStartLng('startLng')
       .arcEndLat('endLat')
       .arcEndLng('endLng')
       .arcAltitude('alt')
-      .arcStroke(narrow?0.7:0.55)
-      .arcColor(a=>a.live?['rgba(126,231,240,.15)','#7ee7f0']:['rgba(176,190,198,.08)','rgba(176,190,198,.65)'])
-      .arcDashLength(0.45)
-      .arcDashGap(0.22)
       .arcDashInitialGap('gap')
-      .arcDashAnimateTime((animate&&!night)?2400:0)
-      .arcsData(night?[]:built.arcs)
       .ringLat('lat')
       .ringLng('lng')
-      .ringAltitude(0.02)
-      .ringColor(()=>t=>'rgba(126,231,240,'+(0.7*(1-t)).toFixed(3)+')')
-      .ringMaxRadius(narrow?3.2:3.6)
+      .ringAltitude(0.02);
+    g=inst;
+
+    if(isNight||isHolo||isDots){
+      const mat=inst.globeMaterial();
+      if(mat&&mat.color&&mat.color.setHex){
+        mat.color.setHex(isNight?0xffffff:0x0a1420);
+        if(mat.specular&&mat.specular.setHex) mat.specular.setHex(isHolo?0x1d5a66:0x16303a);
+        mat.shininess=isHolo?24:12;
+        mat.needsUpdate=true;
+      }
+    }
+    if(isHubs){
+      inst
+        .pointColor(p=>p.hub?(p.open?'#eafdff':'#9dc2d2'):'#37b0c2')
+        .pointRadius(p=>p.hub?(p.open?(narrow?0.95:0.8):0.4):(narrow?0.38:0.26))
+        .pointAltitude(p=>p.hub?0.022:0.004)
+        .pointsData(dotField(narrow?12:8).concat(built.hubs))
+        .arcStroke(narrow?0.72:0.58)
+        .arcColor(a=>a.live?['rgba(126,231,240,.12)','#8ff0f8']:['rgba(150,170,185,.06)','rgba(150,170,185,.5)'])
+        .arcDashLength(0.42)
+        .arcDashGap(0.24)
+        .arcDashAnimateTime(animate?2600:0)
+        .arcsData(built.arcs);
+      const mat=inst.globeMaterial();
+      if(mat&&mat.color&&mat.color.setHex){
+        mat.color.setHex(0x07131d);
+        if(mat.specular&&mat.specular.setHex) mat.specular.setHex(0x0d2630);
+        mat.shininess=18;
+        mat.needsUpdate=true;
+      }
+    }
+    if(isHolo){
+      inst
+        .showGraticules(true)
+        .arcStroke(narrow?0.42:0.28)
+        .arcColor(a=>a.live?['rgba(126,231,240,.06)','rgba(150,245,255,.8)']:['rgba(126,231,240,.02)','rgba(126,231,240,.28)'])
+        .arcDashLength(0.28)
+        .arcDashGap(0.12)
+        .arcDashAnimateTime(animate?1800:0)
+        .arcsData(built.arcs)
+        .pointColor(p=>p.open?'#d9fdff':'#6ad6e2')
+        .pointRadius(p=>p.open?(narrow?0.9:0.75):0.45)
+        .pointAltitude(0.02)
+        .pointsData(built.hubs);
+    }
+    if(isDots){
+      inst
+        .arcStroke(narrow?0.55:0.42)
+        .arcColor(a=>a.live?['rgba(190,215,235,.05)','rgba(214,238,255,.75)']:['rgba(170,190,210,.03)','rgba(170,190,210,.28)'])
+        .arcDashLength(0.5)
+        .arcDashGap(0.4)
+        .arcDashAnimateTime(animate?3200:0)
+        .arcsData(built.arcs)
+        .pointColor(p=>p.open?'#ffffff':'#7f9fb8')
+        .pointRadius(p=>p.open?(narrow?0.8:0.66):(narrow?0.34:0.27))
+        .pointAltitude(0.018)
+        .pointsData(landDots(narrow?1.7:1.15).concat(built.hubs));
+      const mat=inst.globeMaterial();
+      if(mat&&mat.color&&mat.color.setHex){
+        mat.color.setHex(0x04070b);
+        if(mat.specular&&mat.specular.setHex) mat.specular.setHex(0x0a141c);
+        mat.shininess=4;
+        mat.needsUpdate=true;
+      }
+    }
+    /* Market-open pulse rings, where the treatment has room for them. */
+    inst
+      .ringColor(()=>t=>'rgba('+(isDots?'214,238,255':'126,231,240')+','+(0.72*(1-t)).toFixed(3)+')')
+      .ringMaxRadius(narrow?3.0:3.6)
       .ringPropagationSpeed(animate?1.2:0)
       .ringRepeatPeriod(1700)
-      .ringsData(animate?built.open:[]);
-    g=inst;
+      .ringsData(animate&&!isDots?built.open:[]);
+
     const reveal=()=>{
       if(g!==inst) return;
       host.dataset.ready='1';
       root.classList.add('has-gl');
+      root.classList.remove('no-gl');
       if(!animate) inst.pauseAnimation();
     };
-    if(night){
-      const useSmall=IOS||narrow;
-      if(useSmall){
-        fetch(NIGHT_URL).then(r=>r.blob()).then(async blob=>{
-          let bmp;
-          try{ bmp=await createImageBitmap(blob,{resizeWidth:1024,resizeHeight:512}); }
-          catch(e){ bmp=await createImageBitmap(blob); }
-          const c=document.createElement('canvas');
-          c.width=1024; c.height=512;
-          c.getContext('2d').drawImage(bmp,0,0,1024,512);
-          if(bmp.close) bmp.close();
-          if(g===inst) inst.globeImageUrl(c.toDataURL('image/jpeg',0.85));
-        }).catch(()=>{ if(g===inst) inst.globeImageUrl(NIGHT_URL); });
-      } else inst.globeImageUrl(NIGHT_URL);
-      const started=performance.now();
-      const timer=setInterval(()=>{
-        if(g!==inst){ clearInterval(timer); return; }
-        const mat=inst.globeMaterial();
-        const img=mat&&mat.map&&mat.map.image;
-        const bigEnough=!useSmall||(img&&img.width&&img.width<=1024);
-        if((mat&&mat.map&&bigEnough)||performance.now()-started>12000){
-          clearInterval(timer);
-          reveal();
-        }
-      }, 40);
+    const showFallback=()=>{
+      if(g!==inst) return;
+      reveal();
+    };
+    if(isNight||isHolo){
+      loadTex(NIGHT_URL, texW).then(img=>{
+        if(g!==inst) return;
+        inst.globeImageUrl(toTexture(img));
+        requestAnimationFrame(()=>requestAnimationFrame(reveal));
+      }).catch(()=>{
+        if(g!==inst) return;
+        inst.globeImageUrl(NIGHT_URL);
+        setTimeout(showFallback, 6000);
+      });
+    } else if(isDots){
+      loadTex(NIGHT_URL, narrow?1024:2048).then(img=>{
+        texCache.land=img;
+        if(g!==inst) return;
+        inst.pointsData(landDots(narrow?1.8:1.2).concat(model().hubs));
+        inst.globeImageUrl(toTexture(img));
+        requestAnimationFrame(()=>requestAnimationFrame(reveal));
+      }).catch(()=>{
+        if(g!==inst) return;
+        inst.globeImageUrl(toTexture(img));
+        requestAnimationFrame(()=>requestAnimationFrame(reveal));
+      });
     } else {
       requestAnimationFrame(()=>requestAnimationFrame(reveal));
     }
-    if(!night){
-      const mat=inst.globeMaterial();
-      if(mat&&mat.color&&mat.color.setHex){
-        mat.color.setHex(0x0a1420);
-        if(mat.specular&&mat.specular.setHex) mat.specular.setHex(0x16303a);
-        mat.shininess=12;
-        mat.needsUpdate=true;
-      }
-    }
     fit(inst);
-    inst.pointOfView({lat:12, lng:122, altitude:narrow?2.5:2.16}, 0);
+    inst.pointOfView({lat:14, lng:118, altitude:narrow?2.5:2.16}, 0);
     const ctl=inst.controls();
     ctl.autoRotate=!!animate;
-    ctl.autoRotateSpeed=narrow?0.22:0.38;
+    ctl.autoRotateSpeed=narrow?0.2:0.34;
     ctl.enableZoom=false;
     ctl.enableRotate=false;
     ctl.enablePan=false;
@@ -2142,7 +2262,7 @@ function initGlobe(){
     }
   }
   function choose(next, persist){
-    if(next!=='night') return;
+    if(NAMES.indexOf(next)<0) return;
     showChoice(next);
     if(persist) remember(next);
     if(!window.Globe){ mode=next; return; }
@@ -2153,7 +2273,7 @@ function initGlobe(){
   }
   showChoice(mode);
   const q=new URLSearchParams(location.search).get('globe');
-  if(q==='night'||q==='hubs') remember(q);
+  if(NAMES.indexOf(q)>=0) remember(q);
   pick.addEventListener('click', e=>{
     const b=e.target.closest('button');
     if(!b||!b.dataset.globe) return;
@@ -2162,7 +2282,8 @@ function initGlobe(){
   pick.addEventListener('keydown', e=>{
     if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft') return;
     e.preventDefault();
-    const next=mode==='night'?'hubs':'night';
+    const i=NAMES.indexOf(mode);
+    const next=NAMES[(i+(e.key==='ArrowRight'?1:NAMES.length-1))%NAMES.length];
     choose(next, true);
     const btn=pick.querySelector('[data-globe="'+next+'"]');
     if(btn) btn.focus();
