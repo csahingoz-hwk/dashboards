@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-05T09:17:27.971889Z",
-  "updated_london": "5 Nov 2026, 09:17 GMT",
+  "generated_at": "2026-11-06T02:45:44.517200Z",
+  "updated_london": "6 Nov 2026, 02:45 GMT",
   "timezone": "Europe/London",
   "sample": false,
   "stale": false,
@@ -27,268 +27,252 @@
   "mood": null,
   "news": [
     {
-      "id": "alpaca-62904872",
-      "headline": "Dan Ives Warns Chip Stocks Aren't Done Falling, Sees Another 12% Drop — But Tom Lee Calls AI Selloff an 'Overreaction,' Predicts 20% Tech Rally",
-      "summary": "Dan Ives sees another 10%-12% drop for chip stocks, while Tom Lee calls the AI selloff an overreaction and sees 20% tech upside.",
+      "id": "alpaca-62965277",
+      "headline": "Trump Blames 'Dumocrats' as Stock Market Suffers $3 Trillion Rout After Democrats Win Congress: 'Your 401(k)s Have Dropped'",
+      "summary": "Donald Trump blamed Democrats for a rout that erased about $3 trillion from the S&amp;P 500 and handed the Nasdaq 100 its worst day since 2020",
       "source": "Benzinga",
-      "url": "https://www.benzinga.com/markets/tech/26/11/62904872/dan-ives-warns-chip-stocks-arent-done-falling-sees-another-12-drop-but-tom-lee-calls-ai-selloff-an-overreaction-predicts-20-tech-rally",
-      "symbols": [
-        "AAPL",
-        "DIA",
-        "INTC",
-        "PLTR"
-      ],
-      "published_at": "2026-11-05T09:08:34Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-62904858",
-      "headline": "Jim Cramer Warns Friday's Jobs Report Could 'Repeal' Midterm Rally, Says Elections 'Did Not Upend' Business Cycle: ‘I Hesitate To Guess Where We Go Next’",
-      "summary": "Jim Cramer warns Friday&#39;s jobs report could &#39;repeal&#39; the midterm rally, arguing elections did not upend the business cycle.",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/markets/equities/26/11/62904858/jim-cramer-warns-fridays-jobs-report-could-repeal-midterm-rally-says-elections-did-not-upend-business-cycle-i-hesitate-to-guess-where-we-go-next",
-      "symbols": [
-        "AAPL",
-        "AMZN",
-        "APLD",
-        "CRWV"
-      ],
-      "published_at": "2026-11-05T09:07:28Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-62904812",
-      "headline": "Kevin O'Leary Predicts Political U-Turn on AI Data Centers, Says They Will Become a Middle-Class Wealth Engine: 'Resistance is Going to Disappear'",
-      "summary": "Kevin O’Leary predicts opposition to U.S. AI data centers will fade as states embrace high-paying jobs and major power investments.",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/markets/tech/26/11/62904812/kevin-oleary-ai-data-centers-middle-class-wealth-engine-states-embrace-projects",
+      "url": "https://www.benzinga.com/markets/equities/26/11/62965277/donald-trump-democrats-stock-market-selloff-3-trillion-nasdaq-100-midterms",
       "symbols": [
         "AMD",
-        "GOOG",
-        "GOOGL",
-        "SPCX"
+        "MU",
+        "NVDA",
+        "QQQ"
       ],
-      "published_at": "2026-11-05T09:00:02Z",
+      "published_at": "2026-11-06T01:59:15Z",
       "sentiment": null,
       "sentiment_label": null,
       "origin": "alpaca",
       "sample": false
     },
     {
-      "id": "alpaca-62904721",
-      "headline": "'Microsoft Rejects Multibillion-Dollar AI Deal with UK’s Nscale' - FT",
-      "summary": "",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/news/26/11/62904721/microsoft-rejects-multibillion-dollar-ai-deal-uk-s-nscale-ft",
+      "id": "alpaca-115291327",
+      "headline": "JPMorgan Chase Bank Acts as Sole Arranger for $500 Million Debt Financing",
+      "summary": "JPMorgan Chase Bank, N.A. served as the sole arranger for $500 million in debt financing to support Shield's $5.3 billion acquisition of Echodyne Corp.",
+      "source": "fiscal.ai",
+      "url": "https://www.prnewswire.com/news-releases/shield-to-acquire-echodyne-in-a-transaction-valued-at-5-3-billion-and-raise-2-5-billion-at-a-28-8-billion-valuation-302930012.html",
+      "symbols": [
+        "JPM"
+      ],
+      "published_at": "2026-11-06T01:01:33Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-115291326",
+      "headline": "Microsoft Adjusts AI Infrastructure Strategy and Capital Expenditure Outlook",
+      "summary": "Microsoft has reduced its 2026 capital expenditure projection to $170 billion from $175 billion and is becoming more selective with data center capacity commitments.",
+      "source": "fiscal.ai",
+      "url": "https://www.tradingview.com/news/gurufocus:590b2655e094b:0-microsoft-walks-away-from-ai-deal-as-170-billion-question-grows/",
       "symbols": [
         "MSFT"
       ],
-      "published_at": "2026-11-05T08:46:49Z",
+      "published_at": "2026-11-06T01:01:26Z",
       "sentiment": null,
       "sentiment_label": null,
       "origin": "alpaca",
       "sample": false
     },
     {
-      "id": "alpaca-62904506",
-      "headline": "Apple’s Slow Breakup With Qualcomm Still Hurts — China Android Is Rebounding, But Handset Revenue Is Set to Slip as QCOM Raises Prices",
-      "summary": "Qualcomm Inc (NASDAQ: QCOM) said its China Android business hit bottom in the June quarter and has grown sequentially since, but the chipmaker is raising prices, still losing Apple revenue, and facing skepticism over its handset outlook.",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/markets/tech/26/11/62904506/apples-slow-breakup-with-qualcomm-still-hurts-china-android-is-rebounding-but-handset-revenue-is-set-to-slip-as-qcom-raises-prices",
-      "symbols": [
-        "AAPL"
-      ],
-      "published_at": "2026-11-05T08:23:25Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-62904059",
-      "headline": "Tesla Bulls Could Get Burned? Gary Black Sees Trouble With SpaceX All-Stock Merger: Warns 24% Premium 'Can Quickly Go Negative'",
-      "summary": "Gary Black warns a Tesla-SpaceX stock merger could dilute Tesla holders, citing losses after Marvell-Lumentum’s premium deal.",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/markets/tech/26/11/62904059/tesla-bulls-could-get-burned-gary-black-sees-trouble-with-spacex-all-stock-merger-warns-24-premium-can-quickly-go-negative",
-      "symbols": [
-        "LITE",
-        "MRVL",
-        "SPCX",
-        "TSLA"
-      ],
-      "published_at": "2026-11-05T07:29:23Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-62903942",
-      "headline": "Microsoft Is the Last Big Tech Buyback Holdout: Alphabet, Meta, Amazon Go Dark as AI Spending Eats Cash, Says This Market Commentator",
-      "summary": "Big Tech’s era of mega buybacks is giving way to mega AI spending, as companies put their cash into data centers, not their own stock.",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/markets/tech/26/11/62903942/big-tech-stock-buybacks-lowest-since-2017-ai-spending-microsoft-alphabet-meta",
-      "symbols": [
-        "AMZN",
-        "GOOG",
-        "GOOGL",
-        "META"
-      ],
-      "published_at": "2026-11-05T07:14:39Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-62903627",
-      "headline": "Dow Jumps Over 1,500 Points After Midterms: Investor Sentiment Improves, Greed Index Moves To ‘Fear’ Zone",
-      "summary": "CNN Fear &amp; Greed rose to 27 in the Fear zone as U.S. stocks surged after Democrats won Congress; oil fell and most sectors gained.",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/markets/market-summary/26/11/62903627/dow-jumps-over-1500-points-after-midterms-investor-sentiment-improves-greed-index-moves-to-fear-zone",
-      "symbols": [
-        "ABNB",
-        "CAH",
-        "MCD",
-        "MSFT"
-      ],
-      "published_at": "2026-11-05T06:45:59Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-62903277",
-      "headline": "TSLA, SPCX Stocks Fall Overnight as Ted Cruz Says Democrats Will ‘Persecute’ Elon Musk: Ron DeSantis Warns ‘I Guarantee You They Will Do That’",
-      "summary": "Tesla and SpaceX shares fell overnight as warnings of Democrats making Musk a target begins gathering pace, raising concerns.",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/markets/equities/26/11/62903277/tsla-spcx-stocks-fall-overnight-ted-cruz-desantis-warn-democrats-persecute-elon-musk",
-      "symbols": [
-        "SPCX",
-        "TSLA"
-      ],
-      "published_at": "2026-11-05T06:03:49Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-113686316",
-      "headline": "Apple Updates Insider Trading Policy to Ban Prediction Market Betting",
-      "summary": "Apple has updated its insider trading policy to explicitly prohibit employees from using confidential company information to bet on prediction markets.",
+      "id": "alpaca-115290414",
+      "headline": "NVIDIA Plans to Convert Telecom Facilities into AI Data Centers",
+      "summary": "NVIDIA is reportedly developing a strategy to repurpose existing telecommunications infrastructure into small-scale AI data centers to accelerate chip deployment and bypass construction hurdles.",
       "source": "fiscal.ai",
-      "url": "https://www.tradingview.com/news/financemagnates:a2edf84a9094b:0-apple-bars-staff-from-using-company-secrets-on-prediction-markets/",
+      "url": "https://www.tradingview.com/news/stocktwits:f1672d0bc094b:0-nvidia-eyes-apollo-s-struggling-telecom-sites-to-sidestep-data-center-moratoriums-report/",
       "symbols": [
-        "AAPL"
-      ],
-      "published_at": "2026-11-05T03:01:27Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-62902639",
-      "headline": "Trump to Pardon Elon Musk Soon? Crypto Punters Bet as Ross Gerber Calls GOP Midterm Loss 'Worst Possible Outcome' for SpaceX CEO",
-      "summary": "Cryptocurrency punters think President Donald Trump is most likely to pardon Elon Musk, as Ross Gerber said the Republican midterm defeat could create difficulties for the world&#39;s richest person.",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/markets/prediction-markets/26/11/62902639/trump-elon-musk-pardon-democrats-midterms-ross-gerber",
-      "symbols": [
-        "BTCUSD",
-        "POLUSD",
-        "TSLA",
-        "ZECUSD"
-      ],
-      "published_at": "2026-11-05T02:47:51Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-62902549",
-      "headline": "Cathie Wood Buys $47.4 Million of SpaceX as Democratic Congress Looms Over Elon Musk’s Businesses After Midterms",
-      "summary": "Ark added 348,406 SpaceX shares across three funds and trimmed Alphabet for a second straight session.",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/etfs/broad-u-s-equity-etfs/26/11/62902549/cathie-wood-ark-buys-spacex-elon-musk-midterms",
-      "symbols": [
-        "AMZN",
-        "ARKK",
-        "ARKQ",
-        "ARKW"
-      ],
-      "published_at": "2026-11-05T02:27:27Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-113680583",
-      "headline": "Apple Reportedly Reduces Employee AI Spending Budgets",
-      "summary": "Apple has reportedly implemented cuts to internal budgets allocated for employee AI spending.",
-      "source": "fiscal.ai",
-      "url": "https://www.marketscreener.com/news/apple-cuts-employee-ai-spending-budgets-ce785fdfde8cf12d",
-      "symbols": [
-        "AAPL"
-      ],
-      "published_at": "2026-11-05T01:01:58Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-113479902",
-      "headline": "Meta Platforms Prices $15 Billion USD Bond Offering",
-      "summary": "Meta Platforms, Inc. has priced a $15 billion, five-tranche bond offering with maturities ranging from 2031 to 2056.",
-      "source": "fiscal.ai",
-      "url": "https://www.tradingview.com/news/gurufocus:36533a7da094b:0-meta-stocks-rise-1-77-while-15-billion-bond-deal-adds-a-cash-hurdle/",
-      "symbols": [
-        "META"
-      ],
-      "published_at": "2026-11-04T22:31:45Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-113479899",
-      "headline": "Microsoft Updates Clarity Analytics Tool with AI Agent Tracking Features",
-      "summary": "Microsoft has introduced three new features to its Clarity analytics platform to help website owners monitor interactions from both human users and AI agents.",
-      "source": "fiscal.ai",
-      "url": "https://www.pymnts.com/news/artificial-intelligence/2026/microsoft-clarity-helps-merchants-welcome-ai-shopping-agents/",
-      "symbols": [
-        "MSFT"
-      ],
-      "published_at": "2026-11-04T22:31:39Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-62893642",
-      "headline": "Arm-based PCs Have Now Reached ~20% Of Global Shipments, Reflecting Growing Adoption Of Arm In Personal Computing. Google Introduced GoogleBook, A New Category Of AI-Native Laptops Built For Gemini Intelligence, With Arm Serving As A Primary Compute Platform For Many Models. NVIDIA’s RTX Spark, Built On Arm, Further Expands Our Reach Into Local AI, Content Creation And Gaming",
-      "summary": "",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/quote/NVDA",
-      "symbols": [
-        "ARM",
-        "GOOG",
-        "GOOGL",
         "NVDA"
       ],
-      "published_at": "2026-11-04T21:34:55Z",
+      "published_at": "2026-11-06T00:01:31Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-115290413",
+      "headline": "Apple Completes $7.5 Billion Bond Offering",
+      "summary": "Apple raised $7.5 billion in a high-grade bond offering that attracted approximately $31 billion in total investor orders.",
+      "source": "fiscal.ai",
+      "url": "https://www.tradingview.com/news/stocktwits:339036295094b:0-apple-reportedly-set-to-raise-7-5b-from-bond-offering-amid-market-selloff/",
+      "symbols": [
+        "AAPL"
+      ],
+      "published_at": "2026-11-06T00:01:24Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-62961405",
+      "headline": "Chip Stocks Just Had Their Worst Day Since 2020: 28 of 30 Biggest Names Are in a Bear Market",
+      "summary": "Chip stocks posted their worst day since March 2020 as 28 of the 30 stocks in the iShares Semiconductor ETF now trade at least 20% below record highs.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/markets/equities/26/11/62961405/chip-stocks-worst-day-since-2020-soxx-bear-market",
+      "symbols": [
+        "ADI",
+        "ALAB",
+        "AMAT",
+        "AMD"
+      ],
+      "published_at": "2026-11-05T23:16:48Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-115024144",
+      "headline": "Concentrix Launches New AI Application for Microsoft Dynamics 365",
+      "summary": "Concentrix has released a new AI-powered application for Microsoft Dynamics 365, now available on the Microsoft Marketplace.",
+      "source": "fiscal.ai",
+      "url": "https://www.globenewswire.com/news-release/2026/11/05/3396551/0/en/concentrix-brings-agentic-ai-migration-engine-to-microsoft-marketplace.html",
+      "symbols": [
+        "MSFT"
+      ],
+      "published_at": "2026-11-05T22:31:46Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-115024140",
+      "headline": "Amazon Announces 2027 Fulfillment Fee Adjustments for Marketplace Sellers",
+      "summary": "Amazon will increase fulfillment fees for U.S. marketplace sellers by an average of 19 cents per item starting in 2027, alongside changes to storage fee structures.",
+      "source": "fiscal.ai",
+      "url": "https://www.pymnts.com/news/retail/2026/amazon-raises-seller-fees-walmart-expands-drone-delivery/",
+      "symbols": [
+        "AMZN"
+      ],
+      "published_at": "2026-11-05T22:31:43Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-115024139",
+      "headline": "Beijing Green Forest Certification Approved for Amazon Climate Pledge Friendly Standard",
+      "summary": "Beijing Green Forest Certification Co., Ltd. has been approved to certify electronics under Amazon's SCS-103 Annex A standard for recycled content.",
+      "source": "fiscal.ai",
+      "url": "https://www.streetinsider.com/ACCESS+Newswire/Beijing+Green+Forest+Certification+Approved+to+Certify+Electronics+Under+Amazon-Recognized+Recycled+Content+Standard/27295968.html",
+      "symbols": [
+        "AMZN"
+      ],
+      "published_at": "2026-11-05T22:31:43Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-62957898",
+      "headline": "IREN Says At Microsoft’s Request, We Are Implementing Network Design Change Across Horizon Deployments; Under Microsoft Agreement, Delivery Dates Are Extended, Without Delay Credits, For Delays Resulting From Microsoft-Requested Change; Expect Making Significant Investments For Foreseeable Future, Including Capital Requirements Related To Microsoft & NVIDIA Agreements; Expect Making Significant Investments For Foreseeable Future, Including GPU Acquisitions, Development Of Additional Data Center Capacity",
+      "summary": "",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/news/26/11/62957898/iren-says-microsoft-s-request-we-are-implementing-network-design-change-across-horizon-deployments-u",
+      "symbols": [
+        "IREN",
+        "MSFT"
+      ],
+      "published_at": "2026-11-05T22:15:29Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-62957030",
+      "headline": "OpenAI Could Go Public In 2027 As Greg Brockman Signals IPO Readiness",
+      "summary": "OpenAI’s Greg Brockman said the company is gearing up for its IPO in 2027, adding that the company’s enterprise value has increased.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/markets/private-markets/26/11/62957030/openai-could-go-public-in-2027-as-greg-brockman-signals-ipo-readiness",
+      "symbols": [
+        "JPM"
+      ],
+      "published_at": "2026-11-05T22:06:12Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-62956559",
+      "headline": "Nvidia Stock Is Down Nearly 24% Ahead of Earnings: Is It a Buy?",
+      "summary": "Nvidia plunged 24% since Oct. 6, but strong chip demand boosts forecasts; financing, power and regulatory risks fuel debate over a buying opportunity.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/markets/prediction-markets/26/11/62956559/nvidia-stock-selloff",
+      "symbols": [
+        "AAPL",
+        "AMZN",
+        "NVDA"
+      ],
+      "published_at": "2026-11-05T22:00:08Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-114879603",
+      "headline": "Chase Travel Announces Expansion of 'The Edit' Collection",
+      "summary": "Chase Travel is expanding its 'The Edit' luxury travel collection to include over 10,000 vacation homes starting in 2027.",
+      "source": "fiscal.ai",
+      "url": "https://investingnews.com/chase-travel-unveils-27-trips-to-take-in-2027-and-previews-expanded-luxury-vacation-homes-offering/",
+      "symbols": [
+        "JPM"
+      ],
+      "published_at": "2026-11-05T21:33:21Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-114877118",
+      "headline": "Tesla Faces Potential Regulatory Headwinds in Texas Following Election Results",
+      "summary": "Tesla's data center operations in Texas face potential regulatory scrutiny following the election of Gina Hinojosa as governor.",
+      "source": "fiscal.ai",
+      "url": "https://www.tradingview.com/news/gurufocus:5b2c56cc2094b:0-elon-musk-faces-a-new-28-5-trillion-problem-after-texas-upset/",
+      "symbols": [
+        "TSLA"
+      ],
+      "published_at": "2026-11-05T21:32:34Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-62953587",
+      "headline": "GLJ Research Reiterates Sell on Tesla, Maintains $24.86 Price Target",
+      "summary": "",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/news/26/11/62953587/glj-research-reiterates-sell-tesla-maintains-24-86-price-target",
+      "symbols": [
+        "TSLA"
+      ],
+      "published_at": "2026-11-05T21:27:03Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-62948723",
+      "headline": "Michael Burry Asks Whether Anthropic’s Partners Are Polishing Its IPO Numbers",
+      "summary": "Michael Burry questions whether Anthropic’s cloud partners are helping polish expenses and margins ahead of its IPO.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/markets/tech/26/11/62948723/michael-burry-asks-whether-anthropics-partners-are-polishing-its-ipo-numbers",
+      "symbols": [
+        "AMD",
+        "AMZN",
+        "APO",
+        "AVGO"
+      ],
+      "published_at": "2026-11-05T21:02:04Z",
       "sentiment": null,
       "sentiment_label": null,
       "origin": "alpaca",
@@ -296,99 +280,203 @@
     }
   ],
   "movers": {
-    "last_updated": "2026-11-04 16:15:59 US/Eastern",
+    "last_updated": "2026-11-05 15:57:22 US/Eastern",
     "gainers": [
       {
-        "ticker": "OMH",
-        "price": "15.55",
-        "change_amount": "12.63",
-        "change_percentage": "432.5342%"
+        "ticker": "AEHL",
+        "price": "17.39",
+        "change_amount": "11.12",
+        "change_percentage": "177.3525%"
       },
       {
-        "ticker": "CMTG",
-        "price": "1.85",
-        "change_amount": "0.74",
-        "change_percentage": "66.6667%"
+        "ticker": "ZNB",
+        "price": "1.085",
+        "change_amount": "0.463",
+        "change_percentage": "74.4373%"
       },
       {
-        "ticker": "CRIS",
-        "price": "1.11",
-        "change_amount": "0.3961",
-        "change_percentage": "55.484%"
+        "ticker": "APPX",
+        "price": "14.54",
+        "change_amount": "5.6",
+        "change_percentage": "62.6398%"
       },
       {
-        "ticker": "DUOG",
-        "price": "61.3251",
-        "change_amount": "21.5671",
-        "change_percentage": "54.2459%"
+        "ticker": "APPC",
+        "price": "11.96",
+        "change_amount": "4.6",
+        "change_percentage": "62.5%"
       },
       {
-        "ticker": "PMAX",
-        "price": "1.04",
-        "change_amount": "0.365",
-        "change_percentage": "54.0741%"
+        "ticker": "UVIX",
+        "price": "51.625",
+        "change_amount": "18.515",
+        "change_percentage": "55.9197%"
       }
     ],
     "losers": [
       {
-        "ticker": "DJTU",
-        "price": "2.335",
-        "change_amount": "-2.195",
-        "change_percentage": "-48.4547%"
+        "ticker": "CDLR",
+        "price": "7.44",
+        "change_amount": "-18.4",
+        "change_percentage": "-71.2074%"
       },
       {
-        "ticker": "HUTG",
-        "price": "3.19",
-        "change_amount": "-2.68",
-        "change_percentage": "-45.6559%"
+        "ticker": "SNWV",
+        "price": "2.25",
+        "change_amount": "-3.48",
+        "change_percentage": "-60.733%"
       },
       {
-        "ticker": "STLL",
-        "price": "3.46",
-        "change_amount": "-2.59",
-        "change_percentage": "-42.8099%"
+        "ticker": "MNTN",
+        "price": "4.67",
+        "change_amount": "-5.7",
+        "change_percentage": "-54.9662%"
       },
       {
-        "ticker": "CIFU",
-        "price": "1.175",
-        "change_amount": "-0.765",
-        "change_percentage": "-39.433%"
+        "ticker": "VCYT",
+        "price": "23.88",
+        "change_amount": "-28.64",
+        "change_percentage": "-54.5316%"
       },
       {
-        "ticker": "NRIX",
-        "price": "15.95",
-        "change_amount": "-9.87",
-        "change_percentage": "-38.2262%"
+        "ticker": "AXTX",
+        "price": "5.9085",
+        "change_amount": "-5.0315",
+        "change_percentage": "-45.9918%"
       }
     ],
     "active": [
       {
         "ticker": "SOXL",
-        "price": "66.76",
-        "change_amount": "-6.36",
-        "change_percentage": "-8.698%"
+        "price": "40.755",
+        "change_amount": "-25.925",
+        "change_percentage": "-38.8797%"
+      },
+      {
+        "ticker": "NVDA",
+        "price": "182.29",
+        "change_amount": "-17.84",
+        "change_percentage": "-8.9142%"
       },
       {
         "ticker": "INTC",
-        "price": "58.27",
-        "change_amount": "-2.28",
-        "change_percentage": "-3.7655%"
+        "price": "52.215",
+        "change_amount": "-6.055",
+        "change_percentage": "-10.3913%"
       },
       {
-        "ticker": "CRIS",
-        "price": "1.11",
-        "change_amount": "0.3961",
-        "change_percentage": "55.484%"
-      },
-      {
-        "ticker": "NVD",
-        "price": "4.61",
-        "change_amount": "0.28",
-        "change_percentage": "6.4665%"
+        "ticker": "SNXX",
+        "price": "3.0602",
+        "change_amount": "-2.3698",
+        "change_percentage": "-43.6427%"
       }
     ]
   },
   "earnings": [
+    {
+      "symbol": "META",
+      "quarter": "2026Q3",
+      "reported_date": "2026-10-21",
+      "fiscal_date_ending": "2026-09-30",
+      "reported_eps": "7.4",
+      "estimated_eps": "6.52",
+      "surprise_percentage": "13.4969",
+      "summary": {
+        "method": "extractive",
+        "llm": null,
+        "sentiment_score": 0.3034,
+        "sentiment_label": "Somewhat-Bullish",
+        "turn_count": 29,
+        "overview": "This has been a busy and exciting few months. Our Family of Apps is now used by 3.64 billion people each day, and we are seeing all-time highs in engagement on both Facebook and Instagram, driven by strong growth in video.",
+        "quotes": [
+          {
+            "role": "CEO",
+            "speaker": "Mark Elliot Zuckerberg",
+            "title": "CEO",
+            "text": "The most common use case for Muse is shopping, with more than 25% of people who are using Muse engaging in this, with an average purchase size of over $200.",
+            "sentiment": 0.9,
+            "sentiment_label": "Bullish"
+          },
+          {
+            "role": "CFO",
+            "speaker": "Susan J. Li",
+            "title": "CFO",
+            "text": "For 2026, we anticipate capital expenditures, including principal payments on finance leases, to be in the range of $135 billion to $145 billion, narrowed from our prior outlook of $130 billion to $145 billion.",
+            "sentiment": 0.6,
+            "sentiment_label": "Bullish"
+          }
+        ],
+        "bullish": {
+          "speaker": "Mark Elliot Zuckerberg",
+          "title": "CEO",
+          "role": "CEO",
+          "text": "This has been a busy and exciting few months.",
+          "sentiment": 0.9,
+          "sentiment_label": "Bullish"
+        },
+        "bearish": {
+          "speaker": "Susan J. Li",
+          "title": "CFO",
+          "role": "CFO",
+          "text": "So on your first question about how the agentic ecosystem evolves, I wish I could predict that more perfectly, and I think it will take some time.",
+          "sentiment": 0.4,
+          "sentiment_label": "Bullish"
+        }
+      },
+      "sample": false
+    },
+    {
+      "symbol": "TSLA",
+      "quarter": "2026Q3",
+      "reported_date": "2026-10-21",
+      "fiscal_date_ending": "2026-09-30",
+      "reported_eps": "0.48",
+      "estimated_eps": "0.22",
+      "surprise_percentage": "118.1818",
+      "summary": {
+        "method": "extractive",
+        "llm": null,
+        "sentiment_score": 0.3173,
+        "sentiment_label": "Somewhat-Bullish",
+        "turn_count": 81,
+        "overview": "The third quarter was very strong, and I'd like to give a big congratulations to the whole Tesla team for working hard to make it happen. Demand is growing rapidly for our vehicles.",
+        "quotes": [
+          {
+            "role": "CEO",
+            "speaker": "Elon Musk",
+            "title": "CEO",
+            "text": "The way to think about it is that there are about 10,000 things that have to go right for production of the robot, and it will move as fast as the slowest, least likely of those 10,000.",
+            "sentiment": 0.9,
+            "sentiment_label": "Bullish"
+          },
+          {
+            "role": "CFO",
+            "speaker": "Vaibhav Taneja",
+            "title": "CFO",
+            "text": "In Q3, over 75% of deliveries in North America included a sign-up for a paid FSD subscription at the time of delivery, which is approximately 20% higher than Q2.",
+            "sentiment": 0.8,
+            "sentiment_label": "Bullish"
+          }
+        ],
+        "bullish": {
+          "speaker": "Elon Musk",
+          "title": "CEO",
+          "role": "CEO",
+          "text": "The third quarter was very strong, and I'd like to give a big congratulations to the whole Tesla team for working hard to make it happen.",
+          "sentiment": 0.9,
+          "sentiment_label": "Bullish"
+        },
+        "bearish": {
+          "speaker": "Vaibhav Taneja",
+          "title": "CFO",
+          "role": "CFO",
+          "text": "I think people take this very simply: that you can—if the software can be solved, it's not because—I mean, I'll let Ashok get into it.",
+          "sentiment": 0.0,
+          "sentiment_label": "Neutral"
+        }
+      },
+      "sample": false
+    },
     {
       "symbol": "GOOGL",
       "quarter": "2026Q3",
@@ -496,243 +584,243 @@
   ],
   "flows": {
     "symbols": [
-      "GOOGL",
-      "AMZN"
+      "META",
+      "TSLA"
     ],
     "insider": [
       {
-        "symbol": "GOOGL",
-        "date": "2026-10-29",
-        "name": "Frances Arnold",
-        "title": "Director",
+        "symbol": "META",
+        "date": "2026-10-26",
+        "name": "Javier Olivan",
+        "title": "Chief Operating Officer",
+        "action": "Sale",
+        "code": "S",
+        "shares": "408",
+        "price": "640.0"
+      },
+      {
+        "symbol": "META",
+        "date": "2026-10-26",
+        "name": "Javier Olivan",
+        "title": "Chief Operating Officer",
         "action": "Sale",
         "code": "S",
         "shares": "82",
-        "price": "284.0"
+        "price": "640.0"
       },
       {
-        "symbol": "GOOGL",
-        "date": "2026-09-30",
-        "name": "Frances Arnold",
+        "symbol": "META",
+        "date": "2026-10-26",
+        "name": "Javier Olivan",
+        "title": "Chief Operating Officer",
+        "action": "Sale",
+        "code": "S",
+        "shares": "57",
+        "price": "640.0"
+      },
+      {
+        "symbol": "META",
+        "date": "2026-10-26",
+        "name": "Peggy Alford",
         "title": "Director",
         "action": "Sale",
         "code": "S",
-        "shares": "83",
-        "price": "340.45"
+        "shares": "390",
+        "price": "640.0"
       },
       {
-        "symbol": "GOOGL",
-        "date": "2026-08-28",
-        "name": "Frances Arnold",
-        "title": "Director",
+        "symbol": "META",
+        "date": "2026-10-26",
+        "name": "Javier Olivan",
+        "title": "Chief Operating Officer",
         "action": "Sale",
         "code": "S",
-        "shares": "82",
-        "price": "337.71"
+        "shares": "946",
+        "price": "640.0"
       },
       {
-        "symbol": "GOOGL",
-        "date": "2026-07-30",
-        "name": "Frances Arnold",
-        "title": "Director",
+        "symbol": "TSLA",
+        "date": "2026-09-08",
+        "name": "Vaibhav Taneja",
+        "title": "Chief Financial Officer",
         "action": "Sale",
         "code": "S",
-        "shares": "82",
-        "price": "333.39"
+        "shares": "2605.8",
+        "price": "360.134"
       },
       {
-        "symbol": "GOOGL",
-        "date": "2026-07-29",
-        "name": "Marsida Saraci",
-        "title": "VP, Chief Accounting Officer",
+        "symbol": "TSLA",
+        "date": "2026-06-08",
+        "name": "Vaibhav Taneja",
+        "title": "Chief Financial Officer",
         "action": "Sale",
         "code": "S",
-        "shares": "449",
-        "price": "333.2"
+        "shares": "2605.5",
+        "price": "402.197"
       },
       {
-        "symbol": "AMZN",
-        "date": "2026-10-01",
-        "name": "Douglas J Herrington",
-        "title": "CEO Worldwide Amazon Stores",
+        "symbol": "TSLA",
+        "date": "2026-05-13",
+        "name": "Vaibhav Taneja",
+        "title": "Chief Financial Officer",
         "action": "Sale",
         "code": "S",
-        "shares": "1000",
-        "price": "251.5"
-      },
-      {
-        "symbol": "AMZN",
-        "date": "2026-09-01",
-        "name": "Douglas J Herrington",
-        "title": "CEO Worldwide Amazon Stores",
-        "action": "Sale",
-        "code": "S",
-        "shares": "1000",
-        "price": "254.77"
-      },
-      {
-        "symbol": "AMZN",
-        "date": "2026-08-24",
-        "name": "David Zapolsky",
-        "title": "Senior Vice President",
-        "action": "Sale",
-        "code": "S",
-        "shares": "9258",
-        "price": "259.77"
+        "shares": "3000",
+        "price": "450.0"
       }
     ],
     "congress": [
       {
-        "symbol": "GOOGL",
-        "date": "2026-09-14",
-        "name": "Pete Sessions",
+        "symbol": "META",
+        "date": "2026-09-24",
+        "name": "Maria Elvira Salazar",
         "party": "R",
-        "state": "TX",
+        "state": "FL",
         "chamber": "House",
         "action": "Sell",
-        "amount": "$15k–$50k"
+        "amount": "$1k–$15k"
       },
       {
-        "symbol": "GOOGL",
-        "date": "2026-09-04",
+        "symbol": "META",
+        "date": "2026-09-23",
         "name": "Ro Khanna",
         "party": "D",
         "state": "CA",
-        "chamber": "House",
-        "action": "Sell",
-        "amount": "$1k–$15k"
-      },
-      {
-        "symbol": "GOOGL",
-        "date": "2026-08-27",
-        "name": "Thomas H. Kean, Jr.",
-        "party": "R",
-        "state": "NJ",
-        "chamber": "House",
-        "action": "Sell",
-        "amount": "$1k–$15k"
-      },
-      {
-        "symbol": "GOOGL",
-        "date": "2026-08-24",
-        "name": "Michael A. Rulli",
-        "party": "R",
-        "state": "OH",
-        "chamber": "House",
-        "action": "Sell",
-        "amount": "$50k–$100k"
-      },
-      {
-        "symbol": "GOOGL",
-        "date": "2026-08-11",
-        "name": "David J. Taylor",
-        "party": "R",
-        "state": "OH",
         "chamber": "House",
         "action": "Buy",
         "amount": "$1k–$15k"
       },
       {
-        "symbol": "AMZN",
-        "date": "2026-10-27",
-        "name": "Pete Sessions",
+        "symbol": "META",
+        "date": "2026-09-22",
+        "name": "Maria Elvira Salazar",
         "party": "R",
-        "state": "TX",
+        "state": "FL",
         "chamber": "House",
-        "action": "Sell",
-        "amount": "$15k–$50k"
+        "action": "Buy",
+        "amount": "$1k–$15k"
       },
       {
-        "symbol": "AMZN",
+        "symbol": "META",
+        "date": "2026-09-22",
+        "name": "Maria Elvira Salazar",
+        "party": "R",
+        "state": "FL",
+        "chamber": "House",
+        "action": "Buy",
+        "amount": "$1k–$15k"
+      },
+      {
+        "symbol": "META",
+        "date": "2026-09-11",
+        "name": "Ro Khanna",
+        "party": "D",
+        "state": "CA",
+        "chamber": "House",
+        "action": "Buy",
+        "amount": "$1k–$15k"
+      },
+      {
+        "symbol": "TSLA",
         "date": "2026-10-02",
         "name": "Pete Sessions",
         "party": "R",
         "state": "TX",
         "chamber": "House",
         "action": "Sell",
-        "amount": "$100k–$250k"
+        "amount": "$15k–$50k"
       },
       {
-        "symbol": "AMZN",
-        "date": "2026-09-04",
+        "symbol": "TSLA",
+        "date": "2026-09-25",
         "name": "Ro Khanna",
         "party": "D",
         "state": "CA",
         "chamber": "House",
-        "action": "Sell",
+        "action": "Buy",
         "amount": "$1k–$15k"
+      },
+      {
+        "symbol": "TSLA",
+        "date": "2026-09-11",
+        "name": "Ro Khanna",
+        "party": "D",
+        "state": "CA",
+        "chamber": "House",
+        "action": "Buy",
+        "amount": "$15k–$50k"
       }
     ],
     "institutional": [
       {
-        "symbol": "GOOGL",
-        "ownership": "90%",
-        "holders": "6116",
-        "increased": "2812",
-        "decreased": "2753",
+        "symbol": "META",
+        "ownership": "87%",
+        "holders": "5521",
+        "increased": "2786",
+        "decreased": "2290",
         "top": [
           {
             "name": "Vanguard Group Inc",
-            "shares": "529.0m",
-            "change": "2.43%",
+            "shares": "200.0m",
+            "change": "3.77%",
             "change_type": "increased",
             "reported": "2025-12-31"
           },
           {
             "name": "Blackrock",
-            "shares": "461.0m",
-            "change": "3.13%",
+            "shares": "173.4m",
+            "change": "2.70%",
             "change_type": "increased",
             "reported": "2026-06-30"
           },
           {
             "name": "Vanguard Capital Management Llc",
-            "shares": "383.0m",
-            "change": "1.24%",
+            "shares": "143.4m",
+            "change": "0.92%",
             "change_type": "increased",
             "reported": "2026-06-30"
           },
           {
             "name": "Fmr Llc",
-            "shares": "250.7m",
-            "change": "5.99%",
-            "change_type": "increased",
+            "shares": "95.9m",
+            "change": "-17.77%",
+            "change_type": "decreased",
             "reported": "2026-06-30"
           }
         ]
       },
       {
-        "symbol": "AMZN",
-        "ownership": "76%",
-        "holders": "6488",
-        "increased": "3383",
-        "decreased": "2591",
+        "symbol": "TSLA",
+        "ownership": "49%",
+        "holders": "4608",
+        "increased": "2379",
+        "decreased": "1654",
         "top": [
           {
             "name": "Vanguard Group Inc",
-            "shares": "845.4m",
-            "change": "-0.58%",
-            "change_type": "decreased",
+            "shares": "258.9m",
+            "change": "2.59%",
+            "change_type": "increased",
             "reported": "2025-12-31"
           },
           {
             "name": "Blackrock",
-            "shares": "748.4m",
-            "change": "1.75%",
+            "shares": "214.1m",
+            "change": "2.90%",
             "change_type": "increased",
             "reported": "2026-06-30"
           },
           {
             "name": "Vanguard Capital Management Llc",
-            "shares": "635.8m",
-            "change": "0.73%",
+            "shares": "184.0m",
+            "change": "0.64%",
             "change_type": "increased",
             "reported": "2026-06-30"
           },
           {
             "name": "State Street Corp",
-            "shares": "397.2m",
-            "change": "1.73%",
+            "shares": "117.5m",
+            "change": "2.41%",
             "change_type": "increased",
             "reported": "2026-06-30"
           }
