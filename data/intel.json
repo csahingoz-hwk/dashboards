@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-14T02:38:24.316438Z",
-  "updated_london": "14 Nov 2026, 02:38 GMT",
+  "generated_at": "2026-11-17T04:43:42.041071Z",
+  "updated_london": "17 Nov 2026, 04:43 GMT",
   "timezone": "Europe/London",
   "sample": false,
   "stale": false,
@@ -27,254 +27,240 @@
   "mood": null,
   "news": [
     {
-      "id": "alpaca-63273173",
-      "headline": "ChatGPT Wallet Lets OpenAI's Dots AI Agents Shop On Your Behalf Without Accessing Actual Card Details",
-      "summary": "OpenAI unveiled ChatGPT Wallet, a new payment capability that allows its “dots” AI agents to complete purchases for users&#39; behalf.",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/markets/tech/26/11/63273173/chatgpt-wallet-openais-dots",
-      "symbols": [
-        "AXP",
-        "MA",
-        "META",
-        "V"
-      ],
-      "published_at": "2026-11-14T02:34:24Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-122730650",
-      "headline": "JPMorgan Chase Declares Dividends on Series II, OO, and PP Preferred Stock",
-      "summary": "JPMorgan Chase & Co. has announced dividend declarations for its outstanding Series II, OO, and PP preferred stock.",
+      "id": "alpaca-124187195",
+      "headline": "Microsoft Releases Preliminary Report on Recent 365 Service Outage",
+      "summary": "Microsoft issued a preliminary post-incident report attributing the recent Microsoft 365 service disruption to a latent software defect and network capacity issues.",
       "source": "fiscal.ai",
-      "url": "https://www.moomoo.com/hans/news/post/1004625917/press-release-jpmorganchase-declares-preferred-stock-dividends",
-      "symbols": [
-        "JPM"
-      ],
-      "published_at": "2026-11-14T00:01:27Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-122569509",
-      "headline": "Amazon YVR2 Fulfillment Center Workers Covered by Binding Collective Agreement",
-      "summary": "Approximately 800 workers at Amazon's YVR2 fulfillment center are now subject to a binding collective agreement following an independent arbitration process.",
-      "source": "fiscal.ai",
-      "url": "https://www.newswire.ca/news-releases/amazon-workers-in-delta-win-first-union-contract-in-north-america-888332994.html",
-      "symbols": [
-        "AMZN"
-      ],
-      "published_at": "2026-11-13T22:32:09Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-122567730",
-      "headline": "Epic Games Files Response Brief in Supreme Court Contempt Case Against Apple",
-      "summary": "Epic Games has formally requested that the Supreme Court maintain the civil contempt ruling against Apple regarding its App Store commission policies.",
-      "source": "fiscal.ai",
-      "url": "https://appleosophy.com/wire/0f4obpw/",
-      "symbols": [
-        "AAPL"
-      ],
-      "published_at": "2026-11-13T22:31:27Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-63271367",
-      "headline": "Bitcoin, Ethereum, XRP Bottom Calls Get Louder but Prediction Markets Disagree",
-      "summary": "Bitcoin, Ethereum and XRP plunge as analysts split on a bottom and Polymarket bettors see BTC falling to $65,000.",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/crypto/cryptocurrency/26/11/63271367/bitcoin-ethereum-xrp-bottom-calls-get-louder-but-prediction-markets-disagree",
-      "symbols": [
-        "BTCUSD",
-        "ETHUSD",
-        "NVDA",
-        "XRPUSD"
-      ],
-      "published_at": "2026-11-13T22:00:08Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-63271091",
-      "headline": "‘Nvidia Letting Jensen Go is Terrible for America’: Podcaster Lex Fridman Compares Chipmaker to Apple Firing Steve Jobs",
-      "summary": "Podcaster Lex Fridman thinks Nvidia was wrong to force Jensen Huang out as CEO.",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/trading-ideas/movers/26/11/63271091/nvidia-letting-jensen-go-is-terrible-for-america-podcaster-lex-fridman-compares-chipmaker-to-apple-firing-steve-jobs",
-      "symbols": [
-        "NVDA"
-      ],
-      "published_at": "2026-11-13T21:48:57Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-63270399",
-      "headline": "Rosenblatt Maintains Buy on NVIDIA, Lowers Price Target to $300",
-      "summary": "",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/news/26/11/63270399/rosenblatt-maintains-buy-nvidia-lowers-price-target-300",
-      "symbols": [
-        "NVDA"
-      ],
-      "published_at": "2026-11-13T21:33:05Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-122469078",
-      "headline": "Apple Releases tvOS 27.2.1 Update",
-      "summary": "Apple has released the tvOS 27.2.1 software update, which introduces support for Siri AI on older Apple TV models.",
-      "source": "fiscal.ai",
-      "url": "https://appleosophy.com/2026/11/13/apple-rolls-out-tvos-27-2-1-with-support-for-siri-ai-on-older-apple-tv-models/",
-      "symbols": [
-        "AAPL"
-      ],
-      "published_at": "2026-11-13T21:31:27Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-122469077",
-      "headline": "Amazon Developing 'World Product Graph' to Expand Shopping Data",
-      "summary": "Amazon is reportedly developing an initiative called 'World Product Graph' to provide shoppers with comprehensive product information, including items not currently stocked by the company.",
-      "source": "fiscal.ai",
-      "url": "https://www.pymnts.com/commerce/ecommerce/2026/amazon-targets-google-walmart-with-plan-catalog-every-product-online/",
-      "symbols": [
-        "AMZN"
-      ],
-      "published_at": "2026-11-13T21:31:27Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-63269563",
-      "headline": "Nvidia Loses Its Founder, AMD and Broadcom Take the Crown: This Week on Wall Street",
-      "summary": "Nvidia lost its founder and AMD and Broadcom led the S&amp;P 100 with 18% weekly gains, as hot inflation and a 5.15% 10-year yield put a Fed hike in play.",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/markets/market-summary/26/11/63269563/this-week-on-wall-street-nvidia-huang-amd-broadcom-fed-hike",
-      "symbols": [
-        "AMD",
-        "ANET",
-        "AVGO",
-        "BTCUSD"
-      ],
-      "published_at": "2026-11-13T21:17:32Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-63267180",
-      "headline": "‘Amazon Revives Deal With Troubled Data Centre Venture Backed By Rick Perry’ - FT",
-      "summary": "",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/news/26/11/63267180/amazon-revives-deal-troubled-data-centre-venture-backed-rick-perry-ft",
-      "symbols": [
-        "AMZN"
-      ],
-      "published_at": "2026-11-13T20:46:17Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-63266602",
-      "headline": "Josh Kushner Bets Big on Elon Musk, More Than Doubles Thrive Capital Stake in SpaceX Stock in Q3",
-      "summary": "By the end of Q3, Thrive Capital&#39;s SpaceX position was valued at around $7.1 billion, representing 92% of the investment portfolio.",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/trading-ideas/long-ideas/26/11/63266602/josh-kushner-bets-big-on-elon-musk-more-than-doubles-thrive-capital-stake-in-spacex-stock-in-q3",
-      "symbols": [
-        "AMZN",
-        "FIG",
-        "OSCR",
-        "SECZ"
-      ],
-      "published_at": "2026-11-13T20:37:21Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-63266095",
-      "headline": "Nvidia In Process Of Selecting Search Firm, No Formal Candidates Engaged To Succeed Jensen Huang - CNBC",
-      "summary": "",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/news/26/11/63266095/nvidia-process-selecting-search-firm-no-formal-candidates-engaged-succeed-jensen-huang-cnbc",
-      "symbols": [
-        "NVDA"
-      ],
-      "published_at": "2026-11-13T20:28:59Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-63265115",
-      "headline": "Microsoft Says Infrastructure Stabilizes As Queued Messages Drain And Traffic Rebalances, With No ETA For Full Recovery",
-      "summary": "",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/news/26/11/63265115/microsoft-says-infrastructure-stabilizes-queued-messages-drain-and-traffic-rebalances-no-eta-full-re",
+      "url": "https://www.newswire.ca/news-releases/microsoft-outage-triggers-canada-wide-class-action-lawsuit-852582849.html",
       "symbols": [
         "MSFT"
       ],
-      "published_at": "2026-11-13T20:14:22Z",
+      "published_at": "2026-11-17T03:01:25Z",
       "sentiment": null,
       "sentiment_label": null,
       "origin": "alpaca",
       "sample": false
     },
     {
-      "id": "alpaca-63264694",
-      "headline": "Nancy Pelosi’s Nvidia Bet Just Cost Her Most Of A Year’s Pay — Thanks To Jensen Huang",
-      "summary": "Former House Speaker Nancy Pelosi owns Nvidia stock. Here&#39;s how much her stake is down over the last week.",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/news/politics/26/11/63264694/nancy-pelosis-nvidia-bet-just-cost-her-most-of-a-years-pay-thanks-to-jensen-huang",
-      "symbols": [
-        "NVDA",
-        "TSLA",
-        "V"
-      ],
-      "published_at": "2026-11-13T20:06:46Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-122097917",
-      "headline": "Texas Attorney General Threatens Potential Tesla-SpaceX Merger",
-      "summary": "The newly elected Texas Attorney General has signaled opposition to a potential merger between Tesla and SpaceX.",
+      "id": "alpaca-124178455",
+      "headline": "Teamsters Organize Rally for Terminated Amazon Delivery Drivers in New York City",
+      "summary": "The Teamsters union is organizing a rally to support 200 delivery drivers who were dismissed after Amazon terminated its contract with their third-party employer.",
       "source": "fiscal.ai",
-      "url": "https://www.marketscreener.com/news/tesla-spacex-merger-threatened-by-newly-elected-texas-attorney-general-ce785ed9de8cf523",
+      "url": "https://www.prnewswire.com/news-releases/teamsters-rally-to-support-amazon-e-bike-delivery-drivers-illegally-fired-by-company-302941100.html",
+      "symbols": [
+        "AMZN"
+      ],
+      "published_at": "2026-11-17T00:01:27Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-124041552",
+      "headline": "Instagram Launches Integration for Amazon Affiliate Links",
+      "summary": "Instagram has introduced a new feature allowing creators to directly integrate Amazon affiliate links into Reels and feed posts.",
+      "source": "fiscal.ai",
+      "url": "https://newsfilter.io/articles/instagram-now-lets-creators-add-amazon-affiliate-links-in-reels-and-feed-posts-2c6d5f0747ae5ab0a3c96b0d6d701a1b",
+      "symbols": [
+        "AMZN"
+      ],
+      "published_at": "2026-11-16T22:31:22Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-123962947",
+      "headline": "Apple Releases iOS 27.3 Developer Beta Featuring 'Face Unlock' for iPhone Duo",
+      "summary": "Apple's latest iOS 27.3 developer beta introduces a new software-based 'face unlock' feature specifically for the iPhone Duo.",
+      "source": "fiscal.ai",
+      "url": "https://newsfilter.io/articles/apple-adds-face-unlock-to-the-iphone-duo-but-its-not-face-id-4bcfeb7f1ab45ccd98350e3cc94c1985",
+      "symbols": [
+        "AAPL"
+      ],
+      "published_at": "2026-11-16T21:31:25Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-123962946",
+      "headline": "Apple Appoints 26-Year Veteran Corey Fugman to Lead Payments and Wallet Unit",
+      "summary": "Apple has named company veteran Corey Fugman to head its payments and digital wallet division, which oversees Apple Pay, Apple Card, and Wallet services.",
+      "source": "fiscal.ai",
+      "url": "https://appleosophy.com/wire/qv14pwk/",
+      "symbols": [
+        "AAPL"
+      ],
+      "published_at": "2026-11-16T21:31:25Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-123849783",
+      "headline": "JPMorgan Chase Discloses 5.22% Stake in Sibanye-Stillwater",
+      "summary": "JPMorgan Chase & Co. has formally notified that it has acquired a 5.22% interest in the issued share capital of Sibanye-Stillwater.",
+      "source": "fiscal.ai",
+      "url": "https://irw-press.com/de/mitteilung-ueber-den-erwerb-einer-wirtschaftlichen-beteiligung-an-wertpapieren-durch-jpmorgan-chase-co/",
+      "symbols": [
+        "JPM"
+      ],
+      "published_at": "2026-11-16T20:02:56Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-123772877",
+      "headline": "JPMorgan Chase and Other Major Banks Experience Online Banking Outages",
+      "summary": "Customers reported widespread difficulties accessing online banking services at JPMorgan Chase and other major financial institutions on November 16, 2026.",
+      "source": "fiscal.ai",
+      "url": "https://www.barchart.com/story/news/8859950/customers-at-some-of-the-nation-s-largest-banks-are-reporting-difficulty-accessing-accounts-online",
+      "symbols": [
+        "JPM"
+      ],
+      "published_at": "2026-11-16T19:01:43Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-123772854",
+      "headline": "Apple and OpenEvidence Launch Virtual Health AI Research Study",
+      "summary": "Apple has initiated a virtual research study in collaboration with OpenEvidence to investigate how consumers utilize conversational artificial intelligence for health-related purposes.",
+      "source": "fiscal.ai",
+      "url": "https://www.pymnts.com/news/artificial-intelligence/2026/apple-and-openevidence-seek-200000-consumers-for-health-ai-study/",
+      "symbols": [
+        "AAPL"
+      ],
+      "published_at": "2026-11-16T19:01:36Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-123772846",
+      "headline": "Amnesty International Reports Continued Labor Issues at Amazon Saudi Arabia Facilities",
+      "summary": "Amnesty International has alleged that migrant workers at Amazon facilities in Saudi Arabia continue to face exploitation, including misleading recruitment practices and wage issues.",
+      "source": "fiscal.ai",
+      "url": "https://www.manilatimes.net/2026/11/17/business/foreign-business/amnesty-amazons-migrant-workers-still-being-exploited/2471194",
+      "symbols": [
+        "AMZN"
+      ],
+      "published_at": "2026-11-16T19:01:33Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-123772835",
+      "headline": "NVIDIA Announces Quantum Computing Collaborations with IBM and Fermilab",
+      "summary": "NVIDIA is partnering with IBM and the Fermi National Accelerator Laboratory to advance quantum computing research, including a new modular codesign platform and a high-speed decoding algorithm.",
+      "source": "fiscal.ai",
+      "url": "https://www.globenewswire.com/news-release/2026/11/16/3403878/0/en/nvidia-announces-collaboration-with-ibm-and-fermi-national-accelerator-laboratory-to-launch-quantum-classical-codesign-platform-plus-error-correction-breakthrough-to-advance-practi.html",
+      "symbols": [
+        "NVDA"
+      ],
+      "published_at": "2026-11-16T19:01:25Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-123772834",
+      "headline": "NVIDIA Introduces Nemotron for Science Platform",
+      "summary": "NVIDIA launched 'NVIDIA Nemotron for Science,' a new platform designed to help researchers build specialized AI agents for scientific discovery, including a new chemistry dataset.",
+      "source": "fiscal.ai",
+      "url": "https://www.globenewswire.com/news-release/2026/11/16/3403880/0/en/nvidia-introduces-nemotron-for-science-to-accelerate-discoveries-with-agents.html",
+      "symbols": [
+        "NVDA"
+      ],
+      "published_at": "2026-11-16T19:01:25Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-123772833",
+      "headline": "NVIDIA Launches Vera CPU Platform for High-Performance Computing",
+      "summary": "NVIDIA announced the 'NVIDIA Vera CPU' rack-scale platform, its first custom data center CPU designed for high-performance scientific modeling and simulation.",
+      "source": "fiscal.ai",
+      "url": "https://www.globenewswire.com/news-release/2026/11/16/3403879/0/en/nvidia-expands-vera-cpu-platform-to-accelerate-scientific-discovery.html",
+      "symbols": [
+        "NVDA"
+      ],
+      "published_at": "2026-11-16T19:01:25Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-123772831",
+      "headline": "Thread AI Joins Microsoft for Startups Pegasus Program",
+      "summary": "Thread AI has been accepted into the Microsoft for Startups Pegasus Program, providing the company with access to Azure AI models and enterprise-grade support.",
+      "source": "fiscal.ai",
+      "url": "https://www.prnewswire.com/news-releases/thread-ai-joins-the-microsoft-for-startups-pegasus-program-to-deliver-its-ai-workflow-orchestration-platform-on-microsoft-marketplace-302940646.html",
+      "symbols": [
+        "MSFT"
+      ],
+      "published_at": "2026-11-16T19:01:20Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-123587549",
+      "headline": "Tesla Announces €3 Billion Expansion of German Gigafactory",
+      "summary": "Tesla plans to invest €3 billion ($3.31 billion) to expand its manufacturing facility in Gruenheide, Germany, to increase production capacity for its Cybercab autonomous vehicles.",
+      "source": "fiscal.ai",
+      "url": "https://www.fidelity.com/news/article/company-news/202611160938RTRSNEWSCOMBINED_KCN3WR1QL-OUSBS_1",
       "symbols": [
         "TSLA"
       ],
-      "published_at": "2026-11-13T20:01:49Z",
+      "published_at": "2026-11-16T16:01:24Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-123587548",
+      "headline": "Microsoft Addresses Recent 365 Service Disruption",
+      "summary": "Microsoft has implemented new service health check methods and automated recovery systems following a global disruption to its 365 services that occurred between November 12 and 14, 2026.",
+      "source": "fiscal.ai",
+      "url": "https://businesschief.com/news/microsoft-outage-loss-could-total-us-700m-analysts-say",
+      "symbols": [
+        "MSFT"
+      ],
+      "published_at": "2026-11-16T16:01:21Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-123508614",
+      "headline": "Corvex Signs $103 Million Agreement for NVIDIA Blackwell Capacity",
+      "summary": "AI cloud computing firm Corvex has entered into a $103 million take-or-pay agreement to secure NVIDIA Blackwell GPU capacity.",
+      "source": "fiscal.ai",
+      "url": "https://www.prnewswire.com/news-releases/corvex-signs-103-million-take-or-pay-agreement-for-nvidia-blackwell-capacity-21-million-of-annual-contract-revenue-per-megawatt-302940368.html",
+      "symbols": [
+        "NVDA"
+      ],
+      "published_at": "2026-11-16T14:31:25Z",
       "sentiment": null,
       "sentiment_label": null,
       "origin": "alpaca",
@@ -282,197 +268,81 @@
     }
   ],
   "movers": {
-    "last_updated": "2026-11-13 16:15:59 US/Eastern",
+    "last_updated": "2026-11-16 16:16:00 US/Eastern",
     "gainers": [
       {
-        "ticker": "FCUV",
-        "price": "7.08",
-        "change_amount": "4.16",
-        "change_percentage": "142.4658%"
+        "ticker": "GMM",
+        "price": "2.01",
+        "change_amount": "0.99",
+        "change_percentage": "97.0588%"
+      },
+      {
+        "ticker": "GDHG",
+        "price": "1.58",
+        "change_amount": "0.75",
+        "change_percentage": "90.3614%"
       },
       {
         "ticker": "AKAN",
-        "price": "1.36",
-        "change_amount": "0.6883",
-        "change_percentage": "102.4713%"
+        "price": "2.21",
+        "change_amount": "0.85",
+        "change_percentage": "62.5%"
       },
       {
-        "ticker": "WWB",
-        "price": "28.5",
-        "change_amount": "11.5",
-        "change_percentage": "67.6471%"
+        "ticker": "HIHO",
+        "price": "1.2",
+        "change_amount": "0.415",
+        "change_percentage": "52.8662%"
       },
       {
-        "ticker": "SLSN",
-        "price": "1.52",
-        "change_amount": "0.611",
-        "change_percentage": "67.2167%"
-      },
-      {
-        "ticker": "VTSI",
-        "price": "4.24",
-        "change_amount": "1.62",
-        "change_percentage": "61.8321%"
+        "ticker": "NCT",
+        "price": "8.96",
+        "change_amount": "2.7352",
+        "change_percentage": "43.9404%"
       }
     ],
     "losers": [
       {
-        "ticker": "SST",
-        "price": "1.03",
-        "change_amount": "-0.64",
-        "change_percentage": "-38.3234%"
+        "ticker": "MTEX",
+        "price": "3.76",
+        "change_amount": "-2.54",
+        "change_percentage": "-40.3175%"
       },
       {
-        "ticker": "RMIX",
-        "price": "5.08",
-        "change_amount": "-3.04",
-        "change_percentage": "-37.4384%"
-      },
-      {
-        "ticker": "NPCE",
-        "price": "7.56",
-        "change_amount": "-4.46",
-        "change_percentage": "-37.1048%"
-      },
-      {
-        "ticker": "NMAD",
-        "price": "2.35",
-        "change_amount": "-1.35",
-        "change_percentage": "-36.4865%"
+        "ticker": "BTDL",
+        "price": "1.7261",
+        "change_amount": "-1.1412",
+        "change_percentage": "-39.8005%"
       }
     ],
     "active": [
       {
         "ticker": "NVDA",
-        "price": "162.85",
-        "change_amount": "-3.34",
-        "change_percentage": "-2.0097%"
+        "price": "156.14",
+        "change_amount": "-6.71",
+        "change_percentage": "-4.1204%"
       },
       {
         "ticker": "SOXL",
-        "price": "58.34",
-        "change_amount": "-7.19",
-        "change_percentage": "-10.9721%"
+        "price": "48.76",
+        "change_amount": "-9.56",
+        "change_percentage": "-16.3923%"
       },
       {
-        "ticker": "NU",
-        "price": "13.21",
-        "change_amount": "1.38",
-        "change_percentage": "11.6653%"
+        "ticker": "GDHG",
+        "price": "1.58",
+        "change_amount": "0.75",
+        "change_percentage": "90.3614%"
       },
       {
-        "ticker": "FCUV",
-        "price": "7.08",
-        "change_amount": "4.16",
-        "change_percentage": "142.4658%"
+        "ticker": "SPDN",
+        "price": "8.795",
+        "change_amount": "0.165",
+        "change_percentage": "1.9119%"
       }
     ]
   },
   "earnings": [
-    {
-      "symbol": "META",
-      "quarter": "2026Q3",
-      "reported_date": "2026-10-21",
-      "fiscal_date_ending": "2026-09-30",
-      "reported_eps": "7.4",
-      "estimated_eps": "6.52",
-      "surprise_percentage": "13.4969",
-      "summary": {
-        "method": "extractive",
-        "llm": null,
-        "sentiment_score": 0.3034,
-        "sentiment_label": "Somewhat-Bullish",
-        "turn_count": 29,
-        "overview": "This has been a busy and exciting few months. Our Family of Apps is now used by 3.64 billion people each day, and we are seeing all-time highs in engagement on both Facebook and Instagram, driven by strong growth in video.",
-        "quotes": [
-          {
-            "role": "CEO",
-            "speaker": "Mark Elliot Zuckerberg",
-            "title": "CEO",
-            "text": "The most common use case for Muse is shopping, with more than 25% of people who are using Muse engaging in this, with an average purchase size of over $200.",
-            "sentiment": 0.9,
-            "sentiment_label": "Bullish"
-          },
-          {
-            "role": "CFO",
-            "speaker": "Susan J. Li",
-            "title": "CFO",
-            "text": "For 2026, we anticipate capital expenditures, including principal payments on finance leases, to be in the range of $135 billion to $145 billion, narrowed from our prior outlook of $130 billion to $145 billion.",
-            "sentiment": 0.6,
-            "sentiment_label": "Bullish"
-          }
-        ],
-        "bullish": {
-          "speaker": "Mark Elliot Zuckerberg",
-          "title": "CEO",
-          "role": "CEO",
-          "text": "This has been a busy and exciting few months.",
-          "sentiment": 0.9,
-          "sentiment_label": "Bullish"
-        },
-        "bearish": {
-          "speaker": "Susan J. Li",
-          "title": "CFO",
-          "role": "CFO",
-          "text": "So on your first question about how the agentic ecosystem evolves, I wish I could predict that more perfectly, and I think it will take some time.",
-          "sentiment": 0.4,
-          "sentiment_label": "Bullish"
-        }
-      },
-      "sample": false
-    },
-    {
-      "symbol": "TSLA",
-      "quarter": "2026Q3",
-      "reported_date": "2026-10-21",
-      "fiscal_date_ending": "2026-09-30",
-      "reported_eps": "0.2",
-      "estimated_eps": "0.22",
-      "surprise_percentage": "-9.0909",
-      "summary": {
-        "method": "extractive",
-        "llm": null,
-        "sentiment_score": 0.3173,
-        "sentiment_label": "Somewhat-Bullish",
-        "turn_count": 81,
-        "overview": "The third quarter was very strong, and I'd like to give a big congratulations to the whole Tesla team for working hard to make it happen. Demand is growing rapidly for our vehicles.",
-        "quotes": [
-          {
-            "role": "CEO",
-            "speaker": "Elon Musk",
-            "title": "CEO",
-            "text": "The way to think about it is that there are about 10,000 things that have to go right for production of the robot, and it will move as fast as the slowest, least likely of those 10,000.",
-            "sentiment": 0.9,
-            "sentiment_label": "Bullish"
-          },
-          {
-            "role": "CFO",
-            "speaker": "Vaibhav Taneja",
-            "title": "CFO",
-            "text": "In Q3, over 75% of deliveries in North America included a sign-up for a paid FSD subscription at the time of delivery, which is approximately 20% higher than Q2.",
-            "sentiment": 0.8,
-            "sentiment_label": "Bullish"
-          }
-        ],
-        "bullish": {
-          "speaker": "Elon Musk",
-          "title": "CEO",
-          "role": "CEO",
-          "text": "The third quarter was very strong, and I'd like to give a big congratulations to the whole Tesla team for working hard to make it happen.",
-          "sentiment": 0.9,
-          "sentiment_label": "Bullish"
-        },
-        "bearish": {
-          "speaker": "Vaibhav Taneja",
-          "title": "CFO",
-          "role": "CFO",
-          "text": "I think people take this very simply: that you can—if the software can be solved, it's not because—I mean, I'll let Ashok get into it.",
-          "sentiment": 0.0,
-          "sentiment_label": "Neutral"
-        }
-      },
-      "sample": false
-    },
     {
       "symbol": "GOOGL",
       "quarter": "2026Q3",
@@ -572,6 +442,110 @@
           "role": "CFO",
           "text": "Justin, on your question about fuel and line-haul inflation, I would say I don't have an exact number for you, but it is higher in Q4 than it was in Q3.",
           "sentiment": -0.1,
+          "sentiment_label": "Neutral"
+        }
+      },
+      "sample": false
+    },
+    {
+      "symbol": "META",
+      "quarter": "2026Q3",
+      "reported_date": "2026-10-21",
+      "fiscal_date_ending": "2026-09-30",
+      "reported_eps": "7.4",
+      "estimated_eps": "6.52",
+      "surprise_percentage": "13.4969",
+      "summary": {
+        "method": "extractive",
+        "llm": null,
+        "sentiment_score": 0.3034,
+        "sentiment_label": "Somewhat-Bullish",
+        "turn_count": 29,
+        "overview": "This has been a busy and exciting few months. Our Family of Apps is now used by 3.64 billion people each day, and we are seeing all-time highs in engagement on both Facebook and Instagram, driven by strong growth in video.",
+        "quotes": [
+          {
+            "role": "CEO",
+            "speaker": "Mark Elliot Zuckerberg",
+            "title": "CEO",
+            "text": "The most common use case for Muse is shopping, with more than 25% of people who are using Muse engaging in this, with an average purchase size of over $200.",
+            "sentiment": 0.9,
+            "sentiment_label": "Bullish"
+          },
+          {
+            "role": "CFO",
+            "speaker": "Susan J. Li",
+            "title": "CFO",
+            "text": "For 2026, we anticipate capital expenditures, including principal payments on finance leases, to be in the range of $135 billion to $145 billion, narrowed from our prior outlook of $130 billion to $145 billion.",
+            "sentiment": 0.6,
+            "sentiment_label": "Bullish"
+          }
+        ],
+        "bullish": {
+          "speaker": "Mark Elliot Zuckerberg",
+          "title": "CEO",
+          "role": "CEO",
+          "text": "This has been a busy and exciting few months.",
+          "sentiment": 0.9,
+          "sentiment_label": "Bullish"
+        },
+        "bearish": {
+          "speaker": "Susan J. Li",
+          "title": "CFO",
+          "role": "CFO",
+          "text": "So on your first question about how the agentic ecosystem evolves, I wish I could predict that more perfectly, and I think it will take some time.",
+          "sentiment": 0.4,
+          "sentiment_label": "Bullish"
+        }
+      },
+      "sample": false
+    },
+    {
+      "symbol": "TSLA",
+      "quarter": "2026Q3",
+      "reported_date": "2026-10-21",
+      "fiscal_date_ending": "2026-09-30",
+      "reported_eps": "0.2",
+      "estimated_eps": "0.22",
+      "surprise_percentage": "-9.0909",
+      "summary": {
+        "method": "extractive",
+        "llm": null,
+        "sentiment_score": 0.3173,
+        "sentiment_label": "Somewhat-Bullish",
+        "turn_count": 81,
+        "overview": "The third quarter was very strong, and I'd like to give a big congratulations to the whole Tesla team for working hard to make it happen. Demand is growing rapidly for our vehicles.",
+        "quotes": [
+          {
+            "role": "CEO",
+            "speaker": "Elon Musk",
+            "title": "CEO",
+            "text": "The way to think about it is that there are about 10,000 things that have to go right for production of the robot, and it will move as fast as the slowest, least likely of those 10,000.",
+            "sentiment": 0.9,
+            "sentiment_label": "Bullish"
+          },
+          {
+            "role": "CFO",
+            "speaker": "Vaibhav Taneja",
+            "title": "CFO",
+            "text": "In Q3, over 75% of deliveries in North America included a sign-up for a paid FSD subscription at the time of delivery, which is approximately 20% higher than Q2.",
+            "sentiment": 0.8,
+            "sentiment_label": "Bullish"
+          }
+        ],
+        "bullish": {
+          "speaker": "Elon Musk",
+          "title": "CEO",
+          "role": "CEO",
+          "text": "The third quarter was very strong, and I'd like to give a big congratulations to the whole Tesla team for working hard to make it happen.",
+          "sentiment": 0.9,
+          "sentiment_label": "Bullish"
+        },
+        "bearish": {
+          "speaker": "Vaibhav Taneja",
+          "title": "CFO",
+          "role": "CFO",
+          "text": "I think people take this very simply: that you can—if the software can be solved, it's not because—I mean, I'll let Ashok get into it.",
+          "sentiment": 0.0,
           "sentiment_label": "Neutral"
         }
       },
@@ -684,145 +658,115 @@
   ],
   "flows": {
     "symbols": [
-      "META",
-      "TSLA"
+      "GOOGL",
+      "AMZN"
     ],
     "insider": [
       {
-        "symbol": "META",
-        "date": "2026-11-02",
-        "name": "Marc L Andreessen",
+        "symbol": "GOOGL",
+        "date": "2026-10-29",
+        "name": "Frances Arnold",
         "title": "Director",
         "action": "Sale",
         "code": "S",
-        "shares": "1986",
-        "price": "612.12"
+        "shares": "82",
+        "price": "284.0"
       },
       {
-        "symbol": "META",
-        "date": "2026-11-02",
-        "name": "Marc L Andreessen",
+        "symbol": "GOOGL",
+        "date": "2026-09-30",
+        "name": "Frances Arnold",
         "title": "Director",
         "action": "Sale",
         "code": "S",
-        "shares": "872",
-        "price": "608.26"
+        "shares": "83",
+        "price": "340.45"
       },
       {
-        "symbol": "META",
-        "date": "2026-11-02",
-        "name": "Marc L Andreessen",
+        "symbol": "GOOGL",
+        "date": "2026-08-28",
+        "name": "Frances Arnold",
         "title": "Director",
         "action": "Sale",
         "code": "S",
-        "shares": "1964",
-        "price": "609.33"
+        "shares": "82",
+        "price": "337.71"
       },
       {
-        "symbol": "META",
-        "date": "2026-11-02",
-        "name": "Marc L Andreessen",
+        "symbol": "GOOGL",
+        "date": "2026-07-30",
+        "name": "Frances Arnold",
         "title": "Director",
         "action": "Sale",
         "code": "S",
-        "shares": "4629",
-        "price": "610.27"
+        "shares": "82",
+        "price": "333.39"
       },
       {
-        "symbol": "META",
+        "symbol": "GOOGL",
+        "date": "2026-07-29",
+        "name": "Marsida Saraci",
+        "title": "VP, Chief Accounting Officer",
+        "action": "Sale",
+        "code": "S",
+        "shares": "449",
+        "price": "333.2"
+      },
+      {
+        "symbol": "AMZN",
         "date": "2026-11-02",
-        "name": "Marc L Andreessen",
-        "title": "Director",
+        "name": "Douglas J Herrington",
+        "title": "CEO Worldwide Amazon Stores",
         "action": "Sale",
         "code": "S",
-        "shares": "4571",
-        "price": "611.14"
+        "shares": "1000",
+        "price": "243.47"
       },
       {
-        "symbol": "TSLA",
-        "date": "2026-09-08",
-        "name": "Vaibhav Taneja",
-        "title": "Chief Financial Officer",
+        "symbol": "AMZN",
+        "date": "2026-10-01",
+        "name": "Douglas J Herrington",
+        "title": "CEO Worldwide Amazon Stores",
         "action": "Sale",
         "code": "S",
-        "shares": "2605.8",
-        "price": "360.134"
+        "shares": "1000",
+        "price": "251.5"
       },
       {
-        "symbol": "TSLA",
-        "date": "2026-06-08",
-        "name": "Vaibhav Taneja",
-        "title": "Chief Financial Officer",
+        "symbol": "AMZN",
+        "date": "2026-09-01",
+        "name": "Douglas J Herrington",
+        "title": "CEO Worldwide Amazon Stores",
         "action": "Sale",
         "code": "S",
-        "shares": "2605.5",
-        "price": "402.197"
-      },
-      {
-        "symbol": "TSLA",
-        "date": "2026-05-13",
-        "name": "Vaibhav Taneja",
-        "title": "Chief Financial Officer",
-        "action": "Sale",
-        "code": "S",
-        "shares": "3000",
-        "price": "450.0"
+        "shares": "1000",
+        "price": "254.77"
       }
     ],
     "congress": [
       {
-        "symbol": "META",
-        "date": "2026-10-21",
-        "name": "Shelley Moore Capito",
+        "symbol": "GOOGL",
+        "date": "2026-11-03",
+        "name": "David J. Taylor",
         "party": "R",
-        "state": "WV",
-        "chamber": "Senate",
-        "action": "Sell",
-        "amount": "$1k–$15k"
-      },
-      {
-        "symbol": "META",
-        "date": "2026-10-09",
-        "name": "Gilbert Ray Cisneros, Jr.",
-        "party": "D",
-        "state": "CA",
+        "state": "OH",
         "chamber": "House",
         "action": "Buy",
         "amount": "$1k–$15k"
       },
       {
-        "symbol": "META",
-        "date": "2026-10-02",
-        "name": "Ro Khanna",
-        "party": "D",
-        "state": "CA",
-        "chamber": "House",
-        "action": "Sell",
-        "amount": "$1k–$15k"
-      },
-      {
-        "symbol": "META",
-        "date": "2026-09-24",
-        "name": "Maria Elvira Salazar",
+        "symbol": "GOOGL",
+        "date": "2026-11-03",
+        "name": "David J. Taylor",
         "party": "R",
-        "state": "FL",
-        "chamber": "House",
-        "action": "Sell",
-        "amount": "$1k–$15k"
-      },
-      {
-        "symbol": "META",
-        "date": "2026-09-23",
-        "name": "Ro Khanna",
-        "party": "D",
-        "state": "CA",
+        "state": "OH",
         "chamber": "House",
         "action": "Buy",
         "amount": "$1k–$15k"
       },
       {
-        "symbol": "TSLA",
-        "date": "2026-10-02",
+        "symbol": "GOOGL",
+        "date": "2026-09-14",
         "name": "Pete Sessions",
         "party": "R",
         "state": "TX",
@@ -831,98 +775,128 @@
         "amount": "$15k–$50k"
       },
       {
-        "symbol": "TSLA",
-        "date": "2026-09-25",
+        "symbol": "GOOGL",
+        "date": "2026-09-04",
         "name": "Ro Khanna",
         "party": "D",
         "state": "CA",
         "chamber": "House",
-        "action": "Buy",
+        "action": "Sell",
         "amount": "$1k–$15k"
       },
       {
-        "symbol": "TSLA",
-        "date": "2026-09-11",
+        "symbol": "GOOGL",
+        "date": "2026-08-27",
+        "name": "Thomas H. Kean, Jr.",
+        "party": "R",
+        "state": "NJ",
+        "chamber": "House",
+        "action": "Sell",
+        "amount": "$1k–$15k"
+      },
+      {
+        "symbol": "AMZN",
+        "date": "2026-10-27",
+        "name": "Pete Sessions",
+        "party": "R",
+        "state": "TX",
+        "chamber": "House",
+        "action": "Sell",
+        "amount": "$15k–$50k"
+      },
+      {
+        "symbol": "AMZN",
+        "date": "2026-10-02",
         "name": "Ro Khanna",
         "party": "D",
         "state": "CA",
         "chamber": "House",
-        "action": "Buy",
-        "amount": "$15k–$50k"
+        "action": "Sell",
+        "amount": "$1k–$15k"
+      },
+      {
+        "symbol": "AMZN",
+        "date": "2026-10-02",
+        "name": "Pete Sessions",
+        "party": "R",
+        "state": "TX",
+        "chamber": "House",
+        "action": "Sell",
+        "amount": "$100k–$250k"
       }
     ],
     "institutional": [
       {
-        "symbol": "META",
-        "ownership": "87%",
-        "holders": "5554",
-        "increased": "2820",
-        "decreased": "2296",
+        "symbol": "GOOGL",
+        "ownership": "90%",
+        "holders": "6175",
+        "increased": "2891",
+        "decreased": "2692",
         "top": [
           {
             "name": "Vanguard Group Inc",
-            "shares": "200.0m",
-            "change": "3.77%",
+            "shares": "529.0m",
+            "change": "2.43%",
             "change_type": "increased",
             "reported": "2025-12-31"
           },
           {
             "name": "Blackrock",
-            "shares": "173.4m",
-            "change": "2.70%",
-            "change_type": "increased",
-            "reported": "2026-06-30"
+            "shares": "459.0m",
+            "change": "-0.42%",
+            "change_type": "decreased",
+            "reported": "2026-09-30"
           },
           {
             "name": "Vanguard Capital Management Llc",
-            "shares": "143.4m",
-            "change": "0.92%",
+            "shares": "384.8m",
+            "change": "0.49%",
             "change_type": "increased",
-            "reported": "2026-06-30"
+            "reported": "2026-09-30"
           },
           {
             "name": "Fmr Llc",
-            "shares": "95.9m",
-            "change": "-17.77%",
+            "shares": "247.7m",
+            "change": "-1.22%",
             "change_type": "decreased",
-            "reported": "2026-06-30"
+            "reported": "2026-09-30"
           }
         ]
       },
       {
-        "symbol": "TSLA",
-        "ownership": "51%",
-        "holders": "4624",
-        "increased": "2352",
-        "decreased": "1706",
+        "symbol": "AMZN",
+        "ownership": "76%",
+        "holders": "6539",
+        "increased": "3391",
+        "decreased": "2612",
         "top": [
           {
             "name": "Vanguard Group Inc",
-            "shares": "258.9m",
-            "change": "2.59%",
-            "change_type": "increased",
+            "shares": "845.4m",
+            "change": "-0.58%",
+            "change_type": "decreased",
             "reported": "2025-12-31"
           },
           {
             "name": "Blackrock",
-            "shares": "214.1m",
-            "change": "2.90%",
-            "change_type": "increased",
-            "reported": "2026-06-30"
+            "shares": "747.9m",
+            "change": "-0.07%",
+            "change_type": "decreased",
+            "reported": "2026-09-30"
           },
           {
             "name": "Vanguard Capital Management Llc",
-            "shares": "184.0m",
-            "change": "0.64%",
+            "shares": "638.9m",
+            "change": "0.49%",
             "change_type": "increased",
-            "reported": "2026-06-30"
+            "reported": "2026-09-30"
           },
           {
             "name": "State Street Corp",
-            "shares": "117.5m",
-            "change": "2.41%",
+            "shares": "400.5m",
+            "change": "0.83%",
             "change_type": "increased",
-            "reported": "2026-06-30"
+            "reported": "2026-09-30"
           }
         ]
       }
