@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-18T03:49:29.595695Z",
-  "updated_london": "18 Nov 2026, 03:49 GMT",
+  "generated_at": "2026-11-19T03:47:18.883647Z",
+  "updated_london": "19 Nov 2026, 03:47 GMT",
   "timezone": "Europe/London",
   "sample": false,
   "stale": false,
@@ -27,240 +27,240 @@
   "mood": null,
   "news": [
     {
-      "id": "alpaca-125309054",
-      "headline": "Tesla Urges Shareholder Participation for 2026 Annual Meeting",
-      "summary": "Tesla has initiated a proxy solicitation campaign, urging shareholders to vote on board recommendations ahead of the company's 2026 Annual Meeting scheduled for December 3.",
+      "id": "alpaca-125955611",
+      "headline": "JPMorgan-led Banks Reduce Yield on Proofpoint Bond",
+      "summary": "A banking group led by JPMorgan Chase has lowered the yield on a $1.25 billion bond for cybersecurity firm Proofpoint due to high investor demand.",
       "source": "fiscal.ai",
-      "url": "https://www.moomoo.com/stock/TSLA-US/announcement?chain_id=Name1K9-3FXPhg.1l4tp40&global_content=%7B%22promote_id%22%3A13764,%22sub_promote_id%22%3A107,%22f%22%3A%22www.moomoo.com%2Fetfs%2FTSLS-US%22%7D",
-      "symbols": [
-        "TSLA"
-      ],
-      "published_at": "2026-11-18T03:01:56Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-125309045",
-      "headline": "Transamerica Expands AI Partnership with Amazon Web Services",
-      "summary": "Transamerica has deepened its collaboration with Amazon Web Services to scale artificial intelligence across its enterprise operations.",
-      "source": "fiscal.ai",
-      "url": "https://www.prnewswire.com/news-releases/transamerica-expands-strategic-relationship-with-aws-to-scale-responsible-ai-capabilities-302942296.html",
-      "symbols": [
-        "AMZN"
-      ],
-      "published_at": "2026-11-18T03:01:22Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-125306632",
-      "headline": "Teamsters Rally Following Amazon's Termination of Delivery Partner",
-      "summary": "The International Brotherhood of Teamsters held a rally in Manhattan to protest the firing of approximately 200 delivery drivers following Amazon's cancellation of a contract with a delivery service partner.",
-      "source": "fiscal.ai",
-      "url": "https://www.prnewswire.com/news-releases/teamsters-rally-for-200-e-bike-drivers-terminated-by-amazon-in-new-york-302942866.html",
-      "symbols": [
-        "AMZN"
-      ],
-      "published_at": "2026-11-18T01:01:19Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-125306205",
-      "headline": "NVIDIA Reports Financial Results for Third Quarter Fiscal 2027",
-      "summary": "NVIDIA announced its financial results for the third quarter of fiscal 2027, reporting revenue of $115.8 billion, a 103% increase year-over-year.",
-      "source": "fiscal.ai",
-      "url": "https://www.globenewswire.com/news-release/2026/11/17/3405200/0/en/nvidia-announces-financial-results-for-third-quarter-fiscal-2027.html",
-      "symbols": [
-        "NVDA"
-      ],
-      "published_at": "2026-11-18T00:01:31Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-124874617",
-      "headline": "Meta Testing Standalone Messaging App 'Direct'",
-      "summary": "Meta has begun testing a standalone messaging app called 'Direct' in Thailand and Turkey, allowing users to access Instagram messages without an Instagram account.",
-      "source": "fiscal.ai",
-      "url": "https://newscord.org/article/meta-tests-direct-standalone-instagram-messaging-app-without-account-in-thailand--Story_20261117_MetalaunchesDirectas387ae1a0",
-      "symbols": [
-        "META"
-      ],
-      "published_at": "2026-11-17T20:01:29Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-124874616",
-      "headline": "Apple Reports Widespread Internal and Consumer Service Outages",
-      "summary": "Apple experienced significant service disruptions affecting internal corporate tools, retail store operations, and consumer-facing services.",
-      "source": "fiscal.ai",
-      "url": "https://appleosophy.com/wire/lu3evxk/",
-      "symbols": [
-        "AAPL"
-      ],
-      "published_at": "2026-11-17T20:01:26Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-124775308",
-      "headline": "Viking Global Investors Increases Stake in Tesla",
-      "summary": "Viking Global Investors LP has increased its shareholding in Tesla, Inc. to 2.3 million shares, according to a recent SEC filing.",
-      "source": "fiscal.ai",
-      "url": "https://www.moomoo.com/stock/TSLA261106C350000-US?chain_id=Name1K9-3FXPhg.1lfo5sg&global_content=%7B%22promote_id%22%3A%22%22%2C%22sub_promote_id%22%3A64%2C%22subpromote_id%22%3A%22%22%2C%22f%22%3A%22www.moomoo.com%2Fcommunity%2Fprofile%2F151699427%22%7D",
-      "symbols": [
-        "TSLA"
-      ],
-      "published_at": "2026-11-17T19:02:45Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-124775296",
-      "headline": "JPMorgan-Led Banks Reduce Borrowing Costs for CCC Intelligent Solutions Debt Deal",
-      "summary": "A group of banks led by JPMorgan Chase & Co. reduced borrowing costs on a $2.85 billion debt financing package for the acquisition of CCC Intelligent Solutions.",
-      "source": "fiscal.ai",
-      "url": "https://www.marketscreener.com/news/jpmorgan-led-banks-cut-borrowing-costs-on-2-85-billion-debt-deal-for-ccc-intelligent-solutions-acqu-ce785edcda80f22c",
+      "url": "https://www.moomoo.com/stock/JPM-US?chain_id=Name1K9-3FXPhg.1lfrpt0&global_content=%7B%22promote_id%22%3A%22%22%2C%22sub_promote_id%22%3A64%2C%22subpromote_id%22%3A%22%22%2C%22f%22%3A%22www.moomoo.com%2Fcommunity%2Fprofile%2Fbuy-low-sell-low-107785341%22%7D",
       "symbols": [
         "JPM"
       ],
-      "published_at": "2026-11-17T19:02:25Z",
+      "published_at": "2026-11-18T21:32:14Z",
       "sentiment": null,
       "sentiment_label": null,
       "origin": "alpaca",
       "sample": false
     },
     {
-      "id": "alpaca-124775288",
-      "headline": "Microsoft Launches AI Transparency Initiative",
-      "summary": "Microsoft has introduced an AI Transparency Initiative aimed at establishing common standards for security, governance, and transparency in artificial intelligence models.",
+      "id": "alpaca-125955603",
+      "headline": "UBS Adjusts Meta Platforms Price Target",
+      "summary": "UBS has lowered its price target for Meta Platforms while maintaining a buy rating, citing concerns over infrastructure spending.",
       "source": "fiscal.ai",
-      "url": "https://stockhouse.com/news/newswire/2026/11/17/microsoft-launches-ai-transparency-initiative-with-40-organisations",
-      "symbols": [
-        "MSFT"
-      ],
-      "published_at": "2026-11-17T19:02:16Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-124775259",
-      "headline": "JPMorgan Blocks Meta's 'Muse' AI Agent from Customer Accounts",
-      "summary": "JPMorgan Chase has prohibited Meta's 'Muse' AI agent from accessing its customer accounts, citing security and risk management concerns.",
-      "source": "fiscal.ai",
-      "url": "https://www.barchart.com/story/news/8879129/you-dont-want-rogue-agents-jamie-dimon-shuts-metas-muse-ai-agent-out-of-jpmorgan-what-it-means-for-meta-stock",
+      "url": "https://www.moomoo.com/stock/META-US?chain_id=Name1K9-3FXPhg.1lfrtdg&global_content=%7B%22promote_id%22%3A%22%22%2C%22sub_promote_id%22%3A64%2C%22subpromote_id%22%3A%22%22%2C%22f%22%3A%22www.moomoo.com%2Fcommunity%2Fprofile%2Fequity-investor-74339429%2Fpost%2Fall%22%7D",
       "symbols": [
         "META"
       ],
-      "published_at": "2026-11-17T19:02:06Z",
+      "published_at": "2026-11-18T21:32:00Z",
       "sentiment": null,
       "sentiment_label": null,
       "origin": "alpaca",
       "sample": false
     },
     {
-      "id": "alpaca-124773547",
-      "headline": "Apple Reportedly Nearing Long-Term DRAM Supply Agreement With Samsung",
-      "summary": "Apple is reportedly in advanced talks to secure a four-to-five-year DRAM supply deal with Samsung starting in early 2027.",
+      "id": "alpaca-125955602",
+      "headline": "Reports Indicate Meta Proposed Ending News Blackout in Canada",
+      "summary": "Reports suggest Meta has proposed ending its news content blackout in Canada in exchange for an exemption under the Online News Act.",
       "source": "fiscal.ai",
-      "url": "https://appleosophy.com/wire/k4cb19g/",
+      "url": "https://newsfilter.io/articles/minister-says-discussions-with-meta-confidential-following-reports-of-possible-d88ccd8ccd8c5cc388ed918f1cc8b03a",
+      "symbols": [
+        "META"
+      ],
+      "published_at": "2026-11-18T21:32:00Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-125954216",
+      "headline": "Apple Releases HomeView Software 27.2.1 Update",
+      "summary": "Apple has issued a software update for its smart home hub to address Siri functionality and connectivity bugs.",
+      "source": "fiscal.ai",
+      "url": "https://appleosophy.com/wire/gwm546z/",
       "symbols": [
         "AAPL"
       ],
-      "published_at": "2026-11-17T19:01:26Z",
+      "published_at": "2026-11-18T21:31:41Z",
       "sentiment": null,
       "sentiment_label": null,
       "origin": "alpaca",
       "sample": false
     },
     {
-      "id": "alpaca-124509336",
-      "headline": "Rockwell Automation Launches GPU-Enabled Industrial Computing with NVIDIA",
-      "summary": "Rockwell Automation has introduced new industrial computing solutions powered by NVIDIA accelerated computing to enhance edge AI capabilities.",
+      "id": "alpaca-125831085",
+      "headline": "Wells Fargo to Name JPMorgan Executive Allison Beer as COO",
+      "summary": "Wells Fargo intends to appoint Allison Beer, currently JPMorgan Chase's chief executive of card and connected commerce, as its next chief operating officer.",
       "source": "fiscal.ai",
-      "url": "https://www.newswire.ca/news-releases/rockwell-automation-expands-edge-computing-options-for-industrial-ai-with-nvidia-gpus-847579242.html",
-      "symbols": [
-        "NVDA"
-      ],
-      "published_at": "2026-11-17T16:01:25Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-124509333",
-      "headline": "Meta Testing Internal Prediction Market App 'Takes'",
-      "summary": "Meta is reportedly testing a new internal application called 'Takes' that functions as a prediction market for employees.",
-      "source": "fiscal.ai",
-      "url": "https://cdcgaming.com/brief/meta-tests-prediction-market-app-with-employees/",
-      "symbols": [
-        "META"
-      ],
-      "published_at": "2026-11-17T16:01:17Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-124390896",
-      "headline": "Amazon Expands Grocery Delivery to Include Prepared Meals",
-      "summary": "Amazon has added ready-to-eat and heat-and-eat meal options to its same-day grocery delivery and Amazon Now services.",
-      "source": "fiscal.ai",
-      "url": "https://stockhouse.com/news/newswire/2026/11/17/amazon-adds-prepared-meals-to-same-day-grocery-delivery",
-      "symbols": [
-        "AMZN"
-      ],
-      "published_at": "2026-11-17T14:32:13Z",
-      "sentiment": null,
-      "sentiment_label": null,
-      "origin": "alpaca",
-      "sample": false
-    },
-    {
-      "id": "alpaca-124389557",
-      "headline": "JPMorgan Chase Announces CFO Transition",
-      "summary": "JPMorgan Chase has named Bregje de Best as the successor to current Chief Financial Officer Jeremy Barnum, who will transition to a vice chairman role.",
-      "source": "fiscal.ai",
-      "url": "https://www.morningstar.com/news/dow-jones/202611174825/jpmorgan-chase-names-bregje-de-best-to-succeed-jeremy-barnum-as-chief-financial-officer-2nd-update",
+      "url": "https://www.fidelity.com/news/article/company-news/202611180923MIDNIGHTUSEQUITY_A3756531",
       "symbols": [
         "JPM"
       ],
-      "published_at": "2026-11-17T14:31:24Z",
+      "published_at": "2026-11-18T20:01:36Z",
       "sentiment": null,
       "sentiment_label": null,
       "origin": "alpaca",
       "sample": false
     },
     {
-      "id": "alpaca-124389555",
-      "headline": "Microsoft Commences Ignite 2026 Conference",
-      "summary": "Microsoft has launched its annual Ignite conference in San Francisco, utilizing Haivision's video ecosystem to support global live event production.",
+      "id": "alpaca-125831084",
+      "headline": "Splashtop Joins Microsoft Virus Initiative",
+      "summary": "Splashtop has been accepted into the Microsoft Virus Initiative, a program for security vendors developing antimalware technology for Windows.",
       "source": "fiscal.ai",
-      "url": "https://www.globenewswire.com/news-release/2026/11/17/3404380/0/en/microsoft-selects-haivision-video-contribution-ecosystem-and-makito-one-video-transport-platform-to-power-global-live-event-productions.html",
+      "url": "https://www.globenewswire.com/news-release/2026/11/18/3406049/0/en/splashtop-joins-microsoft-virus-initiative-strengthening-protection-for-microsoft-environments.html",
       "symbols": [
         "MSFT"
       ],
-      "published_at": "2026-11-17T14:31:24Z",
+      "published_at": "2026-11-18T20:01:31Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-125831083",
+      "headline": "Amazon Announces $7 Billion Renewable Energy Investment in India",
+      "summary": "Amazon has committed to investing $7 billion in renewable energy projects in India by 2030, alongside the unveiling of four new utility-scale wind and solar projects.",
+      "source": "fiscal.ai",
+      "url": "https://energydigital.com/news/amazon-to-invest-us-7bn-in-renewable-energy-in-india-by-2030",
+      "symbols": [
+        "AMZN"
+      ],
+      "published_at": "2026-11-18T20:01:31Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-125831082",
+      "headline": "Apple Announces Finalists for 2026 App Store Awards",
+      "summary": "Apple has revealed the 45 finalists for its annual App Store Awards, recognizing excellence across its hardware ecosystem.",
+      "source": "fiscal.ai",
+      "url": "https://appleosophy.com/wire/oy1ri1h/",
+      "symbols": [
+        "AAPL"
+      ],
+      "published_at": "2026-11-18T20:01:25Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-125752606",
+      "headline": "Microsoft and Intel Announce Joint Infrastructure Investments",
+      "summary": "Microsoft and Intel have announced new investments aimed at enhancing infrastructure for cloud and artificial intelligence workloads.",
+      "source": "fiscal.ai",
+      "url": "https://stockhouse.com/news/newswire/2026/11/18/microsoft-and-intel-expand-azure-infrastructure-agreement",
+      "symbols": [
+        "MSFT"
+      ],
+      "published_at": "2026-11-18T19:03:47Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-125752605",
+      "headline": "Ema Launches AI Employees for HR, IT, and Finance on Microsoft Marketplace",
+      "summary": "Enterprise AI platform Ema has made its AI Employees available on the Microsoft Marketplace, allowing customers to deploy solutions directly through their existing Azure commitments.",
+      "source": "fiscal.ai",
+      "url": "https://www.globenewswire.com/news-release/2026/11/18/3405850/0/en/ema-ai-employees-for-hr-it-and-finance-now-available-in-microsoft-marketplace.html",
+      "symbols": [
+        "MSFT"
+      ],
+      "published_at": "2026-11-18T19:03:47Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-125749859",
+      "headline": "Roamly Announces Insurance Coverage for Tesla Cybercab",
+      "summary": "Specialty insurance provider Roamly has expanded its coverage to include the Tesla Cybercab, allowing owners to insure the autonomous vehicle under a digital policy.",
+      "source": "fiscal.ai",
+      "url": "https://www.globenewswire.com/news-release/2026/11/18/3406023/0/en/roamly-announces-insurance-for-tesla-cybercab.html",
+      "symbols": [
+        "TSLA"
+      ],
+      "published_at": "2026-11-18T19:01:37Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-125749853",
+      "headline": "Meta's Muse AI Agent Faces Operational and Privacy Scrutiny",
+      "summary": "Meta's Muse AI agent is under scrutiny following reports of operational errors and privacy concerns, prompting OS-level permission changes.",
+      "source": "fiscal.ai",
+      "url": "https://www.fidelity.com/news/article/company-news/202611180600RTRSNEWSCOMBINED_L6N46Y1DP_1",
+      "symbols": [
+        "META"
+      ],
+      "published_at": "2026-11-18T19:01:33Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-125749852",
+      "headline": "NVIDIA Announces Expanded Multiyear Supply Chain Commitments",
+      "summary": "NVIDIA has entered into expanded multiyear agreements with manufacturing partners to increase capacity for advanced packaging, substrates, and semiconductor testing to support AI infrastructure demand.",
+      "source": "fiscal.ai",
+      "url": "https://supplychaindigital.com/news/nvidia-extends-ai-supply-chain-with-long-term-supply-deals",
+      "symbols": [
+        "NVDA"
+      ],
+      "published_at": "2026-11-18T19:01:32Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-125749851",
+      "headline": "Infoblox Integrates Threat Defense with Amazon Route 53 DNS Firewall",
+      "summary": "Infoblox announced the integration of its threat intelligence platform with Amazon Route 53 Resolver DNS Firewall to provide predictive security for AWS customers.",
+      "source": "fiscal.ai",
+      "url": "https://www.globenewswire.com/news-release/2026/11/18/3405750/0/en/infoblox-brings-preemptive-threat-protection-to-amazon-route-53-dns-firewall.html",
+      "symbols": [
+        "AMZN"
+      ],
+      "published_at": "2026-11-18T19:01:31Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-125543600",
+      "headline": "BCG and Microsoft Expand Collaboration for AI-Powered Business Reimagination",
+      "summary": "BCG and Microsoft have expanded their partnership to help organizations implement AI-driven workflows and business strategies through joint investment and collaborative engineering.",
+      "source": "fiscal.ai",
+      "url": "https://www.prnewswire.com/news-releases/bcg-and-microsoft-expand-collaboration-with-new-model-for-ai-powered-business-reimagination-302943516.html",
+      "symbols": [
+        "MSFT"
+      ],
+      "published_at": "2026-11-18T16:01:33Z",
+      "sentiment": null,
+      "sentiment_label": null,
+      "origin": "alpaca",
+      "sample": false
+    },
+    {
+      "id": "alpaca-125543599",
+      "headline": "Akamai Integrates Enterprise Security with Microsoft Edge for Business on Mobile",
+      "summary": "Akamai has collaborated with Microsoft to bring its Workforce Protector extension to Microsoft Edge for Business on iOS and Android devices.",
+      "source": "fiscal.ai",
+      "url": "https://www.morningstar.com/news/globe-newswire/9879516/akamai-extends-its-enterprise-security-controls-to-microsoft-edge-for-business-browser-on-mobile",
+      "symbols": [
+        "MSFT"
+      ],
+      "published_at": "2026-11-18T16:01:33Z",
       "sentiment": null,
       "sentiment_label": null,
       "origin": "alpaca",
@@ -268,93 +268,197 @@
     }
   ],
   "movers": {
-    "last_updated": "2026-11-17 16:15:59 US/Eastern",
+    "last_updated": "2026-11-18 16:15:59 US/Eastern",
     "gainers": [
       {
-        "ticker": "SLS",
-        "price": "19.15",
-        "change_amount": "11.68",
-        "change_percentage": "156.3588%"
+        "ticker": "AKAN",
+        "price": "4.03",
+        "change_amount": "1.98",
+        "change_percentage": "96.5854%"
       },
       {
-        "ticker": "BKHAU",
-        "price": "16.15",
-        "change_amount": "8.16",
-        "change_percentage": "102.1277%"
+        "ticker": "SKYA",
+        "price": "4.13",
+        "change_amount": "1.96",
+        "change_percentage": "90.3226%"
       },
       {
-        "ticker": "GP",
-        "price": "2.62",
-        "change_amount": "1.21",
-        "change_percentage": "85.8156%"
+        "ticker": "CUE",
+        "price": "4.76",
+        "change_amount": "1.93",
+        "change_percentage": "68.1979%"
       },
       {
-        "ticker": "MPU",
-        "price": "1.9",
-        "change_amount": "0.62",
-        "change_percentage": "48.4375%"
+        "ticker": "RIBBU",
+        "price": "55.95",
+        "change_amount": "18.7",
+        "change_percentage": "50.2013%"
       },
       {
-        "ticker": "AYTU",
-        "price": "2.66",
-        "change_amount": "0.84",
-        "change_percentage": "46.1538%"
+        "ticker": "CLRO",
+        "price": "6.9",
+        "change_amount": "2.18",
+        "change_percentage": "46.1864%"
       }
     ],
     "losers": [
       {
-        "ticker": "CUE",
-        "price": "2.83",
-        "change_amount": "-11.27",
-        "change_percentage": "-79.9291%"
+        "ticker": "HY",
+        "price": "15.25",
+        "change_amount": "-10.95",
+        "change_percentage": "-41.7939%"
       },
       {
-        "ticker": "MDRN",
-        "price": "1.94",
-        "change_amount": "-1.885",
-        "change_percentage": "-49.281%"
+        "ticker": "JMIA",
+        "price": "2.755",
+        "change_amount": "-1.875",
+        "change_percentage": "-40.4968%"
       },
       {
-        "ticker": "STEM",
-        "price": "1.2",
-        "change_amount": "-0.77",
-        "change_percentage": "-39.0863%"
+        "ticker": "PRE",
+        "price": "10.35",
+        "change_amount": "-5.98",
+        "change_percentage": "-36.6197%"
       },
       {
-        "ticker": "KYNB",
-        "price": "2.04",
-        "change_amount": "-1.16",
-        "change_percentage": "-36.25%"
+        "ticker": "NCT",
+        "price": "6.62",
+        "change_amount": "-3.45",
+        "change_percentage": "-34.2602%"
       }
     ],
     "active": [
       {
         "ticker": "NVDA",
-        "price": "155.46",
-        "change_amount": "-0.68",
-        "change_percentage": "-0.4355%"
+        "price": "150.96",
+        "change_amount": "-4.5",
+        "change_percentage": "-2.8946%"
       },
       {
         "ticker": "SOXL",
-        "price": "49.05",
-        "change_amount": "0.29",
-        "change_percentage": "0.5947%"
+        "price": "49.33",
+        "change_amount": "0.26",
+        "change_percentage": "0.5299%"
       },
       {
         "ticker": "SPDN",
-        "price": "8.88",
-        "change_amount": "0.09",
-        "change_percentage": "1.0239%"
+        "price": "8.905",
+        "change_amount": "0.035",
+        "change_percentage": "0.3946%"
       },
       {
         "ticker": "SNXX",
-        "price": "2.87",
-        "change_amount": "-0.09",
-        "change_percentage": "-3.0405%"
+        "price": "2.715",
+        "change_amount": "-0.155",
+        "change_percentage": "-5.4007%"
       }
     ]
   },
   "earnings": [
+    {
+      "symbol": "JPM",
+      "quarter": "2026Q3",
+      "reported_date": "2026-10-13",
+      "fiscal_date_ending": "2026-09-30",
+      "reported_eps": "5.75",
+      "estimated_eps": "5.94",
+      "surprise_percentage": "-3.1987",
+      "summary": {
+        "method": "extractive",
+        "llm": null,
+        "sentiment_score": 0.1065,
+        "sentiment_label": "Neutral",
+        "turn_count": 92,
+        "overview": "Internally, we use agents to do things here, and we are going to continue to do that. We will use them for customers, but our focus will always be to do a great job for customers.",
+        "quotes": [
+          {
+            "role": "CFO",
+            "speaker": "Jeremy Barnum",
+            "title": "CFO",
+            "text": "AUM of $5.2 trillion was up 13% year on year, and client assets of $7.9 trillion were up 15% year on year, driven by continued net inflows and higher market levels.",
+            "sentiment": 0.8,
+            "sentiment_label": "Bullish"
+          },
+          {
+            "role": "CEO",
+            "speaker": "James Dimon",
+            "title": "Chairman and CEO",
+            "text": "We have something across my desk that alone is over $10 billion or $20 billion of financing in one country.",
+            "sentiment": 0.8,
+            "sentiment_label": "Bullish"
+          }
+        ],
+        "bullish": {
+          "speaker": "Jeremy Barnum",
+          "title": "CFO",
+          "role": "CFO",
+          "text": "Thank you very much, and good morning, everyone.",
+          "sentiment": 0.8,
+          "sentiment_label": "Bullish"
+        },
+        "bearish": {
+          "speaker": "Jeremy Barnum",
+          "title": "CFO",
+          "role": "CFO",
+          "text": "Yeah, it is a really good question, right?",
+          "sentiment": 0.0,
+          "sentiment_label": "Neutral"
+        }
+      },
+      "sample": false
+    },
+    {
+      "symbol": "AAPL",
+      "quarter": "2026Q3",
+      "reported_date": "2026-11-02",
+      "fiscal_date_ending": "2026-09-30",
+      "reported_eps": "2.05",
+      "estimated_eps": "1.98",
+      "surprise_percentage": "3.5354",
+      "summary": {
+        "method": "extractive",
+        "llm": null,
+        "sentiment_score": 0.1328,
+        "sentiment_label": "Neutral",
+        "turn_count": 61,
+        "overview": "Good afternoon, everyone, thanks for joining the call. Today, Apple is pleased to report $109.4 billion in revenue, up 16% from a year ago and a June quarter record.",
+        "quotes": [
+          {
+            "role": "CEO",
+            "speaker": "Tim Cook",
+            "title": "Chief Executive Officer",
+            "text": "In the six and a half years since launch, Apple TV has earned more than 850 wins and nearly 3,800 nominations.",
+            "sentiment": 0.9,
+            "sentiment_label": "Bullish"
+          },
+          {
+            "role": "CFO",
+            "speaker": "Kevan Parekh",
+            "title": "Chief Financial Officer",
+            "text": "Finally, today, our board of directors has declared a cash dividend of $0.27 per share of common stock payable on August 13th, 2026, to shareholders of record as of August 10th, 2026.",
+            "sentiment": 0.3,
+            "sentiment_label": "Somewhat-Bullish"
+          }
+        ],
+        "bullish": {
+          "speaker": "Tim Cook",
+          "title": "Chief Executive Officer",
+          "role": "CEO",
+          "text": "Good afternoon, everyone, thanks for joining the call.",
+          "sentiment": 0.9,
+          "sentiment_label": "Bullish"
+        },
+        "bearish": {
+          "speaker": "Tim Cook",
+          "title": "Chief Executive Officer",
+          "role": "CEO",
+          "text": "Let me back up and talk about memory in general, because I know this is a subject on many of your minds.",
+          "sentiment": 0.0,
+          "sentiment_label": "Neutral"
+        }
+      },
+      "sample": false
+    },
     {
       "symbol": "META",
       "quarter": "2026Q3",
@@ -562,202 +666,148 @@
         }
       },
       "sample": false
-    },
-    {
-      "symbol": "MSFT",
-      "quarter": "2026Q3",
-      "reported_date": "2026-10-28",
-      "fiscal_date_ending": "2026-09-30",
-      "reported_eps": "4.89",
-      "estimated_eps": "4.71",
-      "surprise_percentage": "3.8217",
-      "summary": {
-        "method": "extractive",
-        "llm": null,
-        "sentiment_score": 0.1659,
-        "sentiment_label": "Somewhat-Bullish",
-        "turn_count": 44,
-        "overview": "It was a record third quarter powered by the continued strength of Microsoft Cloud, which delivered $54 billion in revenue, up 29% year over year. Our AI business surpassed $37 billion ARR, up 123%.",
-        "quotes": [
-          {
-            "role": "CEO",
-            "speaker": "Satya Nadella",
-            "title": "Chairman & Chief Executive Officer (CEO)",
-            "text": "The number of customers with over 50,000 seats quadrupled year over year, and Accenture now has over 740,000 seats, our largest Copilot win to date.",
-            "sentiment": 0.9,
-            "sentiment_label": "Bullish"
-          },
-          {
-            "role": "CFO",
-            "speaker": "Amy Hood",
-            "title": "Chief Financial Officer (CFO)",
-            "text": "Therefore, we expect COGS of $29.4 to $29.6 billion or growth of 22% to 23%, including roughly $350 million from the retirement program, and operating expense of $19.3 to $19.4 billion or growth of approximately 7%, including roughly $550 million from the retirement program.",
-            "sentiment": 0.6,
-            "sentiment_label": "Bullish"
-          }
-        ],
-        "bullish": {
-          "speaker": "Satya Nadella",
-          "title": "Chairman & Chief Executive Officer (CEO)",
-          "role": "CEO",
-          "text": "It was a record third quarter powered by the continued strength of Microsoft Cloud, which delivered $54 billion in revenue, up 29% year over year.",
-          "sentiment": 0.9,
-          "sentiment_label": "Bullish"
-        },
-        "bearish": {
-          "speaker": "Amy Hood",
-          "title": "Chief Financial Officer (CFO)",
-          "role": "CFO",
-          "text": "Keith, maybe just to take a quick second—just a big thank you to you.",
-          "sentiment": 0.1,
-          "sentiment_label": "Neutral"
-        }
-      },
-      "sample": false
-    },
-    {
-      "symbol": "NVDA",
-      "quarter": "2026Q3",
-      "reported_date": "2026-08-26",
-      "fiscal_date_ending": "2026-07-31",
-      "reported_eps": "2.22",
-      "estimated_eps": "2.09",
-      "surprise_percentage": "6.2201",
-      "summary": {
-        "method": "extractive",
-        "llm": null,
-        "sentiment_score": 0.2909,
-        "sentiment_label": "Somewhat-Bullish",
-        "turn_count": 33,
-        "overview": "There's been a lot of talk about an AI bubble. From our vantage point, we see something very different.",
-        "quotes": [
-          {
-            "role": "CFO",
-            "speaker": "Colette Kress",
-            "title": "CFO",
-            "text": "Analyst expectations for the top CSPs and hyperscalers in 2026 aggregate CapEx have continued to increase and now sit roughly at $600 billion, more than $200 billion higher relative to the start of the year.",
-            "sentiment": 0.9,
-            "sentiment_label": "Bullish"
-          },
-          {
-            "role": "CEO",
-            "speaker": "Jensen Huang",
-            "title": "CEO",
-            "text": "In Q2, Meta reported over a 5% increase in ad conversions on Instagram and a 3% gain on Facebook feed driven by generative AI-based GEMMA.",
-            "sentiment": 0.9,
-            "sentiment_label": "Bullish"
-          }
-        ],
-        "bullish": {
-          "speaker": "Colette Kress",
-          "title": "CFO",
-          "role": "CFO",
-          "text": "We delivered another outstanding quarter with revenue of $57 billion, up 62% year over year and a record sequential revenue growth of $10 billion or 22%.",
-          "sentiment": 0.9,
-          "sentiment_label": "Bullish"
-        },
-        "bearish": {
-          "speaker": "Colette Kress",
-          "title": "CFO",
-          "role": "CFO",
-          "text": "Remember earlier this year we indicated that through cost improvements and mix we would exit the year with gross margins in the mid-seventies.",
-          "sentiment": 0.2,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      },
-      "sample": false
     }
   ],
   "flows": {
     "symbols": [
-      "META",
-      "TSLA"
+      "JPM",
+      "AAPL"
     ],
     "insider": [
       {
-        "symbol": "META",
-        "date": "2026-11-02",
-        "name": "Marc L Andreessen",
-        "title": "Director",
+        "symbol": "JPM",
+        "date": "2026-09-10",
+        "name": "Robin Leopold",
+        "title": "Head of Human Resources",
         "action": "Sale",
         "code": "S",
-        "shares": "1986",
-        "price": "612.12"
+        "shares": "2500",
+        "price": "352.8106"
       },
       {
-        "symbol": "META",
-        "date": "2026-11-02",
-        "name": "Marc L Andreessen",
-        "title": "Director",
+        "symbol": "JPM",
+        "date": "2026-08-11",
+        "name": "Robin Leopold",
+        "title": "Head of Human Resources",
         "action": "Sale",
         "code": "S",
-        "shares": "872",
-        "price": "608.26"
+        "shares": "2500",
+        "price": "361.4072"
       },
       {
-        "symbol": "META",
-        "date": "2026-11-02",
-        "name": "Marc L Andreessen",
-        "title": "Director",
+        "symbol": "JPM",
+        "date": "2026-06-22",
+        "name": "Stacey Friedman",
+        "title": "General Counsel",
         "action": "Sale",
         "code": "S",
-        "shares": "1964",
-        "price": "609.33"
+        "shares": "5467",
+        "price": "330.7337"
       },
       {
-        "symbol": "META",
-        "date": "2026-11-02",
-        "name": "Marc L Andreessen",
-        "title": "Director",
+        "symbol": "JPM",
+        "date": "2026-05-20",
+        "name": "Stacey Friedman",
+        "title": "General Counsel",
         "action": "Sale",
         "code": "S",
-        "shares": "4629",
-        "price": "610.27"
+        "shares": "5468",
+        "price": "300.2662"
       },
       {
-        "symbol": "META",
-        "date": "2026-11-02",
-        "name": "Marc L Andreessen",
-        "title": "Director",
+        "symbol": "JPM",
+        "date": "2026-05-15",
+        "name": "Marianne Lake",
+        "title": "CEO CCB",
         "action": "Sale",
         "code": "S",
-        "shares": "4571",
-        "price": "611.14"
+        "shares": "6427",
+        "price": "298.3555"
       },
       {
-        "symbol": "TSLA",
-        "date": "2026-09-08",
-        "name": "Vaibhav Taneja",
-        "title": "Chief Financial Officer",
+        "symbol": "AAPL",
+        "date": "2026-11-10",
+        "name": "Jennifer Newstead",
+        "title": "SVP, GC and Government Affairs",
         "action": "Sale",
         "code": "S",
-        "shares": "2605.8",
-        "price": "360.134"
+        "shares": "2399",
+        "price": "351.36"
       },
       {
-        "symbol": "TSLA",
-        "date": "2026-06-08",
-        "name": "Vaibhav Taneja",
-        "title": "Chief Financial Officer",
+        "symbol": "AAPL",
+        "date": "2026-11-03",
+        "name": "Jennifer Newstead",
+        "title": "SVP, GC and Government Affairs",
         "action": "Sale",
         "code": "S",
-        "shares": "2605.5",
-        "price": "402.197"
+        "shares": "2399",
+        "price": "325.75"
       },
       {
-        "symbol": "TSLA",
-        "date": "2026-05-13",
-        "name": "Vaibhav Taneja",
-        "title": "Chief Financial Officer",
+        "symbol": "AAPL",
+        "date": "2026-10-27",
+        "name": "Jennifer Newstead",
+        "title": "SVP, GC and Government Affairs",
         "action": "Sale",
         "code": "S",
-        "shares": "3000",
-        "price": "450.0"
+        "shares": "2399",
+        "price": "343.36"
       }
     ],
     "congress": [
       {
-        "symbol": "META",
+        "symbol": "JPM",
+        "date": "2026-09-04",
+        "name": "Sheldon Whitehouse",
+        "party": "D",
+        "state": "RI",
+        "chamber": "Senate",
+        "action": "Sell",
+        "amount": "$15k–$50k"
+      },
+      {
+        "symbol": "JPM",
+        "date": "2026-09-04",
+        "name": "Sheldon Whitehouse",
+        "party": "D",
+        "state": "RI",
+        "chamber": "Senate",
+        "action": "Sell",
+        "amount": "$15k–$50k"
+      },
+      {
+        "symbol": "JPM",
+        "date": "2026-08-20",
+        "name": "Scott Franklin",
+        "party": "R",
+        "state": "FL",
+        "chamber": "House",
+        "action": "Sell",
+        "amount": "$1k–$15k"
+      },
+      {
+        "symbol": "JPM",
+        "date": "2026-08-20",
+        "name": "Scott Franklin",
+        "party": "R",
+        "state": "FL",
+        "chamber": "House",
+        "action": "Sell",
+        "amount": "$1k–$15k"
+      },
+      {
+        "symbol": "JPM",
+        "date": "2026-04-13",
+        "name": "Sheldon Whitehouse",
+        "party": "D",
+        "state": "RI",
+        "chamber": "Senate",
+        "action": "Sell",
+        "amount": "$15k–$50k"
+      },
+      {
+        "symbol": "AAPL",
         "date": "2026-10-21",
         "name": "Shelley Moore Capito",
         "party": "R",
@@ -767,146 +817,96 @@
         "amount": "$1k–$15k"
       },
       {
-        "symbol": "META",
-        "date": "2026-10-09",
-        "name": "Gilbert Ray Cisneros, Jr.",
-        "party": "D",
-        "state": "CA",
-        "chamber": "House",
-        "action": "Buy",
-        "amount": "$1k–$15k"
-      },
-      {
-        "symbol": "META",
+        "symbol": "AAPL",
         "date": "2026-10-02",
         "name": "Ro Khanna",
         "party": "D",
         "state": "CA",
         "chamber": "House",
-        "action": "Sell",
-        "amount": "$1k–$15k"
-      },
-      {
-        "symbol": "META",
-        "date": "2026-09-24",
-        "name": "Maria Elvira Salazar",
-        "party": "R",
-        "state": "FL",
-        "chamber": "House",
-        "action": "Sell",
-        "amount": "$1k–$15k"
-      },
-      {
-        "symbol": "META",
-        "date": "2026-09-23",
-        "name": "Ro Khanna",
-        "party": "D",
-        "state": "CA",
-        "chamber": "House",
         "action": "Buy",
-        "amount": "$1k–$15k"
+        "amount": "$15k–$50k"
       },
       {
-        "symbol": "TSLA",
+        "symbol": "AAPL",
         "date": "2026-10-02",
         "name": "Pete Sessions",
         "party": "R",
         "state": "TX",
         "chamber": "House",
         "action": "Sell",
-        "amount": "$15k–$50k"
-      },
-      {
-        "symbol": "TSLA",
-        "date": "2026-09-25",
-        "name": "Ro Khanna",
-        "party": "D",
-        "state": "CA",
-        "chamber": "House",
-        "action": "Buy",
-        "amount": "$1k–$15k"
-      },
-      {
-        "symbol": "TSLA",
-        "date": "2026-09-11",
-        "name": "Ro Khanna",
-        "party": "D",
-        "state": "CA",
-        "chamber": "House",
-        "action": "Buy",
-        "amount": "$15k–$50k"
+        "amount": "$250k–$500k"
       }
     ],
     "institutional": [
       {
-        "symbol": "META",
-        "ownership": "88%",
-        "holders": "5606",
-        "increased": "2860",
-        "decreased": "2319",
+        "symbol": "JPM",
+        "ownership": "85%",
+        "holders": "5492",
+        "increased": "2522",
+        "decreased": "2405",
         "top": [
           {
             "name": "Vanguard Group Inc",
-            "shares": "200.0m",
-            "change": "3.77%",
-            "change_type": "increased",
+            "shares": "265.8m",
+            "change": "-0.05%",
+            "change_type": "decreased",
             "reported": "2025-12-31"
           },
           {
             "name": "Blackrock",
-            "shares": "173.6m",
-            "change": "0.14%",
-            "change_type": "increased",
+            "shares": "203.4m",
+            "change": "-1.39%",
+            "change_type": "decreased",
             "reported": "2026-09-30"
           },
           {
             "name": "Vanguard Capital Management Llc",
-            "shares": "144.3m",
-            "change": "0.63%",
-            "change_type": "increased",
-            "reported": "2026-09-30"
-          },
-          {
-            "name": "Fmr Llc",
-            "shares": "101.4m",
-            "change": "5.76%",
-            "change_type": "increased",
-            "reported": "2026-09-30"
-          }
-        ]
-      },
-      {
-        "symbol": "TSLA",
-        "ownership": "51%",
-        "holders": "4634",
-        "increased": "2303",
-        "decreased": "1777",
-        "top": [
-          {
-            "name": "Vanguard Group Inc",
-            "shares": "258.9m",
-            "change": "2.59%",
-            "change_type": "increased",
-            "reported": "2025-12-31"
-          },
-          {
-            "name": "Blackrock",
-            "shares": "214.2m",
-            "change": "0.04%",
-            "change_type": "increased",
-            "reported": "2026-09-30"
-          },
-          {
-            "name": "Vanguard Capital Management Llc",
-            "shares": "184.7m",
-            "change": "0.35%",
+            "shares": "174.0m",
+            "change": "7.70%",
             "change_type": "increased",
             "reported": "2026-09-30"
           },
           {
             "name": "State Street Corp",
-            "shares": "118.8m",
-            "change": "1.12%",
+            "shares": "124.4m",
+            "change": "-0.66%",
+            "change_type": "decreased",
+            "reported": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "symbol": "AAPL",
+        "ownership": "77%",
+        "holders": "6502",
+        "increased": "2727",
+        "decreased": "3377",
+        "top": [
+          {
+            "name": "Vanguard Group Inc",
+            "shares": "1.4bn",
+            "change": "1.92%",
+            "change_type": "increased",
+            "reported": "2025-12-31"
+          },
+          {
+            "name": "Blackrock",
+            "shares": "1.2bn",
+            "change": "-0.51%",
+            "change_type": "decreased",
+            "reported": "2026-09-30"
+          },
+          {
+            "name": "Vanguard Capital Management Llc",
+            "shares": "955.2m",
+            "change": "-0.41%",
+            "change_type": "decreased",
+            "reported": "2026-09-30"
+          },
+          {
+            "name": "State Street Corp",
+            "shares": "622.5m",
+            "change": "1.20%",
             "change_type": "increased",
             "reported": "2026-09-30"
           }
